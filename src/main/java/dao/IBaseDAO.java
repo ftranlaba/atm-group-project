@@ -2,6 +2,10 @@ package dao;
 
 import java.util.List;
 
+
+/**
+ * @author Francis
+ */
 public interface IBaseDAO<T> {
     void create(T o);
 
