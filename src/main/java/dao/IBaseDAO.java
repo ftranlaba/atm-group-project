@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -7,13 +8,13 @@ import java.util.List;
  * @author Francis
  */
 public interface IBaseDAO<T> {
-    void create(T o);
+    void create(T o) throws SQLException;
 
-    T getById(int id);
+    T getById(long id) throws SQLException;
 
-    List<T> getAll();
+    List<T> getAll() throws SQLException;
 
-    void update(T o, int id);
+    void update(T o) throws SQLException;
 
-    void delete(int id);
+    void delete(long id) throws SQLException;
 }
