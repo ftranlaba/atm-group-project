@@ -21,16 +21,18 @@ public class TerminalMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException {
         LOGGER.info("ATM Terminal");
-        printMenu();
+        LOGGER.info("1) User");
+        LOGGER.info("2) Admin");
+        LOGGER.info("3) Create Account");
         switch (scan.nextInt()) {
             case 1:
-                createAccount();
-                break;
-            case 2:
                 userUI();
                 break;
-            case 3:
+            case 2:
                 adminUI();
+                break;
+            case 3:
+                createAccount();
                 break;
             default:
                 throw new InvalidTypeException("Invalid Option");
@@ -38,19 +40,52 @@ public class TerminalMain {
         scan.close();
     }
 
+    public static void userUI() throws ExecutionException, InterruptedException {
+        LOGGER.info("login user");
+        LOGGER.info("1) Check account balances");
+        LOGGER.info("2) Deposit Money");
+        LOGGER.info("3) Transfer Money");
+        LOGGER.info("4) Change Account Pin");
+        LOGGER.info("5) Report Card Stolen");
+        switch (scan.nextInt()) {
+            case 1:
+                LOGGER.info("account balance");
+                break;
+            case 2:
+                LOGGER.info("How Much money would you like to deposit: ");
+                int deposit = scan.nextInt();
+                LOGGER.info(deposit);
+                // set deposit to account
+                break;
+            case 3:
+                //finish transfer implementation
+                transfer();
+                break;
+            case 4:
+                LOGGER.info("Change Account Pin");
+                int pin = scan.nextInt();
+                LOGGER.info(pin);
+                //add setter to change pin
+                break;
+            case 5:
+                LOGGER.info("Card Blocked");
+                //set card to blocked
+                break;
+        }
+    }
+
+    public static void adminUI() {
+        LOGGER.info("admin");
+        LOGGER.info("1) See Account");
+        LOGGER.info("2) See Accounts");
+        LOGGER.info("3) Block Card");
+        LOGGER.info("4) Unblock Card");
+
+    }
 
     public static void createAccount() throws ExecutionException, InterruptedException, InvalidTypeException {
         User u = createUser();
         makeAccount(1);
-
-    }
-
-    public static void userUI() {
-        LOGGER.info("login user");
-    }
-
-    public static void adminUI() {
-        LOGGER.info("login admin");
     }
 
     public static void makeAccount(int id) throws InvalidTypeException {
@@ -75,13 +110,12 @@ public class TerminalMain {
                 break;
             default:
                 throw new InvalidTypeException("Invalid type");
-        };
-
+        }
     }
 
     public static User createUser() throws ExecutionException, InterruptedException {
         User u = new User();
-        // add user setter methods
+        // add User setter methods
         CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
             LOGGER.info("Enter First Name: ");
             scan.nextLine();
@@ -104,10 +138,23 @@ public class TerminalMain {
         return u;
     }
 
-    public static void printMenu() {
-        LOGGER.info("1) Create Account");
-        LOGGER.info("2) Login User");
-        LOGGER.info("3) Login Admin");
+    public static void transfer() throws ExecutionException, InterruptedException {
+        //finish implementation
+        CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
+            LOGGER.info("From: ");
+            scan.nextLine();
+            String from = scan.nextLine();
+            LOGGER.info(from);
+        }).thenRunAsync(() -> {
+            LOGGER.info("Where: ");
+            String where = scan.nextLine();
+            LOGGER.info(where);
+        }).thenRunAsync(() -> {
+            LOGGER.info("Amount: ");
+            int amount = scan.nextInt();
+            LOGGER.info(amount);
+        });
+        c.get();
     }
 
 }
