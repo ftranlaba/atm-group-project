@@ -32,6 +32,8 @@ public abstract class IdInfo {
 
     @Override
     public String toString() {
-        return "\n[ID = " + id + ']';
+        return "IdInfo{" +
+                "id=" + id +
+                '}';
     }
 }

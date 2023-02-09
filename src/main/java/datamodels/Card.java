@@ -1,25 +1,26 @@
 package datamodels;
 
-public class DebitCard extends AccountIdInfo {
-    private String number;
+public class Card extends TypeInfo {
+    private String cardNumber;
     private String expirationDate;
     private int cvc;
-    private int block;
+    private boolean block;
 
-    public DebitCard(int id, int foreignIdAccount, String number, String expirationDate, int cvc, int block) {
-        super(id, foreignIdAccount);
-        this.number = number;
+    public Card(int id, int idForeignKey, String type, String cardNumber, String expirationDate, int cvc,
+                boolean block) {
+        super(id, idForeignKey, type);
+        this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvc = cvc;
         this.block = block;
     }
 
-    public String getNumber() {
-        return this.number;
+    public String getCardNumber() {
+        return this.cardNumber;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public String getExpirationDate() {
@@ -38,22 +39,23 @@ public class DebitCard extends AccountIdInfo {
         this.cvc = cvc;
     }
 
-    public int getBlock() {
+    public boolean isBlock() {
         return this.block;
     }
 
-    public void setBlock(int block) {
+    public void setBlock(boolean block) {
         this.block = block;
     }
 
     @Override
     public String toString() {
-        return "DebitCard{" +
-                "number='" + number + '\'' +
+        return "Card{" +
+                "cardNumber='" + cardNumber + '\'' +
                 ", expirationDate='" + expirationDate + '\'' +
                 ", cvc=" + cvc +
                 ", block=" + block +
-                ", foreignIdAccount=" + foreignIdAccount +
+                ", type='" + type + '\'' +
+                ", idForeignKey=" + idForeignKey +
                 ", id=" + id +
                 '}';
     }

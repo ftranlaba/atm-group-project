@@ -1,29 +1,22 @@
 package datamodels;
 
-public class Account extends AccountIdInfo {
-    private int balance;
-    private String type;
+import java.math.BigDecimal;
 
-    public Account(int id, int idPrimaryAccount, int balance, String type) {
-        super(id, idPrimaryAccount);
+public class Account extends TypeInfo {
+    private BigDecimal balance;
+
+    public Account(int id, int idForeignKey, String type, BigDecimal balance) {
+        super(id, idForeignKey, type);
         this.balance = balance;
-        this.type = type;
     }
 
-    public int getBalance() {
+
+    public BigDecimal getBalance() {
         return this.balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Override
@@ -31,7 +24,7 @@ public class Account extends AccountIdInfo {
         return "Account{" +
                 "balance=" + balance +
                 ", type='" + type + '\'' +
-                ", foreignIdAccount=" + foreignIdAccount +
+                ", idForeignKey=" + idForeignKey +
                 ", id=" + id +
                 '}';
     }

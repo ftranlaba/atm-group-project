@@ -1,24 +1,19 @@
 package datamodels;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class Transfer extends AccountIdInfo {
+public class Transfer extends BalanceInfo {
     private int idAccount2;
-    private int oldBalanceAcc1;
-    private int newBalanceAcc1;
-    private int oldBalanceAcc2;
-    private int newBalanceAcc2;
-    private Timestamp time;
+    private BigDecimal oldBalance2;
+    private BigDecimal newBalance2;
 
-    public Transfer(int id, int idAccount1, int idAccount2, int oldBalanceAcc1, int newBalanceAcc1,
-                    int oldBalanceAcc2, int newBalanceAcc2, Timestamp time) {
-        super(id, idAccount1);
+    public Transfer(int id, int idForeignKey, Timestamp time, BigDecimal oldBalance, BigDecimal newBalance,
+                    int idAccount2, BigDecimal oldBalance2, BigDecimal newBalance2) {
+        super(id, idForeignKey, time, oldBalance, newBalance);
         this.idAccount2 = idAccount2;
-        this.oldBalanceAcc1 = oldBalanceAcc1;
-        this.newBalanceAcc1 = newBalanceAcc1;
-        this.oldBalanceAcc2 = oldBalanceAcc2;
-        this.newBalanceAcc2 = newBalanceAcc2;
-        this.time = time;
+        this.oldBalance2 = oldBalance2;
+        this.newBalance2 = newBalance2;
     }
 
     public int getIdAccount2() {
@@ -29,56 +24,32 @@ public class Transfer extends AccountIdInfo {
         this.idAccount2 = idAccount2;
     }
 
-    public int getOldBalanceAcc1() {
-        return this.oldBalanceAcc1;
+    public BigDecimal getOldBalance2() {
+        return this.oldBalance2;
     }
 
-    public void setOldBalanceAcc1(int oldBalanceAcc1) {
-        this.oldBalanceAcc1 = oldBalanceAcc1;
+    public void setOldBalance2(BigDecimal oldBalance2) {
+        this.oldBalance2 = oldBalance2;
     }
 
-    public int getNewBalanceAcc1() {
-        return this.newBalanceAcc1;
+    public BigDecimal getNewBalance2() {
+        return this.newBalance2;
     }
 
-    public void setNewBalanceAcc1(int newBalanceAcc1) {
-        this.newBalanceAcc1 = newBalanceAcc1;
-    }
-
-    public int getOldBalanceAcc2() {
-        return this.oldBalanceAcc2;
-    }
-
-    public void setOldBalanceAcc2(int oldBalanceAcc2) {
-        this.oldBalanceAcc2 = oldBalanceAcc2;
-    }
-
-    public int getNewBalanceAcc2() {
-        return this.newBalanceAcc2;
-    }
-
-    public void setNewBalanceAcc2(int newBalanceAcc2) {
-        this.newBalanceAcc2 = newBalanceAcc2;
-    }
-
-    public Timestamp getTime() {
-        return this.time;
-    }
-
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setNewBalance2(BigDecimal newBalance2) {
+        this.newBalance2 = newBalance2;
     }
 
     @Override
     public String toString() {
         return "Transfer{" +
                 "idAccount2=" + idAccount2 +
-                ", oldBalanceAcc1=" + oldBalanceAcc1 +
-                ", newBalanceAcc1=" + newBalanceAcc1 +
-                ", oldBalanceAcc2=" + oldBalanceAcc2 +
-                ", newBalanceAcc2=" + newBalanceAcc2 +
+                ", oldBalance2=" + oldBalance2 +
+                ", newBalance2=" + newBalance2 +
+                ", oldBalance=" + oldBalance +
+                ", newBalance=" + newBalance +
                 ", time=" + time +
-                ", foreignIdAccount=" + foreignIdAccount +
+                ", idForeignKey=" + idForeignKey +
                 ", id=" + id +
                 '}';
     }
