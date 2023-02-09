@@ -16,3 +16,6 @@
 *.zip
 *.tar.gz
 *.rar
+
+# Target Folder #
+target
