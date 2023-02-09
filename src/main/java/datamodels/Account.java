@@ -1,26 +1,23 @@
 package datamodels;
 
-public class Account {
-
-    private int accountId;
-    private int primaryAccountId;
+public class Account extends IdInfo {
     private int balance;
+    private int idPrimaryAccount;
     private String type;
 
-    public int getAccountId() {
-        return this.accountId;
+    public Account(int id, int idPrimaryAccount, int balance, String type) {
+        super(id);
+        this.idPrimaryAccount = idPrimaryAccount;
+        this.balance = balance;
+        this.type = type;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public int getIdPrimaryAccount() {
+        return this.idPrimaryAccount;
     }
 
-    public int getPrimaryAccountId() {
-        return this.primaryAccountId;
-    }
-
-    public void setPrimaryAccountId(int primaryAccountId) {
-        this.primaryAccountId = primaryAccountId;
+    public void setIdPrimaryAccount(int idPrimaryAccount) {
+        this.idPrimaryAccount = idPrimaryAccount;
     }
 
     public int getBalance() {
@@ -41,9 +38,11 @@ public class Account {
 
     @Override
     public String toString() {
-        return "\n[Account ID = " + accountId +
-                ", Primary Account ID = " + primaryAccountId +
-                ", Balance = " + balance +
-                ", Type = '" + type + '\'' + ']';
+        return "AccountIdInfo{" +
+                "balance=" + balance +
+                ", idPrimaryAccount=" + idPrimaryAccount +
+                ", type='" + type + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

@@ -2,26 +2,24 @@ package datamodels;
 
 import java.sql.Timestamp;
 
-public class AccountAccessHistory {
-    private int accountAccessHistoryId;
-    private int accountId;
+public class AccountAccessHistory extends IdInfo {
+    private int idAccount;
     private Timestamp time;
     private String macAddress;
 
-    public int getAccountAccessHistoryId() {
-        return this.accountAccessHistoryId;
+    public AccountAccessHistory(int id, int idAccount, Timestamp time, String macAddress) {
+        super(id);
+        this.idAccount = idAccount;
+        this.time = time;
+        this.macAddress = macAddress;
     }
 
-    public void setAccountAccessHistoryId(int accountAccessHistoryId) {
-        this.accountAccessHistoryId = accountAccessHistoryId;
+    public int getIdAccount() {
+        return this.idAccount;
     }
 
-    public int getAccountId() {
-        return this.accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
     }
 
     public Timestamp getTime() {
@@ -42,9 +40,11 @@ public class AccountAccessHistory {
 
     @Override
     public String toString() {
-        return "\n[Account Access History ID = " + accountAccessHistoryId +
-                ", Account ID = " + accountId +
-                ", Time = " + time +
-                ", Mac Address = '" + macAddress + '\'' + ']';
+        return "AccountAccessHistory{" +
+                "idAccount=" + idAccount +
+                ", time=" + time +
+                ", macAddress='" + macAddress + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

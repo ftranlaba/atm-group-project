@@ -1,35 +1,34 @@
 package datamodels;
 
-public class DebitCard {
-    private int debitCardId;
-    private int accountId;
-    private String debitCardNumber;
+public class DebitCard extends IdInfo {
+    private int idAccount;
+    private String number;
     private String expirationDate;
     private int cvc;
     private int block;
 
-    public int getDebitCardId() {
-        return this.debitCardId;
+    public DebitCard(int id, int idAccount, String number, String expirationDate, int cvc, int block) {
+        super(id);
+        this.idAccount = idAccount;
+        this.number = number;
+        this.expirationDate = expirationDate;
+        this.cvc = cvc;
+        this.block = block;
+    }
+    public int getIdAccount() {
+        return this.idAccount;
     }
 
-    public void setDebitCardId(int debitCardId) {
-        this.debitCardId = debitCardId;
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
     }
 
-    public int getAccountId() {
-        return this.accountId;
+    public String getNumber() {
+        return this.number;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getDebitCardNumber() {
-        return this.debitCardNumber;
-    }
-
-    public void setDebitCardNumber(String debitCardNumber) {
-        this.debitCardNumber = debitCardNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getExpirationDate() {
@@ -58,11 +57,13 @@ public class DebitCard {
 
     @Override
     public String toString() {
-        return "\n[Debit Card ID = " + debitCardId +
-                ", Account ID = " + accountId +
-                ", Debit Card Number = '" + debitCardNumber + '\'' +
-                ", Expiration Date = '" + expirationDate + '\'' +
-                ", CVC = " + cvc +
-                ", Block = " + block + ']';
+        return "DebitCard{" +
+                "idAccount=" + idAccount +
+                ", number='" + number + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", cvc=" + cvc +
+                ", block=" + block +
+                ", id=" + id +
+                '}';
     }
 }

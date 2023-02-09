@@ -1,35 +1,35 @@
 package datamodels;
 
-public class CreditCard {
-    private int creditCardId;
-    private int primaryAccountId;
-    private String creditCardNumber;
+public class CreditCard extends IdInfo {
+    private int idAccount;
+    private String cardNumber;
     private String expirationDate;
     private int cvc;
     private int block;
 
-    public int getCreditCardId() {
-        return this.creditCardId;
+    public CreditCard(int id, int idAccount, String cardNumber, String expirationDate, int cvc, int block) {
+        super(id);
+        this.idAccount = idAccount;
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
+        this.cvc = cvc;
+        this.block = block;
     }
 
-    public void setCreditCardId(int creditCardId) {
-        this.creditCardId = creditCardId;
+    public int getIdAccount() {
+        return this.idAccount;
     }
 
-    public int getPrimaryAccountId() {
-        return this.primaryAccountId;
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
     }
 
-    public void setPrimaryAccountId(int primaryAccountId) {
-        this.primaryAccountId = primaryAccountId;
+    public String getCardNumber() {
+        return this.cardNumber;
     }
 
-    public String getCreditCardNumber() {
-        return this.creditCardNumber;
-    }
-
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public String getExpirationDate() {
@@ -58,11 +58,12 @@ public class CreditCard {
 
     @Override
     public String toString() {
-        return "\n[Credit Card ID = " + creditCardId +
-                ", Primary Account ID = " + primaryAccountId +
-                ", Credit Card Number = '" + creditCardNumber + '\'' +
-                ", Expiration Date = '" + expirationDate + '\'' +
-                ", CVC = " + cvc +
-                ", Block = " + block + ']';
+        return "CreditCard{" +
+                "cardNumber='" + cardNumber + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", cvc=" + cvc +
+                ", block=" + block +
+                ", id=" + id +
+                '}';
     }
 }

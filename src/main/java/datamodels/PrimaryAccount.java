@@ -1,25 +1,21 @@
 package datamodels;
 
-public class PrimaryAccount {
-
-    private int primaryAccountId;
-    private int userId;
+public class PrimaryAccount extends IdInfo {
+    private int idUser;
     private int pin;
 
-    public int getPrimaryAccountId() {
-        return this.primaryAccountId;
+    public PrimaryAccount(int id, int idUser, int pin) {
+        super(id);
+        this.idUser = idUser;
+        this.pin = pin;
     }
 
-    public void setPrimaryAccountId(int primaryAccountId) {
-        this.primaryAccountId = primaryAccountId;
+    public int getIdUser() {
+        return this.idUser;
     }
 
-    public int getUserId() {
-        return this.userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public int getPin() {
@@ -32,8 +28,10 @@ public class PrimaryAccount {
 
     @Override
     public String toString() {
-        return "\n[Primary Account Id = " + primaryAccountId +
-                ", User Id = " + userId +
-                ", PIN = " + pin + ']';
+        return "PrimaryAccount{" +
+                "idUser=" + idUser +
+                ", pin=" + pin +
+                ", id=" + id +
+                '}';
     }
 }

@@ -2,27 +2,26 @@ package datamodels;
 
 import java.sql.Timestamp;
 
-public class Deposit {
-    private int depositId;
-    private int accountId;
+public class Deposit extends IdInfo {
+    private int idAccount;
     private Timestamp time;
     private int oldBalance;
     private int newBalance;
 
-    public int getDepositId() {
-        return this.depositId;
+    public Deposit(int id, int idAccount, Timestamp time, int oldBalance, int newBalance) {
+        super(id);
+        this.idAccount = idAccount;
+        this.time = time;
+        this.oldBalance = oldBalance;
+        this.newBalance = newBalance;
     }
 
-    public void setDepositId(int depositId) {
-        this.depositId = depositId;
+    public int getIdAccount() {
+        return this.idAccount;
     }
 
-    public int getAccountId() {
-        return this.accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
     }
 
     public Timestamp getTime() {
@@ -51,10 +50,12 @@ public class Deposit {
 
     @Override
     public String toString() {
-        return "\n[Deposit ID = " + depositId +
-                ", Account ID = " + accountId +
-                ", Time = " + time +
-                ", Old Balance = " + oldBalance +
-                ", New Balance = " + newBalance + ']';
+        return "Deposit{" +
+                "idAccount=" + idAccount +
+                ", time=" + time +
+                ", oldBalance=" + oldBalance +
+                ", newBalance=" + newBalance +
+                ", id=" + id +
+                '}';
     }
 }

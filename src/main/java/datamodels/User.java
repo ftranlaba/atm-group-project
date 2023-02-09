@@ -1,12 +1,18 @@
 package datamodels;
 
-public class User {
-
-    private int userId;
+public class User extends IdInfo {
     private String firstName;
     private String lastName;
     private String address;
     private String phoneNumber;
+
+    public User(int id, String firstName, String lastName, String address, String phoneNumber) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getFirstName() {
         return this.firstName;
@@ -40,20 +46,14 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getUserId() {
-        return this.userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
-        return "\n[First Name = '" + firstName + '\'' +
-                ", Last Name = '" + lastName + '\'' +
-                ", Address = '" + address + '\'' +
-                ", Phone Number = '" + phoneNumber + '\'' +
-                ", ID = " + userId + "]";
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

@@ -2,27 +2,30 @@ package datamodels;
 
 import java.sql.Timestamp;
 
-public class CreditCardTransaction {
-    private int creditCardTransactionId;
-    private int creditCardId;
+public class CreditCardTransaction extends IdInfo {
     private Timestamp time;
+    private int idCard;
     private String merchantName;
     private int cost;
 
-    public int getCreditCardTransactionId() {
-        return this.creditCardTransactionId;
+    public CreditCardTransaction(int id, int idCard, Timestamp time, String merchantName, int cost) {
+        super(id);
+        this.idCard = idCard;
+        this.time = time;
+        this.merchantName = merchantName;
+        this.cost = cost;
     }
 
-    public void setCreditCardTransactionId(int creditCardTransactionId) {
-        this.creditCardTransactionId = creditCardTransactionId;
+    public int getIdCard() {
+        return this.idCard;
     }
 
-    public int getCreditCardId() {
-        return this.creditCardId;
+    public void setIdCard(int idCard) {
+        this.idCard = idCard;
     }
 
-    public void setCreditCardId(int creditCardId) {
-        this.creditCardId = creditCardId;
+    public CreditCardTransaction(int id) {
+        super(id);
     }
 
     public Timestamp getTime() {
@@ -51,10 +54,12 @@ public class CreditCardTransaction {
 
     @Override
     public String toString() {
-        return "\n[Credit Card Transaction ID = " + creditCardTransactionId +
-                ", Credit Card ID = " + creditCardId +
-                ", Time = " + time +
-                ", Merchant Name = '" + merchantName + '\'' +
-                ", Cost = " + cost + ']';
+        return "CreditCardTransaction{" +
+                "time=" + time +
+                ", idCard=" + idCard +
+                ", merchantName='" + merchantName + '\'' +
+                ", cost=" + cost +
+                ", id=" + id +
+                '}';
     }
 }

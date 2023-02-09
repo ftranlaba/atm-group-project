@@ -2,27 +2,25 @@ package datamodels;
 
 import java.sql.Timestamp;
 
-public class Withdrawal {
-    private int withdrawalId;
-    private int accountId;
+public class Withdraw extends IdInfo {
+    private int idAccount;
     private Timestamp time;
     private int oldBalance;
     private int newBalance;
 
-    public int getWithdrawalId() {
-        return this.withdrawalId;
+    public Withdraw(int id, int idAccount, int oldBalance, int newBalance) {
+        super(id);
+        this.idAccount = idAccount;
+        this.oldBalance = oldBalance;
+        this.newBalance = newBalance;
     }
 
-    public void setWithdrawalId(int withdrawalId) {
-        this.withdrawalId = withdrawalId;
+    public int getIdAccount() {
+        return this.idAccount;
     }
 
-    public int getAccountId() {
-        return this.accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
     }
 
     public Timestamp getTime() {
@@ -51,10 +49,12 @@ public class Withdrawal {
 
     @Override
     public String toString() {
-        return "\n[Withdrawal ID = " + withdrawalId +
-                ", Account ID = " + accountId +
-                ", Time = " + time +
-                ", Old Balance = " + oldBalance +
-                ", New Balance = " + newBalance + ']';
+        return "Withdraw{" +
+                "idAccount=" + idAccount +
+                ", time=" + time +
+                ", oldBalance=" + oldBalance +
+                ", newBalance=" + newBalance +
+                ", id=" + id +
+                '}';
     }
 }

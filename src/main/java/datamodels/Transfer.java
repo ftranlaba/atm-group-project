@@ -2,38 +2,41 @@ package datamodels;
 
 import java.sql.Timestamp;
 
-public class Transfer {
-    private int transferId;
-    private int account1Id;
-    private int account2Id;
+public class Transfer extends IdInfo {
+    private int idAccount1;
+    private int idAccount2;
     private int oldBalanceAcc1;
     private int newBalanceAcc1;
     private int oldBalanceAcc2;
     private int newBalanceAcc2;
     private Timestamp time;
 
-    public int getTransferId() {
-        return this.transferId;
+    public Transfer(int id, int idAccount1, int idAccount2, int oldBalanceAcc1, int newBalanceAcc1,
+                    int oldBalanceAcc2, int newBalanceAcc2, Timestamp time) {
+        super(id);
+        this.idAccount1 = idAccount1;
+        this.idAccount2 = idAccount2;
+        this.oldBalanceAcc1 = oldBalanceAcc1;
+        this.newBalanceAcc1 = newBalanceAcc1;
+        this.oldBalanceAcc2 = oldBalanceAcc2;
+        this.newBalanceAcc2 = newBalanceAcc2;
+        this.time = time;
     }
 
-    public void setTransferId(int transferId) {
-        this.transferId = transferId;
+    public int getIdAccount1() {
+        return this.idAccount1;
     }
 
-    public int getAccount1Id() {
-        return this.account1Id;
+    public void setIdAccount1(int idAccount1) {
+        this.idAccount1 = idAccount1;
     }
 
-    public void setAccount1Id(int account1Id) {
-        this.account1Id = account1Id;
+    public int getIdAccount2() {
+        return this.idAccount2;
     }
 
-    public int getAccount2Id() {
-        return this.account2Id;
-    }
-
-    public void setAccount2Id(int account2Id) {
-        this.account2Id = account2Id;
+    public void setIdAccount2(int idAccount2) {
+        this.idAccount2 = idAccount2;
     }
 
     public int getOldBalanceAcc1() {
@@ -78,13 +81,15 @@ public class Transfer {
 
     @Override
     public String toString() {
-        return "\n[Transfer ID = " + transferId +
-                ", Account 1 ID = " + account1Id +
-                ", Account 2 ID = " + account2Id +
-                ", Account 1 Old Balance = " + oldBalanceAcc1 +
-                ", Account 1 New Balance = " + newBalanceAcc1 +
-                ", Account 2 Old Balance = " + oldBalanceAcc2 +
-                ", Account 2 New Balance = " + newBalanceAcc2 +
-                ", Time = " + time + ']';
+        return "Transfer{" +
+                "idAccount1=" + idAccount1 +
+                ", idAccount2=" + idAccount2 +
+                ", oldBalanceAcc1=" + oldBalanceAcc1 +
+                ", newBalanceAcc1=" + newBalanceAcc1 +
+                ", oldBalanceAcc2=" + oldBalanceAcc2 +
+                ", newBalanceAcc2=" + newBalanceAcc2 +
+                ", time=" + time +
+                ", id=" + id +
+                '}';
     }
 }
