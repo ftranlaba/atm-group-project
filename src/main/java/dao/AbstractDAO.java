@@ -1,5 +1,6 @@
 package dao;
 
+import dao.interfaces.IBaseDAO;
 import datamodels.IdInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,11 +19,36 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDAO.class);
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
+    /**
+     * @return gets Table Name from child class.
+     */
+    protected abstract String getTableName();
+
+    /**
+     * Creates an entity from a row in the ResultSet.
+     * Does not check if the ResultSet is empty.
+     *
+     * @param rs ResultSet from which to create the entity.
+     * @return The entity created from the first if any row of the ResultSet.
+     * @throws SQLException If a database access error occurs or this method is called on a closed result set.
+     */
+    protected abstract T createEntityFromRow(ResultSet rs) throws SQLException;
+
+    /**
+     * @return gets ID Column Name from child class.
+     */
+    protected abstract String getIdColumnName();
+
+
+    /**
+     * @return gets Column Names from child class.
+     */
+    protected abstract List<String> getColumnNames();
+
     @Override
     public T getById(long id) throws SQLException {
-        String tableName = getTableName();
         Connection connection = CONNECTION_POOL.getConnection();
-        String query = QueryUtil.entityByIdQuery(tableName);
+        String query = QueryUtil.entityByIdQuery(getTableName(), getIdColumnName());
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
@@ -41,33 +67,12 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
         }
     }
 
-    /**
-     * @return gets Table Name from child class.
-     */
-    protected abstract String getTableName();
-
-    /**
-     * Creates an entity from a row in the ResultSet.
-     * Does not check if the ResultSet is empty.
-     *
-     * @param rs ResultSet from which to create the entity.
-     * @return The entity created from the first if any row of the ResultSet.
-     * @throws SQLException If a database access error occurs or this method is called on a closed result set.
-     */
-    protected abstract T createEntityFromRow(ResultSet rs) throws SQLException;
-
     @Override
     public void update(T entity) throws SQLException {
-        String tableName = getTableName();
-        List<String> columnNames = getColumnNames();
-        String query = QueryUtil.updateQuery(tableName, columnNames);
+        String query = QueryUtil.updateQuery(getTableName(), getColumnNames(), getIdColumnName());
         executeCommand(query, this::setUpdatePreparedStatement, entity);
     }
 
-    /**
-     * @return gets Column Names from child class.
-     */
-    protected abstract List<String> getColumnNames();
 
     /**
      * @param query                   The query to execute. Can be an INSERT, UPDATE or DELETE query.
