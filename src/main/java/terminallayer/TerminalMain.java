@@ -81,6 +81,27 @@ public class TerminalMain {
         LOGGER.info("3) Block Card");
         LOGGER.info("4) Unblock Card");
 
+        switch (scan.nextInt()){
+            case 1:
+                LOGGER.info("Enter account id: ");
+                int id = scan.nextInt();
+                LOGGER.info(id);
+                break;
+            case 2:
+                LOGGER.info("Accounts info");
+                break;
+            case 3:
+                LOGGER.info("Enter Account Id of Card to Block: ");
+                int blockId = scan.nextInt();
+                LOGGER.info(blockId);
+                break;
+            case 4:
+                LOGGER.info("Enter Account Id of Card to Unblock: ");
+                int unBlockId = scan.nextInt();
+                LOGGER.info(unBlockId);
+                break;
+        }
+
     }
 
     public static void createAccount() throws ExecutionException, InterruptedException, InvalidTypeException {
