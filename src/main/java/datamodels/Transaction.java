@@ -1,0 +1,40 @@
+package datamodels;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+public class Transaction extends TimeInfo {
+    private String merchantName;
+    private BigDecimal cost;
+
+    public Transaction(int id, int idForeignKey, Timestamp time) {
+        super(id, idForeignKey, time);
+    }
+
+    public String getMerchantName() {
+        return this.merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
+
+    public BigDecimal getCost() {
+        return this.cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "merchantName='" + merchantName + '\'' +
+                ", cost=" + cost +
+                ", time=" + time +
+                ", idForeignKey=" + idForeignKey +
+                ", id=" + id +
+                '}';
+    }
+}
