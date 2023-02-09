@@ -9,11 +9,11 @@ public final class QueryUtil {
     private QueryUtil() {
     }
 
-    public static String entityByIdQuery(String tableName) {
-        return String.format("SELECT * FROM %s WHERE %s_id = (?)", tableName, tableName);
+    public static String entityByIdQuery(String tableName, String idColumnName) {
+        return String.format("SELECT * FROM %s WHERE %s = (?)", tableName, idColumnName);
     }
 
-    public static String updateQuery(String tableName, List<String> columnNames) {
+    public static String updateQuery(String tableName, List<String> columnNames, String idColumnName) {
         StringBuilder query = new StringBuilder(String.format("UPDATE %s SET ", tableName));
         for (int i = 0; i < columnNames.size(); i++) {
             query.append(columnNames.get(i)).append(" = (?)");
@@ -21,7 +21,7 @@ public final class QueryUtil {
                 query.append(", ");
             }
         }
-        query.append(String.format(" WHERE %s_id = (?)", tableName));
+        query.append(String.format(" WHERE %s = (?)", idColumnName));
         return query.toString();
     }
 
