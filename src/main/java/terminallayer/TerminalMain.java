@@ -7,7 +7,9 @@ import org.apache.logging.log4j.Logger;
 import terminallayer.exceptions.InvalidTypeException;
 import terminallayer.util.CardUtil;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -26,9 +28,11 @@ public class TerminalMain {
         LOGGER.info("3) Create Account");
         switch (scan.nextInt()) {
             case 1:
+                authUser();
                 userUI();
                 break;
             case 2:
+                authUser();
                 adminUI();
                 break;
             case 3:
@@ -41,7 +45,6 @@ public class TerminalMain {
     }
 
     public static void userUI() throws ExecutionException, InterruptedException {
-        LOGGER.info("login user");
         LOGGER.info("1) Check account balances");
         LOGGER.info("2) Deposit Money");
         LOGGER.info("3) Transfer Money");
@@ -53,7 +56,7 @@ public class TerminalMain {
                 break;
             case 2:
                 LOGGER.info("How Much money would you like to deposit: ");
-                int deposit = scan.nextInt();
+                BigDecimal deposit = scan.nextBigDecimal();
                 LOGGER.info(deposit);
                 // set deposit to account
                 break;
@@ -75,7 +78,6 @@ public class TerminalMain {
     }
 
     public static void adminUI() {
-        LOGGER.info("admin");
         LOGGER.info("1) See Account");
         LOGGER.info("2) See Accounts");
         LOGGER.info("3) Block Card");
@@ -120,14 +122,14 @@ public class TerminalMain {
         switch (scan.nextInt()) {
             case 1:
 //                CreditCard cc = new CreditCard(cardNumGen, date(), cvcGen());
-//                PrimaryAccount pa = new PrimaryAccount(id, pin, "Credit");
+//                Account a = new PrimaryAccount(id, pin, "Credit");
                 break;
             case 2:
 //                DebitCard db = new DebitCard(cardNumGem(), date(), cvcGen());
-//                PrimaryAccount pa = new PrimaryAccount(id, pin, "Debit");
+//                Account a = new PrimaryAccount(id, pin, "Debit");
                 break;
             case 3:
-//                PrimaryAccount pa = new PrimaryAccount(id, pin, "Savings");
+//                Account a = new PrimaryAccount(id, pin, "Savings");
                 break;
             default:
                 throw new InvalidTypeException("Invalid type");
@@ -172,10 +174,18 @@ public class TerminalMain {
             LOGGER.info(where);
         }).thenRunAsync(() -> {
             LOGGER.info("Amount: ");
-            int amount = scan.nextInt();
+            BigDecimal amount = scan.nextBigDecimal();
             LOGGER.info(amount);
         });
         c.get();
     }
 
+    public static void authUser(){
+        LOGGER.info("Enter Account Id");
+        int id = scan.nextInt();
+        LOGGER.info(id);
+        LOGGER.info("Please Enter Pin ");
+        int pin = scan.nextInt();
+        LOGGER.info(pin);
+    }
 }
