@@ -22,9 +22,9 @@ public class AccountAccess extends TimeInfo {
     public String toString() {
         return "AccountAccess{" +
                 "macAddress='" + macAddress + '\'' +
-                ", time=" + time +
-                ", idForeignKey=" + idForeignKey +
-                ", id=" + id +
+                ", time=" + this.getTime() +
+                ", idForeignKey=" + this.getIdForeignKey() +
+                ", id=" + this.getId() +
                 '}';
     }
 }

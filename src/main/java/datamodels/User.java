@@ -53,7 +53,7 @@ public class User extends IdInfo {
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", id=" + id +
+                ", id=" + this.getId() +
                 '}';
     }
 }

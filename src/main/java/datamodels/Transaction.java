@@ -32,9 +32,9 @@ public class Transaction extends TimeInfo {
         return "Transaction{" +
                 "merchantName='" + merchantName + '\'' +
                 ", cost=" + cost +
-                ", time=" + time +
-                ", idForeignKey=" + idForeignKey +
-                ", id=" + id +
+                ", time=" + this.getTime() +
+                ", idForeignKey=" + this.getIdForeignKey() +
+                ", id=" + this.getId() +
                 '}';
     }
 }

@@ -23,9 +23,9 @@ public class Account extends TypeInfo {
     public String toString() {
         return "Account{" +
                 "balance=" + balance +
-                ", type='" + type + '\'' +
-                ", idForeignKey=" + idForeignKey +
-                ", id=" + id +
+                ", type='" + this.getType() + '\'' +
+                ", idForeignKey=" + this.getIdForeignKey() +
+                ", id=" + this.getId() +
                 '}';
     }
 }

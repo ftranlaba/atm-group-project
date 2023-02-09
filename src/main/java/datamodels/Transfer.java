@@ -46,11 +46,11 @@ public class Transfer extends BalanceInfo {
                 "idAccount2=" + idAccount2 +
                 ", oldBalance2=" + oldBalance2 +
                 ", newBalance2=" + newBalance2 +
-                ", oldBalance=" + oldBalance +
-                ", newBalance=" + newBalance +
-                ", time=" + time +
-                ", idForeignKey=" + idForeignKey +
-                ", id=" + id +
+                ", oldBalance=" + this.getOldBalance() +
+                ", newBalance=" + this.getNewBalance() +
+                ", time=" + this.getTime() +
+                ", idForeignKey=" + this.getIdForeignKey() +
+                ", id=" + this.getId() +
                 '}';
     }
 }
