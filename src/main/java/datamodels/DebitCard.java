@@ -1,26 +1,17 @@
 package datamodels;
 
-public class DebitCard extends IdInfo {
-    private int idAccount;
+public class DebitCard extends AccountIdInfo {
     private String number;
     private String expirationDate;
     private int cvc;
     private int block;
 
-    public DebitCard(int id, int idAccount, String number, String expirationDate, int cvc, int block) {
-        super(id);
-        this.idAccount = idAccount;
+    public DebitCard(int id, int foreignIdAccount, String number, String expirationDate, int cvc, int block) {
+        super(id, foreignIdAccount);
         this.number = number;
         this.expirationDate = expirationDate;
         this.cvc = cvc;
         this.block = block;
-    }
-    public int getIdAccount() {
-        return this.idAccount;
-    }
-
-    public void setIdAccount(int idAccount) {
-        this.idAccount = idAccount;
     }
 
     public String getNumber() {
@@ -58,11 +49,11 @@ public class DebitCard extends IdInfo {
     @Override
     public String toString() {
         return "DebitCard{" +
-                "idAccount=" + idAccount +
-                ", number='" + number + '\'' +
+                "number='" + number + '\'' +
                 ", expirationDate='" + expirationDate + '\'' +
                 ", cvc=" + cvc +
                 ", block=" + block +
+                ", foreignIdAccount=" + foreignIdAccount +
                 ", id=" + id +
                 '}';
     }

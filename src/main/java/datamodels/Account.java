@@ -1,23 +1,13 @@
 package datamodels;
 
-public class Account extends IdInfo {
+public class Account extends AccountIdInfo {
     private int balance;
-    private int idPrimaryAccount;
     private String type;
 
     public Account(int id, int idPrimaryAccount, int balance, String type) {
-        super(id);
-        this.idPrimaryAccount = idPrimaryAccount;
+        super(id, idPrimaryAccount);
         this.balance = balance;
         this.type = type;
-    }
-
-    public int getIdPrimaryAccount() {
-        return this.idPrimaryAccount;
-    }
-
-    public void setIdPrimaryAccount(int idPrimaryAccount) {
-        this.idPrimaryAccount = idPrimaryAccount;
     }
 
     public int getBalance() {
@@ -38,10 +28,10 @@ public class Account extends IdInfo {
 
     @Override
     public String toString() {
-        return "AccountIdInfo{" +
+        return "Account{" +
                 "balance=" + balance +
-                ", idPrimaryAccount=" + idPrimaryAccount +
                 ", type='" + type + '\'' +
+                ", foreignIdAccount=" + foreignIdAccount +
                 ", id=" + id +
                 '}';
     }

@@ -2,8 +2,7 @@ package datamodels;
 
 import java.sql.Timestamp;
 
-public class Transfer extends IdInfo {
-    private int idAccount1;
+public class Transfer extends AccountIdInfo {
     private int idAccount2;
     private int oldBalanceAcc1;
     private int newBalanceAcc1;
@@ -13,22 +12,13 @@ public class Transfer extends IdInfo {
 
     public Transfer(int id, int idAccount1, int idAccount2, int oldBalanceAcc1, int newBalanceAcc1,
                     int oldBalanceAcc2, int newBalanceAcc2, Timestamp time) {
-        super(id);
-        this.idAccount1 = idAccount1;
+        super(id, idAccount1);
         this.idAccount2 = idAccount2;
         this.oldBalanceAcc1 = oldBalanceAcc1;
         this.newBalanceAcc1 = newBalanceAcc1;
         this.oldBalanceAcc2 = oldBalanceAcc2;
         this.newBalanceAcc2 = newBalanceAcc2;
         this.time = time;
-    }
-
-    public int getIdAccount1() {
-        return this.idAccount1;
-    }
-
-    public void setIdAccount1(int idAccount1) {
-        this.idAccount1 = idAccount1;
     }
 
     public int getIdAccount2() {
@@ -82,13 +72,13 @@ public class Transfer extends IdInfo {
     @Override
     public String toString() {
         return "Transfer{" +
-                "idAccount1=" + idAccount1 +
-                ", idAccount2=" + idAccount2 +
+                "idAccount2=" + idAccount2 +
                 ", oldBalanceAcc1=" + oldBalanceAcc1 +
                 ", newBalanceAcc1=" + newBalanceAcc1 +
                 ", oldBalanceAcc2=" + oldBalanceAcc2 +
                 ", newBalanceAcc2=" + newBalanceAcc2 +
                 ", time=" + time +
+                ", foreignIdAccount=" + foreignIdAccount +
                 ", id=" + id +
                 '}';
     }

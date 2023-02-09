@@ -2,24 +2,14 @@ package datamodels;
 
 import java.sql.Timestamp;
 
-public class AccountAccessHistory extends IdInfo {
-    private int idAccount;
+public class AccountAccessHistory extends AccountIdInfo {
     private Timestamp time;
     private String macAddress;
 
-    public AccountAccessHistory(int id, int idAccount, Timestamp time, String macAddress) {
-        super(id);
-        this.idAccount = idAccount;
+    public AccountAccessHistory(int id, int foreignIdAccount, Timestamp time, String macAddress) {
+        super(id, foreignIdAccount);
         this.time = time;
         this.macAddress = macAddress;
-    }
-
-    public int getIdAccount() {
-        return this.idAccount;
-    }
-
-    public void setIdAccount(int idAccount) {
-        this.idAccount = idAccount;
     }
 
     public Timestamp getTime() {
@@ -41,9 +31,9 @@ public class AccountAccessHistory extends IdInfo {
     @Override
     public String toString() {
         return "AccountAccessHistory{" +
-                "idAccount=" + idAccount +
-                ", time=" + time +
+                "time=" + time +
                 ", macAddress='" + macAddress + '\'' +
+                ", foreignIdAccount=" + foreignIdAccount +
                 ", id=" + id +
                 '}';
     }
