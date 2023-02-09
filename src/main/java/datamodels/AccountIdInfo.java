@@ -1,6 +1,6 @@
 package datamodels;
 
-public class AccountIdInfo extends IdInfo {
+public abstract class AccountIdInfo extends IdInfo {
 
     protected int foreignIdAccount;
     public AccountIdInfo(int id, int foreignIdAccount) {
