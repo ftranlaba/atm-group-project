@@ -1,6 +1,7 @@
 package datamodels;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 public class Withdraw extends IdInfo {
     private int idAccount;
