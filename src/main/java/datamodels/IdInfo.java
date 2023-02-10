@@ -3,7 +3,11 @@ package datamodels;
 import java.util.Objects;
 
 public abstract class IdInfo {
-    protected int id;
+    private int id;
+
+    public IdInfo() {
+
+    }
 
     public IdInfo(int id) {
         this.id = id;

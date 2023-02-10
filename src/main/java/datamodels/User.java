@@ -14,6 +14,9 @@ public class User extends IdInfo {
         this.phoneNumber = phoneNumber;
     }
 
+    public User() {
+    }
+
     public String getFirstName() {
         return this.firstName;
     }
@@ -53,7 +56,7 @@ public class User extends IdInfo {
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", id=" + id +
+                ", id=" + this.getId() +
                 '}';
     }
 }

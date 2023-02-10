@@ -7,8 +7,14 @@ public class Transaction extends TimeInfo {
     private String merchantName;
     private BigDecimal cost;
 
-    public Transaction(int id, int idForeignKey, Timestamp time) {
+    public Transaction(int id, int idForeignKey, Timestamp time, String merchantName, BigDecimal cost) {
         super(id, idForeignKey, time);
+        this.merchantName = merchantName;
+        this.cost = cost;
+    }
+
+    public Transaction() {
+        super();
     }
 
     public String getMerchantName() {
@@ -32,9 +38,9 @@ public class Transaction extends TimeInfo {
         return "Transaction{" +
                 "merchantName='" + merchantName + '\'' +
                 ", cost=" + cost +
-                ", time=" + time +
-                ", idForeignKey=" + idForeignKey +
-                ", id=" + id +
+                ", time=" + this.getTime() +
+                ", idForeignKey=" + this.getIdForeignKey() +
+                ", id=" + this.getId() +
                 '}';
     }
 }

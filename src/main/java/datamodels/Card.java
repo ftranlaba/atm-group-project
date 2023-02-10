@@ -15,6 +15,10 @@ public class Card extends TypeInfo {
         this.block = block;
     }
 
+    public Card() {
+        super();
+    }
+
     public String getCardNumber() {
         return this.cardNumber;
     }
@@ -54,9 +58,9 @@ public class Card extends TypeInfo {
                 ", expirationDate='" + expirationDate + '\'' +
                 ", cvc=" + cvc +
                 ", block=" + block +
-                ", type='" + type + '\'' +
-                ", idForeignKey=" + idForeignKey +
-                ", id=" + id +
+                ", type='" + this.getType() + '\'' +
+                ", idForeignKey=" + this.getIdForeignKey() +
+                ", id=" + this.getId() +
                 '}';
     }
 }

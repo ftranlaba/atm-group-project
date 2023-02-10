@@ -12,6 +12,10 @@ public class DepositWithdraw extends  BalanceInfo {
         this.type = type;
     }
 
+    public DepositWithdraw() {
+        super();
+    }
+
     public String getType() {
         return this.type;
     }
@@ -24,11 +28,11 @@ public class DepositWithdraw extends  BalanceInfo {
     public String toString() {
         return "DepositWithdraw{" +
                 "type='" + type + '\'' +
-                ", oldBalance=" + oldBalance +
-                ", newBalance=" + newBalance +
-                ", time=" + time +
-                ", idForeignKey=" + idForeignKey +
-                ", id=" + id +
+                ", oldBalance=" + this.getOldBalance() +
+                ", newBalance=" + this.getNewBalance() +
+                ", time=" + this.getTime() +
+                ", idForeignKey=" + this.getIdForeignKey() +
+                ", id=" + this.getId() +
                 '}';
     }
 }

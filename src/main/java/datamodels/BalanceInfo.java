@@ -4,14 +4,17 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public abstract class BalanceInfo extends TimeInfo {
-
-    protected BigDecimal oldBalance;
-    protected BigDecimal newBalance;
+    private BigDecimal oldBalance;
+    private BigDecimal newBalance;
 
     public BalanceInfo(int id, int idForeignKey, Timestamp time, BigDecimal oldBalance, BigDecimal newBalance) {
         super(id, idForeignKey, time);
         this.oldBalance = oldBalance;
         this.newBalance = newBalance;
+    }
+
+    public BalanceInfo() {
+
     }
 
     public BigDecimal getOldBalance() {
@@ -35,9 +38,9 @@ public abstract class BalanceInfo extends TimeInfo {
         return "BalanceInfo{" +
                 "oldBalance=" + oldBalance +
                 ", newBalance=" + newBalance +
-                ", time=" + time +
-                ", idForeignKey=" + idForeignKey +
-                ", id=" + id +
+                ", time=" + this.getTime() +
+                ", idForeignKey=" + this.getIdForeignKey() +
+                ", id=" + this.getId() +
                 '}';
     }
 }
