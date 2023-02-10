@@ -39,7 +39,10 @@ public class TerminalUtil {
     }
 
     public final static Card createCard(int id, String type) throws SQLException {
-        return new Card(cardCounter(), id, type, cardNumGen(), date(), cvcGen(), false);
+        Card c = new Card(cardCounter(), id, type, cardNumGen(), date(), cvcGen(), false);
+        CardsDAO cardsDAO = new CardsDAO();
+        cardsDAO.create(c);
+        return c;
     }
 
     public final static Account authUser() throws InvalidTypeException {

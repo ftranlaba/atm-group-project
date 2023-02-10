@@ -114,30 +114,33 @@ public class TerminalMain {
 
     public static void createAccount() throws ExecutionException, InterruptedException, InvalidTypeException, SQLException {
         AccountsDAO accountsDAO = new AccountsDAO();
-        CardsDAO cardsDAO = new CardsDAO();
         User u = createUser();
         LOGGER.info(u);
         Account a = makeAccount(u.getId());
         LOGGER.info(a);
         accountsDAO.create(a);
-        Card c = createCard(1, a.getType());
-        LOGGER.info(c);
-        cardsDAO.create(c);
+        LOGGER.info(a.getType());
+//        Card c = createCard(1, a.getType());
+//        LOGGER.info(c);
     }
 
-    public static Account makeAccount(int id) throws InvalidTypeException {
+    public static Account makeAccount(int id) throws InvalidTypeException, SQLException {
+        LOGGER.info("Please Enter Four Digit pin");
+        int pin = scan.nextInt();
         LOGGER.info("Please enter account type: ");
         LOGGER.info("1) Credit");
         LOGGER.info("2) Debit");
         LOGGER.info("3) Savings");
-
-        switch (scan.nextInt()) {
+        int type = scan.nextInt();
+        switch (type) {
             case 1:
-                return new Account(id, "Credit", BigDecimal.valueOf(0));
+                createCard(id, "Credit");
+                return new Account(id, "Credit", BigDecimal.valueOf(0), pin);
             case 2:
-                return new Account(id, "Debit", BigDecimal.valueOf(0));
+                createCard(id, "Debit");
+                return new Account(id, "Debit", BigDecimal.valueOf(0), pin);
             case 3:
-                return new Account(id, "Savings", BigDecimal.valueOf(0));
+                return new Account(id, "Savings", BigDecimal.valueOf(0), pin);
             default:
                 throw new InvalidTypeException("Invalid type");
         }
