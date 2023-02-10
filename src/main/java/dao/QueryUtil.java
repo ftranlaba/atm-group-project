@@ -44,8 +44,8 @@ public final class QueryUtil {
         return query.toString();
     }
 
-    public static String deleteQuery(String tableName) {
-        return String.format("DELETE FROM %s WHERE %s_id = (?)", tableName, tableName);
+    public static String deleteQuery(String tableName, String idColumnName) {
+        return String.format("DELETE FROM %s WHERE %s = (?)", tableName, idColumnName);
     }
 
     public static String selectAllQuery(String tableName) {
