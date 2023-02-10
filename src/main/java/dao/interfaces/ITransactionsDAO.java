@@ -5,5 +5,5 @@ import datamodels.Transaction;
 /**
  * @author Moussa
  */
-public interface ITransactionsDAO extends IBaseDAO<Transaction>{
+public interface ITransactionsDAO extends IBaseDAO<Transaction> {
 }

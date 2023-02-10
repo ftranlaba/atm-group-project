@@ -45,9 +45,15 @@ public class Account extends TypeInfo {
 
     @java.lang.Override
     public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        if (!super.equals(object)) {
+            return false;
+        }
         Account account = (Account) object;
         return pin == account.pin && balance.equals(account.balance);
     }

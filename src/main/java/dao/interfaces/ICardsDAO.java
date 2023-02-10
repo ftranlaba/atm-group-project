@@ -5,5 +5,5 @@ import datamodels.Card;
 /**
  * @author Moussa
  */
-public interface ICardsDAO extends IBaseDAO<Card>{
+public interface ICardsDAO extends IBaseDAO<Card> {
 }
