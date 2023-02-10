@@ -14,7 +14,7 @@ import java.util.List;
  */
 public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDAO.class);
-    private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    protected static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     /**
      * @return gets Table Name from child class.
