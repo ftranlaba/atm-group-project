@@ -16,6 +16,10 @@ public class Transfer extends BalanceInfo {
         this.newBalance2 = newBalance2;
     }
 
+    public Transfer(int id, int idForeignKey, Timestamp time, BigDecimal oldBalance, BigDecimal newBalance) {
+        super(id, idForeignKey, time, oldBalance, newBalance);
+    }
+
     public int getIdAccount2() {
         return this.idAccount2;
     }

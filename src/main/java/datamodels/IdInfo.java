@@ -5,6 +5,10 @@ import java.util.Objects;
 public abstract class IdInfo {
     private int id;
 
+    public IdInfo() {
+
+    }
+
     public IdInfo(int id) {
         this.id = id;
     }

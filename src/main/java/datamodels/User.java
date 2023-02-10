@@ -14,6 +14,9 @@ public class User extends IdInfo {
         this.phoneNumber = phoneNumber;
     }
 
+    public User() {
+    }
+
     public String getFirstName() {
         return this.firstName;
     }
