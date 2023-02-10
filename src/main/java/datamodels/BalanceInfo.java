@@ -13,6 +13,10 @@ public abstract class BalanceInfo extends TimeInfo {
         this.newBalance = newBalance;
     }
 
+    public BalanceInfo() {
+
+    }
+
     public BigDecimal getOldBalance() {
         return this.oldBalance;
     }

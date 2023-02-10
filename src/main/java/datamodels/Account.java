@@ -10,6 +10,9 @@ public class Account extends TypeInfo {
         this.balance = balance;
     }
 
+    public Account() {
+        super();
+    }
 
     public BigDecimal getBalance() {
         return this.balance;
