@@ -110,11 +110,12 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     protected abstract void setCreatePreparedStatement(PreparedStatement ps, T entity) throws SQLException;
 
     @Override
-    public int create(T entity) throws SQLException {
+    public void create(T entity) throws SQLException {
         String tableName = getTableName();
         List<String> columnNames = getColumnNames();
         String query = QueryUtil.createQuery(tableName, columnNames);
-        return executeCommand(query, this::setCreatePreparedStatement, entity);
+        int id = executeCommand(query, this::setCreatePreparedStatement, entity);
+        entity.setId(id);
     }
 
     @Override
