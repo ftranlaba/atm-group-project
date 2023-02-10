@@ -12,6 +12,10 @@ public class DepositWithdraw extends  BalanceInfo {
         this.type = type;
     }
 
+    public DepositWithdraw() {
+        super();
+    }
+
     public String getType() {
         return this.type;
     }

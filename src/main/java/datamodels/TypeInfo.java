@@ -8,6 +8,10 @@ public abstract class TypeInfo extends ForeignKeyInfo{
         this.type = type;
     }
 
+    public TypeInfo() {
+
+    }
+
     public String getType() {
         return this.type;
     }

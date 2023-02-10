@@ -16,6 +16,10 @@ public class Transfer extends BalanceInfo {
         this.newBalance2 = newBalance2;
     }
 
+    public Transfer() {
+        super();
+    }
+
     public int getIdAccount2() {
         return this.idAccount2;
     }
