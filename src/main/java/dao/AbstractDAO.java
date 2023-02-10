@@ -95,7 +95,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
 
     protected void setUpdatePreparedStatement(PreparedStatement preparedStatement, T entity) throws SQLException {
         setCreatePreparedStatement(preparedStatement, entity);
-        preparedStatement.setLong(getColumnNames().size() + 1, entity.id);
+        preparedStatement.setLong(getColumnNames().size() + 1, entity.getId());
     }
 
     /**
