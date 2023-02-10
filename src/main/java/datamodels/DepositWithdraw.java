@@ -12,8 +12,8 @@ public class DepositWithdraw extends  BalanceInfo {
         this.type = type;
     }
 
-    public DepositWithdraw(int id, int idForeignKey, Timestamp time, BigDecimal oldBalance, BigDecimal newBalance) {
-        super(id, idForeignKey, time, oldBalance, newBalance);
+    public DepositWithdraw() {
+        super();
     }
 
     public String getType() {

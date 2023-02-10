@@ -13,8 +13,8 @@ public class Transaction extends TimeInfo {
         this.cost = cost;
     }
 
-    public Transaction(int id, int idForeignKey, Timestamp time) {
-        super(id, idForeignKey, time);
+    public Transaction() {
+        super();
     }
 
     public String getMerchantName() {

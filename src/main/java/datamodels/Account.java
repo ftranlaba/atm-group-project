@@ -10,8 +10,8 @@ public class Account extends TypeInfo {
         this.balance = balance;
     }
 
-    public Account(int id, int idForeignKey, String type) {
-        super(id, idForeignKey, type);
+    public Account() {
+        super();
     }
 
     public BigDecimal getBalance() {

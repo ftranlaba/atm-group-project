@@ -10,8 +10,8 @@ public class AccountAccess extends TimeInfo {
         this.macAddress = macAddress;
     }
 
-    public AccountAccess(int id, int idForeignKey, Timestamp time) {
-        super(id, idForeignKey, time);
+    public AccountAccess() {
+        super();
     }
 
     public String getMacAddress() {

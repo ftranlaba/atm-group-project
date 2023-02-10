@@ -13,8 +13,8 @@ public abstract class BalanceInfo extends TimeInfo {
         this.newBalance = newBalance;
     }
 
-    public BalanceInfo(int id, int idForeignKey, Timestamp time) {
-        super(id, idForeignKey, time);
+    public BalanceInfo() {
+
     }
 
     public BigDecimal getOldBalance() {

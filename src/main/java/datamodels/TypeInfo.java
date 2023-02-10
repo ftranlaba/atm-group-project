@@ -8,8 +8,8 @@ public abstract class TypeInfo extends ForeignKeyInfo{
         this.type = type;
     }
 
-    public TypeInfo(int id, int idForeignKey) {
-        super(id, idForeignKey);
+    public TypeInfo() {
+
     }
 
     public String getType() {
