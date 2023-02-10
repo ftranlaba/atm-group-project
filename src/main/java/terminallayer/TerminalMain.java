@@ -65,7 +65,8 @@ public class TerminalMain {
                 break;
             case 3:
                 //finish transfer implementation
-                makeTransfer(a);
+                LOGGER.info(makeTransfer(a));
+//                makeTransfer(a);
                 break;
             case 4:
                 LOGGER.info("Card Blocked");
