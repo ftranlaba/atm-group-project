@@ -39,9 +39,13 @@ public class TerminalUtil {
     }
 
     public final static Card createCard(int id, String type) throws SQLException {
-        Card c = new Card(cardCounter(), id, type, cardNumGen(), date(), cvcGen(), false);
-        CardsDAO cardsDAO = new CardsDAO();
-        cardsDAO.create(c);
+            Card c = new Card(cardCounter(), id, type, cardNumGen(), date(), cvcGen(), false);
+        try {
+            CardsDAO cardsDAO = new CardsDAO();
+            cardsDAO.create(c);
+        }catch (SQLException e){
+            LOGGER.debug(e);
+        }
         return c;
     }
 

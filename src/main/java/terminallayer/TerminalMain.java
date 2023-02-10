@@ -134,10 +134,10 @@ public class TerminalMain {
         int type = scan.nextInt();
         switch (type) {
             case 1:
-                createCard(id, "Credit");
+//                createCard(id, "Credit");
                 return new Account(id, "Credit", BigDecimal.valueOf(0), pin);
             case 2:
-                createCard(id, "Debit");
+//                createCard(id, "Debit");
                 return new Account(id, "Debit", BigDecimal.valueOf(0), pin);
             case 3:
                 return new Account(id, "Savings", BigDecimal.valueOf(0), pin);
