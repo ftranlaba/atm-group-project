@@ -5,8 +5,13 @@ import java.math.BigDecimal;
 public class Account extends TypeInfo {
     private BigDecimal balance;
 
-    public Account(int id, int idForeignKey, String type, BigDecimal balance) {
-        super(id, idForeignKey, type);
+//    public Account(int id, int idForeignKey, String type, BigDecimal balance) {
+//        super(id, idForeignKey, type);
+//        this.balance = balance;
+//    }
+
+    public Account(int idForeignKey, String type, BigDecimal balance) {
+        super(idForeignKey, type);
         this.balance = balance;
     }
 

@@ -1,5 +1,8 @@
 package terminallayer;
 
+import dao.concretedaos.AccountsDAO;
+import dao.concretedaos.CardsDAO;
+import dao.concretedaos.UsersDAO;
 import datamodels.Account;
 import datamodels.Card;
 import datamodels.User;
@@ -8,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import terminallayer.exceptions.InvalidTypeException;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -20,7 +24,7 @@ public class TerminalMain {
     private static final Logger LOGGER = LogManager.getLogger("TESTLOGGER");
     private static final Scanner scan = new Scanner(System.in);
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException {
+    public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException {
         LOGGER.info("ATM Terminal");
         LOGGER.info("1) User");
         LOGGER.info("2) Admin");
@@ -66,17 +70,18 @@ public class TerminalMain {
             case 3:
                 //finish transfer implementation
                 LOGGER.info(makeTransfer(a));
-//                makeTransfer(a);
                 break;
             case 4:
                 LOGGER.info("Card Blocked");
                 c.setBlock(false);
                 //update db
                 break;
+            default:
+                throw new InvalidTypeException("Invalid Option");
         }
     }
 
-    public static void adminUI() {
+    public static void adminUI() throws InvalidTypeException {
         LOGGER.info("1) See Account");
         LOGGER.info("2) See Accounts");
         LOGGER.info("3) Block Card");
@@ -101,21 +106,23 @@ public class TerminalMain {
                 int unBlockId = scan.nextInt();
                 LOGGER.info(unBlockId);
                 break;
+            default:
+                throw new InvalidTypeException("Invalid Option");
         }
 
     }
 
-    public static void createAccount() throws ExecutionException, InterruptedException, InvalidTypeException {
+    public static void createAccount() throws ExecutionException, InterruptedException, InvalidTypeException, SQLException {
+        AccountsDAO accountsDAO = new AccountsDAO();
+        CardsDAO cardsDAO = new CardsDAO();
         User u = createUser();
         LOGGER.info(u);
-        //query to get user
-        //get id from user for makeAccount(u.getId)
-        Account a = makeAccount(1);
-        //query to get id from account from user id createCard(a.getId)
-        //type from account type
+        Account a = makeAccount(u.getId());
         LOGGER.info(a);
-        Card c = createCard(1, "Debit");
+        accountsDAO.create(a);
+        Card c = createCard(1, a.getType());
         LOGGER.info(c);
+        cardsDAO.create(c);
     }
 
     public static Account makeAccount(int id) throws InvalidTypeException {
@@ -126,17 +133,17 @@ public class TerminalMain {
 
         switch (scan.nextInt()) {
             case 1:
-                return new Account(id, "Credit");
+                return new Account(id, "Credit", BigDecimal.valueOf(0));
             case 2:
-                return new Account(id, "Debit");
+                return new Account(id, "Debit", BigDecimal.valueOf(0));
             case 3:
-                return new Account(id, "Savings");
+                return new Account(id, "Savings", BigDecimal.valueOf(0));
             default:
                 throw new InvalidTypeException("Invalid type");
         }
     }
 
-    public static User createUser() throws ExecutionException, InterruptedException {
+    public static User createUser() throws ExecutionException, InterruptedException, SQLException {
         User u = new User();
         CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
             LOGGER.info("Enter First Name: ");
@@ -156,9 +163,10 @@ public class TerminalMain {
             String phoneNumber = scan.nextLine();
             u.setPhoneNumber(phoneNumber);
         });
+        u.setId(userIdCounter());
         c.get();
-        //add create user to db
+        UsersDAO usersDAO = new UsersDAO();
+        usersDAO.create(u);
         return u;
     }
-
 }

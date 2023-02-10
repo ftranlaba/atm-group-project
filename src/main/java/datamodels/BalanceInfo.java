@@ -13,6 +13,12 @@ public abstract class BalanceInfo extends TimeInfo {
         this.newBalance = newBalance;
     }
 
+    public BalanceInfo(int idForeignKey, Timestamp time, BigDecimal oldBalance, BigDecimal newBalance) {
+        super(idForeignKey, time);
+        this.oldBalance = oldBalance;
+        this.newBalance = newBalance;
+    }
+
     public BalanceInfo() {
 
     }
