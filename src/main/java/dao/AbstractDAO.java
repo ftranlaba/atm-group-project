@@ -5,10 +5,7 @@ import datamodels.IdInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,15 +72,22 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
 
 
     /**
-     * @param query                   The query to execute. Can be an INSERT, UPDATE or DELETE query.
+     * @param query                   The query to execute. Can be an INSERT, or UPDATE query.
      * @param preparedStatementSetter The method to set the PreparedStatement. Accepts a PreparedStatement and an entity.
      * @param entity                  The entity to use to set the PreparedStatement.
+     * @return The id of the created entity if any.
      */
-    private void executeCommand(String query, PreparedStatementSetter<T> preparedStatementSetter, T entity) throws SQLException {
+    private int executeCommand(String query, PreparedStatementSetter<T> preparedStatementSetter, T entity) throws SQLException {
         Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatementSetter.setValues(ps, entity);
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return 0;
+            }
         } finally {
             try {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -106,18 +110,17 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     protected abstract void setCreatePreparedStatement(PreparedStatement ps, T entity) throws SQLException;
 
     @Override
-    public void create(T entity) throws SQLException {
+    public int create(T entity) throws SQLException {
         String tableName = getTableName();
         List<String> columnNames = getColumnNames();
         String query = QueryUtil.createQuery(tableName, columnNames);
-        executeCommand(query, this::setCreatePreparedStatement, entity);
+        return executeCommand(query, this::setCreatePreparedStatement, entity);
     }
 
     @Override
     public void delete(long id) throws SQLException {
-        String tableName = getTableName();
         Connection connection = CONNECTION_POOL.getConnection();
-        String query = QueryUtil.deleteQuery(tableName);
+        String query = QueryUtil.deleteQuery(getTableName(), getIdColumnName());
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             ps.executeUpdate();
