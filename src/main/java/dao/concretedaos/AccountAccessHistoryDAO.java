@@ -2,6 +2,7 @@ package dao.concretedaos;
 
 import dao.AbstractDAO;
 import dao.interfaces.IAccountAccessHistory;
+import datamodels.AccountAccess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * @author Moussa
  */
-public class AccountAccessHistoryDAO extends AbstractDAO<AccountAccessHistory> implements IAccountAccessHistory {
+public class AccountAccessHistoryDAO extends AbstractDAO<AccountAccess> implements IAccountAccessHistory {
     private static final String TABLE_NAME = "account_access_history";
     private static final String ID_COLUMN_NAME = "id_history";
     private static final List<String> COLUMN_NAMES;
@@ -31,13 +32,13 @@ public class AccountAccessHistoryDAO extends AbstractDAO<AccountAccessHistory> i
     }
 
     @Override
-    protected AccountAccessHistory createEntityFromRow(ResultSet rs) throws SQLException {
-        AccountAccessHistory accountAccessHistory = new AccountAccessHistory();
-        accountAccessHistory.setId(rs.getLong(ID_COLUMN_NAME));
-        accountAccessHistory.setAccountId(rs.getLong("id_account"));
-        accountAccessHistory.setTime(rs.getTimestamp("time"));
-        accountAccessHistory.setMacAddress(rs.getString("mac_address"));
-        return accountAccessHistory;
+    protected AccountAccess createEntityFromRow(ResultSet rs) throws SQLException {
+        AccountAccess accountAccess = new AccountAccess();
+        accountAccess.setId(rs.getInt(ID_COLUMN_NAME));
+        accountAccess.setIdForeignKey(rs.getInt("id_account"));
+        accountAccess.setTime(rs.getTimestamp("time"));
+        accountAccess.setMacAddress(rs.getString("mac_address"));
+        return accountAccess;
     }
 
     @Override
@@ -51,8 +52,8 @@ public class AccountAccessHistoryDAO extends AbstractDAO<AccountAccessHistory> i
     }
 
     @Override
-    protected void setCreatePreparedStatement(PreparedStatement ps, AccountAccessHistory entity) throws SQLException {
-        ps.setLong(1, entity.getAccountId());
+    protected void setCreatePreparedStatement(PreparedStatement ps, AccountAccess entity) throws SQLException {
+        ps.setLong(1, entity.getIdForeignKey());
         ps.setTimestamp(2, entity.getTime());
         ps.setString(3, entity.getMacAddress());
     }

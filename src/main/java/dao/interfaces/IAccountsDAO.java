@@ -1,5 +1,7 @@
 package dao.interfaces;
 
+import datamodels.Account;
+
 /**
  * @author Moussa
  */

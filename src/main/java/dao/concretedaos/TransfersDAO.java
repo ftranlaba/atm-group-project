@@ -1,6 +1,8 @@
 package dao.concretedaos;
 
 import dao.AbstractDAO;
+import dao.interfaces.ITransfersDAO;
+import datamodels.Transfer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ import java.util.List;
 /**
  * @author Moussa
  */
-public class TransfersDAO extends AbstractDAO<Transfer> implements ITransferDAO {
+public class TransfersDAO extends AbstractDAO<Transfer> implements ITransfersDAO {
     private static final String TABLE_NAME = "transfers";
     private static final String ID_COLUMN_NAME = "id_transfer";
     private static final List<String> COLUMN_NAMES;
@@ -35,13 +37,13 @@ public class TransfersDAO extends AbstractDAO<Transfer> implements ITransferDAO 
     @Override
     protected Transfer createEntityFromRow(ResultSet rs) throws SQLException {
         Transfer transfer = new Transfer();
-        transfer.setId(rs.getLong(ID_COLUMN_NAME));
-        transfer.setAccount1Id(rs.getLong("id_account1"));
-        transfer.setAccount2Id(rs.getLong("id_account2"));
-        transfer.setOldBalanceAcc1(rs.getInt("old_balance_acc1"));
-        transfer.setNewBalanceAcc1(rs.getInt("new_balance_acc1"));
-        transfer.setOldBalanceAcc2(rs.getInt("old_balance_acc2"));
-        transfer.setNewBalanceAcc2(rs.getInt("new_balance_acc2"));
+        transfer.setId(rs.getInt(ID_COLUMN_NAME));
+        transfer.setIdForeignKey(rs.getInt("id_account1"));
+        transfer.setIdAccount2(rs.getInt("id_account2"));
+        transfer.setOldBalance(rs.getBigDecimal("old_balance_acc1"));
+        transfer.setNewBalance(rs.getBigDecimal("new_balance_acc1"));
+        transfer.setOldBalance2(rs.getBigDecimal("old_balance_acc2"));
+        transfer.setNewBalance2(rs.getBigDecimal("new_balance_acc2"));
         transfer.setTime(rs.getTimestamp("time"));
         return transfer;
     }
@@ -58,12 +60,12 @@ public class TransfersDAO extends AbstractDAO<Transfer> implements ITransferDAO 
 
     @Override
     protected void setCreatePreparedStatement(PreparedStatement ps, Transfer entity) throws SQLException {
-        ps.setLong(1, entity.getAccount1Id());
-        ps.setLong(2, entity.getAccount2Id());
-        ps.setInt(3, entity.getOldBalanceAcc1());
-        ps.setInt(4, entity.getNewBalanceAcc1());
-        ps.setInt(5, entity.getOldBalanceAcc2());
-        ps.setInt(6, entity.getNewBalanceAcc2());
+        ps.setInt(1, entity.getIdForeignKey());
+        ps.setInt(2, entity.getIdAccount2());
+        ps.setBigDecimal(3, entity.getOldBalance());
+        ps.setBigDecimal(4, entity.getNewBalance());
+        ps.setBigDecimal(5, entity.getOldBalance2());
+        ps.setBigDecimal(6, entity.getNewBalance2());
         ps.setTimestamp(7, entity.getTime());
     }
 }

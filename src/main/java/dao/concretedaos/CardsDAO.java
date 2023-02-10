@@ -1,7 +1,8 @@
 package dao.concretedaos;
 
 import dao.AbstractDAO;
-import dao.interfaces.ICreditCardsDAO;
+import dao.interfaces.ICardsDAO;
+import datamodels.Card;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * @author Moussa
  */
-public class CreditCardsDAO extends AbstractDAO<CreditCard> implements ICreditCardsDAO {
+public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
     private static final String TABLE_NAME = "credit_cards";
     private static final String ID_COLUMN_NAME = "id_card";
     private static final List<String> COLUMN_NAMES;
@@ -32,10 +33,10 @@ public class CreditCardsDAO extends AbstractDAO<CreditCard> implements ICreditCa
     }
 
     @Override
-    protected CreditCard createEntityFromRow(ResultSet rs) throws SQLException {
-        CreditCard creditCard = new CreditCard();
-        creditCard.setId(rs.getLong(ID_COLUMN_NAME));
-        creditCard.setPrimaryAccountId(rs.getLong("id_primary_account"));
+    protected Card createEntityFromRow(ResultSet rs) throws SQLException {
+        Card creditCard = new Card();
+        creditCard.setId(rs.getInt(ID_COLUMN_NAME));
+        creditCard.setIdForeignKey(rs.getInt("id_primary_account"));
         creditCard.setCardNumber(rs.getString("card_number"));
         creditCard.setExpirationDate(rs.getString("expiration_date"));
         creditCard.setCvc(rs.getInt("cvc"));
@@ -54,8 +55,8 @@ public class CreditCardsDAO extends AbstractDAO<CreditCard> implements ICreditCa
     }
 
     @Override
-    protected void setCreatePreparedStatement(PreparedStatement ps, CreditCard entity) throws SQLException {
-        ps.setLong(1, entity.getPrimaryAccountId());
+    protected void setCreatePreparedStatement(PreparedStatement ps, Card entity) throws SQLException {
+        ps.setLong(1, entity.getIdForeignKey());
         ps.setString(2, entity.getCardNumber());
         ps.setString(3, entity.getExpirationDate());
         ps.setInt(4, entity.getCvc());

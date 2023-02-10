@@ -2,6 +2,7 @@ package dao.concretedaos;
 
 import dao.AbstractDAO;
 import dao.interfaces.IAccountsDAO;
+import datamodels.Account;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,9 +33,9 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     @Override
     protected Account createEntityFromRow(ResultSet rs) throws SQLException {
         Account account = new Account();
-        account.setId(rs.getLong(ID_COLUMN_NAME));
-        account.setPrimaryAccountId(rs.getLong("id_primary_account"));
-        account.setBalance(rs.getInt("balance"));
+        account.setId(rs.getInt(ID_COLUMN_NAME));
+        account.setIdForeignKey(rs.getInt("id_primary_account"));
+        account.setBalance(rs.getBigDecimal("balance"));
         account.setType(rs.getString("type"));
         return account;
     }
@@ -51,8 +52,8 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
     @Override
     protected void setCreatePreparedStatement(PreparedStatement ps, Account entity) throws SQLException {
-        ps.setLong(1, entity.getPrimaryAccountId());
-        ps.setInt(2, entity.getBalance());
+        ps.setInt(1, entity.getIdForeignKey());
+        ps.setBigDecimal(2, entity.getBalance());
         ps.setString(3, entity.getType());
     }
 }

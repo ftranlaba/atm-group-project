@@ -44,7 +44,7 @@ public class UsersDAO extends AbstractDAO<User> implements IUsersDAO {
     @Override
     protected User createEntityFromRow(ResultSet rs) throws SQLException {
         User user = new User();
-        user.setId(rs.getLong(ID_COLUMN_NAME));
+        user.setId(rs.getInt(ID_COLUMN_NAME));
         user.setFirstName(rs.getString("first_name"));
         user.setLastName(rs.getString("last_name"));
         user.setAddress(rs.getString("address"));

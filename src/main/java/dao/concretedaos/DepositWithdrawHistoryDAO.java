@@ -1,7 +1,8 @@
 package dao.concretedaos;
 
 import dao.AbstractDAO;
-import dao.interfaces.IDepositsDAO;
+import dao.interfaces.IDepositWithdrawHistoryDAO;
+import datamodels.DepositWithdraw;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * @author Moussa
  */
-public class DepositsDAO extends AbstractDAO<Deposit> implements IDepositsDAO {
+public class DepositWithdrawHistoryDAO extends AbstractDAO<DepositWithdraw> implements IDepositWithdrawHistoryDAO {
     private static final String TABLE_NAME = "deposits";
     private static final String ID_COLUMN_NAME = "id_deposit";
     private static final List<String> COLUMN_NAMES;
@@ -31,13 +32,13 @@ public class DepositsDAO extends AbstractDAO<Deposit> implements IDepositsDAO {
     }
 
     @Override
-    protected Deposit createEntityFromRow(ResultSet rs) throws SQLException {
-        Deposit deposit = new Deposit();
-        deposit.setId(rs.getLong(ID_COLUMN_NAME));
-        deposit.setAccountId(rs.getLong("id_account"));
+    protected DepositWithdraw createEntityFromRow(ResultSet rs) throws SQLException {
+        DepositWithdraw deposit = new DepositWithdraw();
+        deposit.setId(rs.getInt(ID_COLUMN_NAME));
+        deposit.setIdForeignKey(rs.getInt("id_account"));
         deposit.setTime(rs.getTimestamp("time"));
-        deposit.setOldBalance(rs.getInt("old_balance"));
-        deposit.setNewBalance(rs.getInt("new_balance"));
+        deposit.setOldBalance(rs.getBigDecimal("old_balance"));
+        deposit.setNewBalance(rs.getBigDecimal("new_balance"));
         return deposit;
     }
 
@@ -52,10 +53,10 @@ public class DepositsDAO extends AbstractDAO<Deposit> implements IDepositsDAO {
     }
 
     @Override
-    protected void setCreatePreparedStatement(PreparedStatement ps, Deposit entity) throws SQLException {
-        ps.setLong(1, entity.getAccountId());
+    protected void setCreatePreparedStatement(PreparedStatement ps, DepositWithdraw entity) throws SQLException {
+        ps.setLong(1, entity.getIdForeignKey());
         ps.setTimestamp(2, entity.getTime());
-        ps.setInt(3, entity.getOldBalance());
-        ps.setInt(4, entity.getNewBalance());
+        ps.setBigDecimal(3, entity.getOldBalance());
+        ps.setBigDecimal(4, entity.getNewBalance());
     }
 }
