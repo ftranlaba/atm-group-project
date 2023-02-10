@@ -9,5 +9,5 @@ import java.sql.SQLException;
  * @author Moussa
  */
 public interface IAccountsDAO extends IBaseDAO<Account> {
-    Account getAccountByCard(Card card) throws SQLException;
+    Account getAccount(Card card, int pin) throws SQLException;
 }
