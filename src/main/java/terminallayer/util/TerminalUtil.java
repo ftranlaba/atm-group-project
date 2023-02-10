@@ -56,14 +56,17 @@ public class TerminalUtil {
     public final static Transfer makeTransfer(Account a) throws InvalidTypeException {
         LOGGER.info("Amount For Transfer");
         BigDecimal transferAmount = scan.nextBigDecimal();
-        BigDecimal initBalance = a.getBalance();
+//        BigDecimal initBalance = a.getBalance();
+        BigDecimal initBalance = BigDecimal.valueOf(234500, 4);
         BigDecimal newBalance = initBalance.subtract(transferAmount);
         LOGGER.info("Id for receiving account");
         int id2 = scan.nextInt();
         //get account by id
         Account account = new Account();
-        BigDecimal oldBalance2 = account.getBalance();
+//        BigDecimal oldBalance2 = account.getBalance();
+        BigDecimal oldBalance2 = BigDecimal.valueOf(34567, 4);
         BigDecimal newBalance2 = oldBalance2.add(transferAmount);
-        return  new Transfer(a.getId(), (Timestamp) new Date(), initBalance, newBalance, id2, oldBalance2, newBalance2);
+        return  new Transfer(a.getId(), new Timestamp(System.currentTimeMillis()), initBalance, newBalance, id2, oldBalance2, newBalance2);
     }
+
 }
