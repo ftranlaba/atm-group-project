@@ -3,12 +3,14 @@ package dao.concretedaos;
 import com.sun.istack.Nullable;
 import dao.AbstractDAO;
 import dao.interfaces.IAccountsDAO;
+import dao.interfaces.IDepositWithdrawHistoryDAO;
 import datamodels.Account;
 import datamodels.AccountAccess;
 import datamodels.Card;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +55,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         ps.setString(3, entity.getType());
     }
 
-    /**
-     * @param card The card to get the account of. The only fields that need to be set are
-     *             the number, expiration date, and cvc.
-     * @param pin  The pin of the account.
-     * @return The account corresponding to the card.
-     * If no account is found or the pin is incorrect then null is returned.
-     * @throws SQLException If a database access error occurs.
-     */
     @Override
     public @Nullable Account getAccount(Card card, int pin) throws SQLException {
         String query = "SELECT * " +
@@ -110,5 +104,60 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         account.setBalance(rs.getBigDecimal("balance"));
         account.setType(rs.getString("type"));
         return account;
+    }
+
+    @Override
+    public void makeDeposit(Account account, BigDecimal amount) throws SQLException {
+        String query = "UPDATE accounts " +
+                "SET balance = balance + (?) " +
+                "WHERE id_account = (?)";
+        Connection connection = CONNECTION_POOL.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setBigDecimal(1, amount);
+            ps.setInt(2, account.getId());
+            ps.executeUpdate();
+
+            BigDecimal oldBalance = account.getBalance();
+            BigDecimal newBalance = oldBalance.add(amount);
+
+            IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
+            depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "deposit");
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public boolean makeWithdrawal(Account account, BigDecimal amount) throws SQLException {
+        if (amount.compareTo(account.getBalance()) > 0) {
+            return false;
+        }
+
+        String query = "UPDATE accounts " +
+                "SET balance = balance - (?) " +
+                "WHERE id_account = (?)";
+        Connection connection = CONNECTION_POOL.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setBigDecimal(1, amount);
+            ps.setInt(2, account.getId());
+            ps.executeUpdate();
+
+            BigDecimal oldBalance = account.getBalance();
+            BigDecimal newBalance = oldBalance.subtract(amount);
+
+            IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
+            depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "withdrawal");
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+        return false;
     }
 }
