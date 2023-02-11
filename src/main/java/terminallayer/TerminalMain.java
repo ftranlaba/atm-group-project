@@ -80,7 +80,6 @@ public class TerminalMain {
         LOGGER.info("2) See Accounts");
         LOGGER.info("3) Block Card");
         LOGGER.info("4) Unblock Card");
-
         switch (scan.nextInt()){
             case 1:
                 LOGGER.info("Enter account id: ");
