@@ -6,8 +6,8 @@ public class Account extends TypeInfo {
     private BigDecimal balance;
     private int pin;
 
-    public Account(int idForeignKey, String type, BigDecimal balance, int pin) {
-        super(idForeignKey, type);
+    public Account(int id, int idForeignKey, String type, BigDecimal balance, int pin) {
+        super(id, idForeignKey, type);
         this.balance = balance;
         this.pin = pin;
     }

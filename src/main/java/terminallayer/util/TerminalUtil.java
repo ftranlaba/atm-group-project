@@ -1,6 +1,6 @@
 package terminallayer.util;
 
-import dao.concretedaos.CardsDAO;
+import dao.concretedaos.AccountsDAO;
 import dao.concretedaos.UsersDAO;
 import datamodels.Account;
 import datamodels.Card;
@@ -15,7 +15,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class TerminalUtil {
 
@@ -39,22 +44,39 @@ public class TerminalUtil {
     }
 
     public final static Card createCard(int id, String type) throws SQLException {
-            Card c = new Card(cardCounter(), id, type, cardNumGen(), date(), cvcGen(), false);
-        try {
-            CardsDAO cardsDAO = new CardsDAO();
-            cardsDAO.create(c);
-        }catch (SQLException e){
-            LOGGER.debug(e);
-        }
-        return c;
+        return new Card(id, type, cardNumGen(), date(), cvcGen(), false);
     }
 
-    public final static Account authUser() throws InvalidTypeException {
-        LOGGER.info("Enter Account Id");
-        int id = scan.nextInt();
-        LOGGER.info(id);
+    public final static Account authUser() throws InvalidTypeException, ExecutionException, InterruptedException, SQLException {
+        AccountsDAO accountsDAO = new AccountsDAO();
+        List paramList = new ArrayList<>();
+        CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
+            LOGGER.info("Enter Account Id: ");
+//            scan.nextLine();
+            int id = scan.nextInt();
+            paramList.add(id);});
+//        }).thenRunAsync(() -> {
+//            LOGGER.info("Enter Pin: ");
+//            int pin = scan.nextInt();
+//            paramList.add(pin);
+//        }).thenRunAsync(() -> {
+//          LOGGER.info("Please Enter Card Number: ");
+//          scan.nextLine();
+//          String cardNum = scan.nextLine();
+//          paramList.add(cardNum);
+//        }).thenRunAsync(() ->{
+//            LOGGER.info("Please Enter Expiration Date: ");
+//            String expirationDate = scan.nextLine();
+//            paramList.add(expirationDate);
+//        }).thenRunAsync(() -> {
+//            LOGGER.info("Please Enter CVC: ");
+//            int cvc = scan.nextInt();
+//            paramList.add(cvc);
+//        });
+        c.get();
         //get account from db
-        Account account = new Account();
+//        LOGGER.info(paramList);
+        Account  account = accountsDAO.getById((Integer) paramList.get(0));
         if (account != null) {
             return account;
         }
@@ -73,25 +95,25 @@ public class TerminalUtil {
         Account account = new Account();
         BigDecimal oldBalance2 = account.getBalance();
         BigDecimal newBalance2 = oldBalance2.add(transferAmount);
-        return  new Transfer(a.getId(), new Timestamp(System.currentTimeMillis()), initBalance, newBalance, id2, oldBalance2, newBalance2);
+        return new Transfer(a.getId(), new Timestamp(System.currentTimeMillis()), initBalance, newBalance, id2, oldBalance2, newBalance2);
     }
 
     public final static int userIdCounter() throws SQLException {
         UsersDAO usersDAO = new UsersDAO();
         List<User> userList = usersDAO.getAll();
-        if(userList == null){
+        if (userList == null) {
             return 1;
         }
         return userList.size() + 1;
     }
 
-    public final static int cardCounter() throws SQLException {
-        CardsDAO cardsDAO = new CardsDAO();
-        List<Card> cardList = cardsDAO.getAll();
-        if(cardList == null){
+    public final static int accountCounter() throws SQLException {
+        AccountsDAO accountsDAO = new AccountsDAO();
+        List<Account> accountList = accountsDAO.getAll();
+        if (accountList == null) {
             return 1;
         }
-        return cardList.size() + 1;
+        return accountList.size() + 1;
     }
 
 }

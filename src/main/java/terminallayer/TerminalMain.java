@@ -2,9 +2,11 @@ package terminallayer;
 
 import dao.concretedaos.AccountsDAO;
 import dao.concretedaos.CardsDAO;
+import dao.concretedaos.TransfersDAO;
 import dao.concretedaos.UsersDAO;
 import datamodels.Account;
 import datamodels.Card;
+import datamodels.Transfer;
 import datamodels.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +14,7 @@ import terminallayer.exceptions.InvalidTypeException;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -25,56 +28,67 @@ public class TerminalMain {
     private static final Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException {
-        LOGGER.info("ATM Terminal");
-        LOGGER.info("1) User");
-        LOGGER.info("2) Admin");
-        LOGGER.info("3) Create Account");
-        switch (scan.nextInt()) {
-            case 1:
-                Account a = authUser();
-                userUI(a);
-                break;
-            case 2:
-               authUser();
-                adminUI();
-                break;
-            case 3:
-                createAccount();
-                break;
-            default:
-                throw new InvalidTypeException("Invalid Option");
+        while (true) {
+            LOGGER.info("ATM Terminal \n");
+            LOGGER.info("1) User");
+            LOGGER.info("2) Admin");
+            LOGGER.info("3) Create Account");
+            LOGGER.info("4) Exit");
+            switch (scan.nextInt()) {
+                case 1:
+                    Account a = authUser();
+                    userUI(a);
+                    break;
+                case 2:
+                    authUser();
+                    adminUI();
+                    break;
+                case 3:
+                    createAccount();
+                    break;
+                case 4:
+                    LOGGER.info("Have A Good Rest of Your Day");
+                    scan.close();
+                    break;
+                default:
+                    throw new InvalidTypeException("Invalid Option");
+            }
         }
-        scan.close();
     }
 
-    public static void userUI(Account a) throws ExecutionException, InterruptedException, InvalidTypeException {
-        LOGGER.info("1) Check account balances");
+    public static void userUI(Account a) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException {
+        AccountsDAO accountsDAO = new AccountsDAO();
+        CardsDAO cardsDAO = new CardsDAO();
+        TransfersDAO transfersDAO = new TransfersDAO();
+        LOGGER.info("1) Check Account ");
         LOGGER.info("2) Deposit Money");
         LOGGER.info("3) Transfer Money");
         LOGGER.info("4) Report Card Stolen");
-        //finish implementation. get card and account from db
-        Card c = new Card();
+        Card c = cardsDAO.getById(a.getId());
+        LOGGER.info(a);
         switch (scan.nextInt()) {
             case 1:
-                LOGGER.info("account balance");
-                a.getBalance();
+                LOGGER.info("account ");
                 LOGGER.info(a);
                 break;
             case 2:
+                // test to make sure it works
                 LOGGER.info("How Much money would you like to deposit: ");
                 BigDecimal deposit = scan.nextBigDecimal();
                 LOGGER.info(deposit);
                 a.setBalance(deposit);
-                // add functionality to update account to db
+                accountsDAO.update(a);
                 break;
             case 3:
                 //finish transfer implementation
-                LOGGER.info(makeTransfer(a));
+                Transfer t = makeTransfer(a);
+                transfersDAO.create(t);
+                LOGGER.info(t);
                 break;
             case 4:
                 LOGGER.info("Card Blocked");
                 c.setBlock(false);
-                //update db
+                cardsDAO.update(c);
                 break;
             default:
                 throw new InvalidTypeException("Invalid Option");
@@ -113,15 +127,17 @@ public class TerminalMain {
     }
 
     public static void createAccount() throws ExecutionException, InterruptedException, InvalidTypeException, SQLException {
+        CardsDAO cardsDAO = new CardsDAO();
         AccountsDAO accountsDAO = new AccountsDAO();
         User u = createUser();
         LOGGER.info(u);
         Account a = makeAccount(u.getId());
         LOGGER.info(a);
         accountsDAO.create(a);
-        LOGGER.info(a.getType());
-//        Card c = createCard(1, a.getType());
-//        LOGGER.info(c);
+        Card c = createCard(a.getId(), a.getType());
+        cardsDAO.create(c);
+        LOGGER.info(c);
+
     }
 
     public static Account makeAccount(int id) throws InvalidTypeException, SQLException {
@@ -134,13 +150,11 @@ public class TerminalMain {
         int type = scan.nextInt();
         switch (type) {
             case 1:
-//                createCard(id, "Credit");
-                return new Account(id, "Credit", BigDecimal.valueOf(0), pin);
+                return new Account(accountCounter(), id, "Credit", BigDecimal.valueOf(0), pin);
             case 2:
-//                createCard(id, "Debit");
-                return new Account(id, "Debit", BigDecimal.valueOf(0), pin);
+                return new Account(accountCounter(), id, "Debit", BigDecimal.valueOf(0), pin);
             case 3:
-                return new Account(id, "Savings", BigDecimal.valueOf(0), pin);
+                return new Account(accountCounter(), id, "Savings", BigDecimal.valueOf(0), pin);
             default:
                 throw new InvalidTypeException("Invalid type");
         }

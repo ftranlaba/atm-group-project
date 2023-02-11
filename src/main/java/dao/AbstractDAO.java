@@ -42,8 +42,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
      */
     protected abstract List<String> getColumnNames();
 
-    @Override
-    public T getById(long id) throws SQLException {
+    public T getById(int id) throws SQLException {
         Connection connection = CONNECTION_POOL.getConnection();
         String query = QueryUtil.entityByIdQuery(getTableName(), getIdColumnName());
 

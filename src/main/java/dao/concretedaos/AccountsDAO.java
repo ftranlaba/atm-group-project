@@ -37,6 +37,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         account.setId(rs.getInt(ID_COLUMN_NAME));
         account.setIdForeignKey(rs.getInt("id_user"));
         account.setBalance(rs.getBigDecimal("balance"));
+        account.setPin(rs.getInt("pin"));
         account.setType(rs.getString("type"));
         return account;
     }
