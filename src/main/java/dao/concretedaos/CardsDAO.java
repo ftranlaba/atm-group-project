@@ -41,6 +41,7 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         creditCard.setCardNumber(rs.getString("number"));
         creditCard.setExpirationDate(rs.getString("expiration_date"));
         creditCard.setCvc(rs.getInt("cvc"));
+        creditCard.setType(rs.getString("type"));
         creditCard.setBlock(rs.getBoolean("block"));
         return creditCard;
     }

@@ -84,7 +84,8 @@ public class TerminalUtil {
 
     }
 
-    public final static Transfer makeTransfer(Account a) throws InvalidTypeException {
+    public final static Transfer makeTransfer(Account a) throws InvalidTypeException, SQLException {
+        AccountsDAO accountsDAO = new AccountsDAO();
         LOGGER.info("Amount For Transfer");
         BigDecimal transferAmount = scan.nextBigDecimal();
         BigDecimal initBalance = a.getBalance();
@@ -92,7 +93,7 @@ public class TerminalUtil {
         LOGGER.info("Id for receiving account");
         int id2 = scan.nextInt();
         //get account by id
-        Account account = new Account();
+        Account account = accountsDAO.getById(id2);
         BigDecimal oldBalance2 = account.getBalance();
         BigDecimal newBalance2 = oldBalance2.add(transferAmount);
         return new Transfer(a.getId(), new Timestamp(System.currentTimeMillis()), initBalance, newBalance, id2, oldBalance2, newBalance2);

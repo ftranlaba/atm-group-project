@@ -14,6 +14,7 @@ import terminallayer.exceptions.InvalidTypeException;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
@@ -72,22 +73,22 @@ public class TerminalMain {
                 LOGGER.info(a);
                 break;
             case 2:
-                // test to make sure it works
+                BigDecimal initBalance = a.getBalance();
                 LOGGER.info("How Much money would you like to deposit: ");
                 BigDecimal deposit = scan.nextBigDecimal();
+                BigDecimal newBalance = initBalance.add(deposit);
                 LOGGER.info(deposit);
-                a.setBalance(deposit);
+                a.setBalance(newBalance);
                 accountsDAO.update(a);
                 break;
             case 3:
-                //finish transfer implementation
                 Transfer t = makeTransfer(a);
                 transfersDAO.create(t);
                 LOGGER.info(t);
                 break;
             case 4:
                 LOGGER.info("Card Blocked");
-                c.setBlock(false);
+                c.setBlock(true);
                 cardsDAO.update(c);
                 break;
             default:
@@ -95,7 +96,9 @@ public class TerminalMain {
         }
     }
 
-    public static void adminUI() throws InvalidTypeException {
+    public static void adminUI() throws InvalidTypeException, SQLException {
+        AccountsDAO accountsDAO = new AccountsDAO();
+        CardsDAO cardsDAO = new CardsDAO();
         LOGGER.info("1) See Account");
         LOGGER.info("2) See Accounts");
         LOGGER.info("3) Block Card");
@@ -104,20 +107,29 @@ public class TerminalMain {
             case 1:
                 LOGGER.info("Enter account id: ");
                 int id = scan.nextInt();
-                LOGGER.info(id);
+                Account account = accountsDAO.getById(id);
+                LOGGER.info(account);
                 break;
             case 2:
-                LOGGER.info("Accounts info");
+                List<Account> accountList = accountsDAO.getAll();
+                for(Account account1 : accountList){
+                    LOGGER.info(account1 + "\n");
+                }
                 break;
             case 3:
                 LOGGER.info("Enter Account Id of Card to Block: ");
                 int blockId = scan.nextInt();
-                LOGGER.info(blockId);
+                Card c = cardsDAO.getById(blockId);
+                c.setBlock(true);
+                cardsDAO.update(c);
+                LOGGER.info(c);
                 break;
             case 4:
                 LOGGER.info("Enter Account Id of Card to Unblock: ");
                 int unBlockId = scan.nextInt();
-                LOGGER.info(unBlockId);
+                Card c1 = cardsDAO.getById(unBlockId);
+                c1.setBlock(false);
+                LOGGER.info(c1);
                 break;
             default:
                 throw new InvalidTypeException("Invalid Option");
