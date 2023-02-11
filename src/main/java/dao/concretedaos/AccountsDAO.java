@@ -2,11 +2,14 @@ package dao.concretedaos;
 
 import com.sun.istack.Nullable;
 import dao.AbstractDAO;
+import dao.exceptions.DAOException;
 import dao.interfaces.IAccountsDAO;
 import dao.interfaces.IDepositWithdrawHistoryDAO;
+import dao.interfaces.ITransfersDAO;
 import datamodels.Account;
 import datamodels.AccountAccess;
 import datamodels.Card;
+import datamodels.Transfer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -132,9 +135,9 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     }
 
     @Override
-    public boolean makeWithdrawal(Account account, BigDecimal amount) throws SQLException {
+    public void makeWithdrawal(Account account, BigDecimal amount) throws SQLException, DAOException {
         if (amount.compareTo(account.getBalance()) > 0) {
-            return false;
+            throw new DAOException("Insufficient funds");
         }
 
         String query = "UPDATE accounts " +
@@ -158,6 +161,73 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
                 LOGGER.error(e.getMessage());
             }
         }
-        return false;
+    }
+
+    @Override
+    public void makeTransfer(Account from, Account to, BigDecimal amount) throws SQLException, DAOException {
+        BigDecimal fromAccOldBalance = from.getBalance();
+        if (fromAccOldBalance.compareTo(amount) < 0) {
+            throw new DAOException("Insufficient funds");
+        }
+
+        BigDecimal fromAccNewBalance = fromAccOldBalance.subtract(amount);
+        from.setBalance(fromAccNewBalance);
+
+        BigDecimal toAccOldBalance = to.getBalance();
+        BigDecimal toAccNewBalance = toAccOldBalance.add(amount);
+        to.setBalance(toAccNewBalance);
+
+        updateBalanceForTransfer(from, to);
+
+        Transfer transfer = new Transfer();
+        transfer.setIdForeignKey(from.getId());
+        transfer.setIdAccount2(to.getId());
+        transfer.setOldBalance(fromAccOldBalance);
+        transfer.setNewBalance(fromAccNewBalance);
+        transfer.setOldBalance2(toAccOldBalance);
+        transfer.setNewBalance2(toAccNewBalance);
+        transfer.setTime(new java.sql.Timestamp(System.currentTimeMillis()));
+
+        ITransfersDAO transfersDAO = new TransfersDAO();
+        transfersDAO.create(transfer);
+    }
+
+    /**
+     * This method is equivalent to calling update on the accounts individually.
+     * However, it updates transactionally.
+     *
+     * @param fromAccount The account to transfer from.
+     * @param toAccount   The account to transfer to.
+     * @return True if the transfer was successful, false otherwise.
+     * @throws SQLException If a database access error occurs.
+     */
+    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) throws SQLException {
+        String query = "UPDATE accounts " +
+                "SET balance = (?) " +
+                "WHERE id_account = (?)";
+
+        Connection connection = CONNECTION_POOL.getConnection();
+        connection.setAutoCommit(false);
+
+        try (PreparedStatement ps1 = connection.prepareStatement(query)) {
+            ps1.setBigDecimal(1, fromAccount.getBalance());
+            ps1.setInt(2, fromAccount.getId());
+            ps1.executeUpdate();
+
+            ps1.setBigDecimal(1, toAccount.getBalance());
+            ps1.setInt(2, toAccount.getId());
+            ps1.executeUpdate();
+
+            connection.commit();
+        } catch(SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
     }
 }

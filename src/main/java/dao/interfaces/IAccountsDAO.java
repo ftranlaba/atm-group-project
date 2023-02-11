@@ -1,5 +1,6 @@
 package dao.interfaces;
 
+import dao.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
 
@@ -30,8 +31,17 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
     /**
      * @param account The account to make the withdrawal from.
      * @param amount  The amount to withdraw.
-     * @return True if the withdrawal was successful, false otherwise.
      * @throws SQLException If a database access error occurs.
+     * @throws DAOException If the account does not have enough money to make the withdrawal.
      */
-    boolean makeWithdrawal(Account account, BigDecimal amount) throws SQLException;
+    void makeWithdrawal(Account account, BigDecimal amount) throws SQLException, DAOException;
+
+    /**
+     * @param from The account to transfer from.
+     * @param to   The account to transfer to.
+     * @param amount      The amount to transfer.
+     * @throws SQLException If a database access error occurs.
+     * @throws DAOException If the from account does not have enough money to make the transfer.
+     */
+    void makeTransfer(Account from, Account to, BigDecimal amount) throws SQLException, DAOException;
 }
