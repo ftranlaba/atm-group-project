@@ -25,7 +25,6 @@ public class AccountAccessHistoryDAO extends AbstractDAO<AccountAccess> implemen
         COLUMN_NAMES.add("mac_address");
     }
 
-
     @Override
     protected String getTableName() {
         return TABLE_NAME;

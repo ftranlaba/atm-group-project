@@ -1,6 +1,6 @@
 package datamodels;
 
-public abstract class TypeInfo extends ForeignKeyInfo{
+public abstract class TypeInfo extends ForeignKeyInfo {
     private String type;
 
     public TypeInfo(int id, int idForeignKey, String type) {

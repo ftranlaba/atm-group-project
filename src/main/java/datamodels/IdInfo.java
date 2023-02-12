@@ -23,8 +23,12 @@ public abstract class IdInfo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         IdInfo idInfo = (IdInfo) o;
         return id == idInfo.id;
     }

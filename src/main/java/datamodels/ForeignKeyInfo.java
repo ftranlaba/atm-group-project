@@ -2,7 +2,7 @@ package datamodels;
 
 import java.util.Objects;
 
-public abstract class ForeignKeyInfo extends IdInfo{
+public abstract class ForeignKeyInfo extends IdInfo {
     private int idForeignKey;
 
     public ForeignKeyInfo(int id, int idForeignKey) {
@@ -23,9 +23,15 @@ public abstract class ForeignKeyInfo extends IdInfo{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         ForeignKeyInfo that = (ForeignKeyInfo) o;
         return idForeignKey == that.idForeignKey;
     }

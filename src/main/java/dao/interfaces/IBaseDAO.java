@@ -3,17 +3,16 @@ package dao.interfaces;
 import java.sql.SQLException;
 import java.util.List;
 
-
 /**
  * @author Francis
  */
 public interface IBaseDAO<T> {
     /**
      * @param o The object to insert into table. Note that the id of this object doesn't need to be set.
-     * @return The id of the created object.
+     *          This object is modified; its id is set to the id of the created row.
      * @throws SQLException
      */
-    int create(T o) throws SQLException;
+    void create(T o) throws SQLException;
 
     T getById(long id) throws SQLException;
 

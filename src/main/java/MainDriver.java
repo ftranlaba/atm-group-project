@@ -9,8 +9,11 @@ public class MainDriver {
     private static final Logger LOGGER = LogManager.getLogger("TESTLOGGER");
 
     public static void main(String[] args) {
+<<<<<<< HEAD
         Account tomAccount = new AccountBuilder(1, 1, "Credit").setBalance(BigDecimal.valueOf(12.12))
                 .setPin(1223).build();
+=======
+>>>>>>> 8c0cfe6aa541b68c9ba34970652db7ac3ea71762
 
         AccountAccess tomAccountAccess = new AccountAccessBuilder(1, 1,
                 Timestamp.valueOf("2022-02-19 03:14:07")).setMacAddress("Apple").build();
