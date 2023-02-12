@@ -3,7 +3,7 @@ package datamodels;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public abstract class TimeInfo extends ForeignKeyInfo{
+public abstract class TimeInfo extends ForeignKeyInfo {
     private Timestamp time;
 
     public TimeInfo(int id, int idForeignKey, Timestamp time) {
@@ -30,9 +30,15 @@ public abstract class TimeInfo extends ForeignKeyInfo{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         TimeInfo timeInfo = (TimeInfo) o;
         return time.equals(timeInfo.time);
     }

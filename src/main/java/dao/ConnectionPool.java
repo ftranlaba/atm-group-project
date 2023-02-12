@@ -17,9 +17,9 @@ import java.util.Vector;
 public final class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static final int INITIAL_POOL_SIZE = 5;
+    private static final Vector<Connection> FREE_CONNECTIONS = new Vector<>();
+    private static final Vector<Connection> USED_CONNECTIONS = new Vector<>();
     private static ConnectionPool instance = null;
-    private static Vector<Connection> freeConnections = new Vector<>();
-    private static Vector<Connection> usedConnections = new Vector<>();
 
     private ConnectionPool() {
     }
@@ -46,7 +46,7 @@ public final class ConnectionPool {
         String password = p.getProperty("password");
 
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
-            freeConnections.add(createConnection(url, userName, password));
+            FREE_CONNECTIONS.add(createConnection(url, userName, password));
         }
     }
 
@@ -60,14 +60,15 @@ public final class ConnectionPool {
     }
 
     public synchronized Connection getConnection() {
-        Connection connection = freeConnections.remove(freeConnections.size() - 1);
-        usedConnections.add(connection);
+        // TODO: Make a ConnectionWrapper class that implements AutoCloseable.
+        Connection connection = FREE_CONNECTIONS.remove(FREE_CONNECTIONS.size() - 1);
+        USED_CONNECTIONS.add(connection);
         return connection;
     }
 
     public synchronized void releaseConnection(Connection connection) throws SQLException {
-        if (usedConnections.remove(connection)) {
-            freeConnections.add(connection);
+        if (USED_CONNECTIONS.remove(connection)) {
+            FREE_CONNECTIONS.add(connection);
         } else {
             throw new SQLException("The connection has already returned or it's not for this pool.");
         }

@@ -1,22 +1,30 @@
 package dao.concretedaos;
 
+import com.sun.istack.Nullable;
 import dao.AbstractDAO;
+import dao.exceptions.DAOException;
 import dao.interfaces.IAccountsDAO;
-import datamodels.Account;
+import dao.interfaces.ICardsDAO;
+import dao.interfaces.IDepositWithdrawHistoryDAO;
+import dao.interfaces.ITransfersDAO;
+import datamodels.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Moussa
  */
+@SuppressWarnings("java:S1192")
 public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     private static final String TABLE_NAME = "accounts";
     private static final String ID_COLUMN_NAME = "id_account";
     private static final List<String> COLUMN_NAMES;
+    private static final Logger LOGGER = LogManager.getLogger(AccountsDAO.class);
 
     static {
         COLUMN_NAMES = new ArrayList<>();
@@ -29,17 +37,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     @Override
     protected String getTableName() {
         return TABLE_NAME;
-    }
-
-    @Override
-    protected Account createEntityFromRow(ResultSet rs) throws SQLException {
-        Account account = new Account();
-        account.setId(rs.getInt(ID_COLUMN_NAME));
-        account.setIdForeignKey(rs.getInt("id_user"));
-        account.setBalance(rs.getBigDecimal("balance"));
-        account.setPin(rs.getInt("pin"));
-        account.setType(rs.getString("type"));
-        return account;
     }
 
     @Override
@@ -56,7 +53,195 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     protected void setCreatePreparedStatement(PreparedStatement ps, Account entity) throws SQLException {
         ps.setInt(1, entity.getIdForeignKey());
         ps.setInt(2, entity.getPin());
-        ps.setBigDecimal(3, entity.getBalance());
-        ps.setString(4, entity.getType());
+        ps.setBigDecimal(2, entity.getBalance());
+        ps.setString(3, entity.getType());
+    }
+
+    @Override
+    public @Nullable Account getAccount(Card card, int pin) throws SQLException {
+        String query = "SELECT * " +
+                "FROM accounts " +
+                "WHERE pin = (?) AND id_account = " +
+                "(SELECT id_account " +
+                "FROM cards " +
+                "WHERE number = (?) AND expiration_date = (?) AND cvc = (?))";
+        Connection connection = CONNECTION_POOL.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, card.getCardNumber());
+            ps.setString(2, card.getExpirationDate());
+            ps.setInt(3, card.getCvc());
+            ps.setInt(4, pin);
+
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+
+            Account account = createEntityFromRow(rs);
+
+            AccountAccess accountAccess = new AccountAccess();
+            accountAccess.setIdForeignKey(account.getId());
+            accountAccess.setTime(new Timestamp(System.currentTimeMillis()));
+            accountAccess.setMacAddress("00:00:00:00:00:00");
+
+            AccountAccessHistoryDAO accountAccessDAO = new AccountAccessHistoryDAO();
+            accountAccessDAO.create(accountAccess);
+
+            return account;
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    protected Account createEntityFromRow(ResultSet rs) throws SQLException {
+        Account account = new Account();
+        account.setId(rs.getInt(ID_COLUMN_NAME));
+        account.setIdForeignKey(rs.getInt("id_user"));
+        account.setPin(rs.getInt("pin"));
+        account.setBalance(rs.getBigDecimal("balance"));
+        account.setType(rs.getString("type"));
+        return account;
+    }
+
+    @Override
+    public void makeDeposit(Account account, BigDecimal amount) throws SQLException {
+        String query = "UPDATE accounts " +
+                "SET balance = balance + (?) " +
+                "WHERE id_account = (?)";
+        Connection connection = CONNECTION_POOL.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setBigDecimal(1, amount);
+            ps.setInt(2, account.getId());
+            ps.executeUpdate();
+
+            BigDecimal oldBalance = account.getBalance();
+            BigDecimal newBalance = oldBalance.add(amount);
+
+            IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
+            depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "deposit");
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void makeWithdrawal(Account account, BigDecimal amount) throws SQLException, DAOException {
+        if (amount.compareTo(account.getBalance()) > 0) {
+            throw new DAOException("Insufficient funds");
+        }
+
+        String query = "UPDATE accounts " +
+                "SET balance = balance - (?) " +
+                "WHERE id_account = (?)";
+        Connection connection = CONNECTION_POOL.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setBigDecimal(1, amount);
+            ps.setInt(2, account.getId());
+            ps.executeUpdate();
+
+            BigDecimal oldBalance = account.getBalance();
+            BigDecimal newBalance = oldBalance.subtract(amount);
+
+            IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
+            depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "withdrawal");
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void makeTransfer(Account from, Account to, BigDecimal amount) throws SQLException, DAOException {
+        BigDecimal fromAccOldBalance = from.getBalance();
+        if (fromAccOldBalance.compareTo(amount) < 0) {
+            throw new DAOException("Insufficient funds");
+        }
+
+        BigDecimal fromAccNewBalance = fromAccOldBalance.subtract(amount);
+        from.setBalance(fromAccNewBalance);
+
+        BigDecimal toAccOldBalance = to.getBalance();
+        BigDecimal toAccNewBalance = toAccOldBalance.add(amount);
+        to.setBalance(toAccNewBalance);
+
+        updateBalanceForTransfer(from, to);
+
+        Transfer transfer = new Transfer();
+        transfer.setIdForeignKey(from.getId());
+        transfer.setIdAccount2(to.getId());
+        transfer.setOldBalance(fromAccOldBalance);
+        transfer.setNewBalance(fromAccNewBalance);
+        transfer.setOldBalance2(toAccOldBalance);
+        transfer.setNewBalance2(toAccNewBalance);
+        transfer.setTime(new java.sql.Timestamp(System.currentTimeMillis()));
+
+        ITransfersDAO transfersDAO = new TransfersDAO();
+        transfersDAO.create(transfer);
+    }
+
+    /**
+     * This method is equivalent to calling update on the accounts individually.
+     * However, it updates transactionally.
+     *
+     * @param fromAccount The account to transfer from.
+     * @param toAccount   The account to transfer to.
+     * @return True if the transfer was successful, false otherwise.
+     * @throws SQLException If a database access error occurs.
+     *                      If an error occurs while committing the transaction then neither account will be updated.
+     */
+    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) throws SQLException {
+        String query = "UPDATE accounts " +
+                "SET balance = (?) " +
+                "WHERE id_account = (?)";
+
+        Connection connection = CONNECTION_POOL.getConnection();
+        connection.setAutoCommit(false);
+
+        try (PreparedStatement ps1 = connection.prepareStatement(query)) {
+            ps1.setBigDecimal(1, fromAccount.getBalance());
+            ps1.setInt(2, fromAccount.getId());
+            ps1.executeUpdate();
+
+            ps1.setBigDecimal(1, toAccount.getBalance());
+            ps1.setInt(2, toAccount.getId());
+            ps1.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void createAccount(User user, Account account, Card card) throws SQLException {
+        account.setIdForeignKey(user.getId());
+        account.setBalance(BigDecimal.ZERO);
+        create(account);
+
+        card.setIdForeignKey(account.getId());
+        card.setType(account.getType());
+        card.setBlock(false);
+        ICardsDAO cardDAO = new CardsDAO();
+        cardDAO.setCardInfo(card);
+        cardDAO.create(card);
     }
 }

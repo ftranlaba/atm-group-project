@@ -3,7 +3,7 @@ package datamodels;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class DepositWithdraw extends  BalanceInfo {
+public class DepositWithdraw extends BalanceInfo {
     private String type;
 
     public DepositWithdraw(int id, int idForeignKey, Timestamp time, BigDecimal oldBalance,
