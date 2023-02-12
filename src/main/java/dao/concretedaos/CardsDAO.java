@@ -3,7 +3,10 @@ package dao.concretedaos;
 import dao.AbstractDAO;
 import dao.interfaces.ICardsDAO;
 import datamodels.Card;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +20,7 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
     private static final String TABLE_NAME = "credit_cards";
     private static final String ID_COLUMN_NAME = "id_card";
     private static final List<String> COLUMN_NAMES;
+    private static final Logger LOGGER = LogManager.getLogger(CardsDAO.class);
 
     static {
         COLUMN_NAMES = new ArrayList<>();
@@ -61,5 +65,25 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         ps.setString(3, entity.getExpirationDate());
         ps.setInt(4, entity.getCvc());
         ps.setBoolean(5, entity.isBlock());
+    }
+
+    @Override
+    public void toggleBlockStatus(Card card) throws SQLException {
+        String query = "UPDATE cards " +
+                "SET block = (?) " +
+                "WHERE id_card = (?)";
+        Connection connection = CONNECTION_POOL.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setBoolean(1, !card.isBlock());
+            ps.setInt(2, card.getId());
+            ps.executeUpdate();
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+        card.setBlock(!card.isBlock());
     }
 }
