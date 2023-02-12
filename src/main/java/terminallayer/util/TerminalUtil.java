@@ -54,25 +54,25 @@ public class TerminalUtil {
             LOGGER.info("Enter Account Id: ");
 //            scan.nextLine();
             int id = scan.nextInt();
-            paramList.add(id);});
-//        }).thenRunAsync(() -> {
-//            LOGGER.info("Enter Pin: ");
-//            int pin = scan.nextInt();
-//            paramList.add(pin);
-//        }).thenRunAsync(() -> {
-//          LOGGER.info("Please Enter Card Number: ");
-//          scan.nextLine();
-//          String cardNum = scan.nextLine();
-//          paramList.add(cardNum);
-//        }).thenRunAsync(() ->{
-//            LOGGER.info("Please Enter Expiration Date: ");
-//            String expirationDate = scan.nextLine();
-//            paramList.add(expirationDate);
-//        }).thenRunAsync(() -> {
-//            LOGGER.info("Please Enter CVC: ");
-//            int cvc = scan.nextInt();
-//            paramList.add(cvc);
-//        });
+            paramList.add(id);
+        }).thenRunAsync(() -> {
+            LOGGER.info("Enter Pin: ");
+            int pin = scan.nextInt();
+            paramList.add(pin);
+        }).thenRunAsync(() -> {
+          LOGGER.info("Please Enter Card Number: ");
+          scan.nextLine();
+          String cardNum = scan.nextLine();
+          paramList.add(cardNum);
+        }).thenRunAsync(() ->{
+            LOGGER.info("Please Enter Expiration Date: ");
+            String expirationDate = scan.nextLine();
+            paramList.add(expirationDate);
+        }).thenRunAsync(() -> {
+            LOGGER.info("Please Enter CVC: ");
+            int cvc = scan.nextInt();
+            paramList.add(cvc);
+        });
         c.get();
         //get account from db
 //        LOGGER.info(paramList);
