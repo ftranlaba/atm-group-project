@@ -13,12 +13,12 @@ public class AccountBuilder extends TypeInfo {
         super(id, idForeignKey, type);
     }
 
-    public AccountBuilder withBalance(BigDecimal balance) {
+    public AccountBuilder setBalance(BigDecimal balance) {
         this.balance = balance;
         return this;
     }
 
-    public AccountBuilder withPin(int pin){
+    public AccountBuilder setPin(int pin){
         this.pin = pin;
         return this;
     }
