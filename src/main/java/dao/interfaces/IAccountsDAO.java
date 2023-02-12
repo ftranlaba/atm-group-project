@@ -3,6 +3,7 @@ package dao.interfaces;
 import dao.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
+import datamodels.User;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -37,11 +38,19 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
     void makeWithdrawal(Account account, BigDecimal amount) throws SQLException, DAOException;
 
     /**
-     * @param from The account to transfer from.
-     * @param to   The account to transfer to.
-     * @param amount      The amount to transfer.
+     * @param from   The account to transfer from.
+     * @param to     The account to transfer to.
+     * @param amount The amount to transfer.
      * @throws SQLException If a database access error occurs.
      * @throws DAOException If the from account does not have enough money to make the transfer.
      */
     void makeTransfer(Account from, Account to, BigDecimal amount) throws SQLException, DAOException;
+
+    /**
+     * @param user    The user to create the account for. The user should already be in the users table.
+     * @param account An account object with the PIN and type fields set. It will be modified inplace to hold the info of the created account.
+     * @param card    An uninitialized card object. It will be modified inplace to hold the info of the created card.
+     * @throws SQLException If a database access error occurs.
+     */
+    void createAccount(User user, Account account, Card card) throws SQLException;
 }

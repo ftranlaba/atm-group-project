@@ -4,12 +4,10 @@ import com.sun.istack.Nullable;
 import dao.AbstractDAO;
 import dao.exceptions.DAOException;
 import dao.interfaces.IAccountsDAO;
+import dao.interfaces.ICardsDAO;
 import dao.interfaces.IDepositWithdrawHistoryDAO;
 import dao.interfaces.ITransfersDAO;
-import datamodels.Account;
-import datamodels.AccountAccess;
-import datamodels.Card;
-import datamodels.Transfer;
+import datamodels.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -200,6 +198,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
      * @param toAccount   The account to transfer to.
      * @return True if the transfer was successful, false otherwise.
      * @throws SQLException If a database access error occurs.
+     *                      If an error occurs while committing the transaction then neither account will be updated.
      */
     private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) throws SQLException {
         String query = "UPDATE accounts " +
@@ -219,7 +218,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             ps1.executeUpdate();
 
             connection.commit();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             connection.rollback();
             throw e;
         } finally {
@@ -229,5 +228,18 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
                 LOGGER.error(e.getMessage());
             }
         }
+    }
+
+    @Override
+    public void createAccount(User user, Account account, Card card) throws SQLException {
+        account.setIdForeignKey(user.getId());
+        account.setBalance(BigDecimal.ZERO);
+        create(account);
+
+        card.setIdForeignKey(account.getId());
+        card.setType(account.getType());
+        card.setBlock(false);
+        ICardsDAO cardDAO = new CardsDAO();
+        cardDAO.create(card);
     }
 }
