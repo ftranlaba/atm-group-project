@@ -6,9 +6,13 @@ import datamodels.Card;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -107,12 +111,10 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
     }
 
     private static String calculateExpirationDate() {
-        Date now = new Date(System.currentTimeMillis());
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(now);
-        calendar.add(Calendar.YEAR, 3);
-        Date expirationDate = new Date(calendar.getTimeInMillis());
-        return expirationDate.toString();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expirationDate = now.plusYears(3);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yy");
+        return formatter.format(expirationDate);
     }
 
     private static int generateCvc() {
