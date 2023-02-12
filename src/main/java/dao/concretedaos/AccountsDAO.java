@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * @author Moussa
  */
+@SuppressWarnings("java:S1192")
 public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     private static final String TABLE_NAME = "accounts";
     private static final String ID_COLUMN_NAME = "id_account";
@@ -240,6 +241,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         card.setType(account.getType());
         card.setBlock(false);
         ICardsDAO cardDAO = new CardsDAO();
+        cardDAO.setCardInfo(card);
         cardDAO.create(card);
     }
 }
