@@ -13,34 +13,8 @@ import java.util.List;
  * @author Moussa
  */
 public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
+    protected static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
     private static final Logger LOGGER = LogManager.getLogger(AbstractDAO.class);
-    private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
-
-    /**
-     * @return gets Table Name from child class.
-     */
-    protected abstract String getTableName();
-
-    /**
-     * Creates an entity from a row in the ResultSet.
-     * Does not check if the ResultSet is empty.
-     *
-     * @param rs ResultSet from which to create the entity.
-     * @return The entity created from the first if any row of the ResultSet.
-     * @throws SQLException If a database access error occurs or this method is called on a closed result set.
-     */
-    protected abstract T createEntityFromRow(ResultSet rs) throws SQLException;
-
-    /**
-     * @return gets ID Column Name from child class.
-     */
-    protected abstract String getIdColumnName();
-
-
-    /**
-     * @return gets Column Names from child class.
-     */
-    protected abstract List<String> getColumnNames();
 
     @Override
     public T getById(long id) throws SQLException {
@@ -64,12 +38,36 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
         }
     }
 
+    /**
+     * @return gets Table Name from child class.
+     */
+    protected abstract String getTableName();
+
+    /**
+     * Creates an entity from a row in the ResultSet.
+     * Does not check if the ResultSet is empty.
+     *
+     * @param rs ResultSet from which to create the entity.
+     * @return The entity created from the first if any row of the ResultSet.
+     * @throws SQLException If a database access error occurs or this method is called on a closed result set.
+     */
+    protected abstract T createEntityFromRow(ResultSet rs) throws SQLException;
+
+    /**
+     * @return gets ID Column Name from child class.
+     */
+    protected abstract String getIdColumnName();
+
     @Override
     public void update(T entity) throws SQLException {
         String query = QueryUtil.updateQuery(getTableName(), getColumnNames(), getIdColumnName());
         executeCommand(query, this::setUpdatePreparedStatement, entity);
     }
 
+    /**
+     * @return gets Column Names from child class.
+     */
+    protected abstract List<String> getColumnNames();
 
     /**
      * @param query                   The query to execute. Can be an INSERT, or UPDATE query.
@@ -110,11 +108,12 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     protected abstract void setCreatePreparedStatement(PreparedStatement ps, T entity) throws SQLException;
 
     @Override
-    public int create(T entity) throws SQLException {
+    public void create(T entity) throws SQLException {
         String tableName = getTableName();
         List<String> columnNames = getColumnNames();
         String query = QueryUtil.createQuery(tableName, columnNames);
-        return executeCommand(query, this::setCreatePreparedStatement, entity);
+        int id = executeCommand(query, this::setCreatePreparedStatement, entity);
+        entity.setId(id);
     }
 
     @Override

@@ -2,11 +2,14 @@ package dao.concretedaos;
 
 import dao.AbstractDAO;
 import dao.interfaces.IDepositWithdrawHistoryDAO;
+import datamodels.Account;
 import datamodels.DepositWithdraw;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +61,17 @@ public class DepositWithdrawHistoryDAO extends AbstractDAO<DepositWithdraw> impl
         ps.setTimestamp(2, entity.getTime());
         ps.setBigDecimal(3, entity.getOldBalance());
         ps.setBigDecimal(4, entity.getNewBalance());
+    }
+
+    @Override
+    public void logDepositOrWithdrawal(Account account, BigDecimal oldBalance, BigDecimal newBalance, String type) throws SQLException {
+        DepositWithdraw depositWithdraw = new DepositWithdraw();
+        depositWithdraw.setIdForeignKey(account.getId());
+        depositWithdraw.setTime(new Timestamp(System.currentTimeMillis()));
+        depositWithdraw.setOldBalance(oldBalance);
+        depositWithdraw.setNewBalance(newBalance);
+        depositWithdraw.setType("type");
+
+        create(depositWithdraw);
     }
 }
