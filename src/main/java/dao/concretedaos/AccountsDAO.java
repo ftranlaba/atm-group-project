@@ -56,6 +56,9 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         ps.setBigDecimal(2, entity.getBalance());
         ps.setString(3, entity.getType());
     }
+<<<<<<< HEAD
+}
+=======
 
     @Override
     public @Nullable Account getAccount(Card card, int pin) throws SQLException {
@@ -245,3 +248,4 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         cardDAO.create(card);
     }
 }
+>>>>>>> 8c0cfe6aa541b68c9ba34970652db7ac3ea71762
