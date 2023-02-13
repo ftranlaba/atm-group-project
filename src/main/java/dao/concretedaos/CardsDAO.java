@@ -36,6 +36,29 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         COLUMN_NAMES.add("block");
     }
 
+    private static String generateCardNumber() {
+        StringBuilder cardNumber = new StringBuilder();
+        // No leading 0.
+        cardNumber.append(RANDOM.nextInt(9) + 1);
+
+        int cardNumberLength = 16;
+        for (int i = 1; i < cardNumberLength; i++) {
+            cardNumber.append(RANDOM.nextInt(10));
+        }
+        return cardNumber.toString();
+    }
+
+    private static String calculateExpirationDate() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expirationDate = now.plusYears(3);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yy");
+        return formatter.format(expirationDate);
+    }
+
+    private static int generateCvc() {
+        return RANDOM.nextInt(1000);
+    }
+
     @Override
     protected String getTableName() {
         return TABLE_NAME;
@@ -97,28 +120,5 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         card.setCardNumber(generateCardNumber());
         card.setExpirationDate(calculateExpirationDate());
         card.setCvc(generateCvc());
-    }
-
-    private static String generateCardNumber() {
-        StringBuilder cardNumber = new StringBuilder();
-        // No leading 0.
-        cardNumber.append(RANDOM.nextInt(9) + 1);
-
-        int cardNumberLength = 16;
-        for (int i = 1; i < cardNumberLength; i++) {
-            cardNumber.append(RANDOM.nextInt(10));
-        }
-        return cardNumber.toString();
-    }
-
-    private static String calculateExpirationDate() {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expirationDate = now.plusYears(3);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yy");
-        return formatter.format(expirationDate);
-    }
-
-    private static int generateCvc() {
-        return RANDOM.nextInt(1000);
     }
 }

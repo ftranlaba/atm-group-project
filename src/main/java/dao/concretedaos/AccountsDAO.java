@@ -4,8 +4,6 @@ import com.sun.istack.Nullable;
 import dao.AbstractDAO;
 import dao.exceptions.DAOException;
 import dao.interfaces.IAccountsDAO;
-import dao.interfaces.ICardsDAO;
-import dao.interfaces.IDepositWithdrawHistoryDAO;
 import dao.interfaces.ITransfersDAO;
 import datamodels.*;
 import org.apache.logging.log4j.LogManager;
@@ -32,6 +30,46 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         COLUMN_NAMES.add("pin");
         COLUMN_NAMES.add("balance");
         COLUMN_NAMES.add("type");
+    }
+
+    /**
+     * This method is equivalent to calling update on the accounts individually.
+     * However, it updates transactionally.
+     *
+     * @param fromAccount The account to transfer from.
+     * @param toAccount   The account to transfer to.
+     * @return True if the transfer was successful, false otherwise.
+     * @throws SQLException If a database access error occurs.
+     *                      If an error occurs while committing the transaction then neither account will be updated.
+     */
+    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) throws SQLException {
+        String query = "UPDATE accounts " +
+                "SET balance = (?) " +
+                "WHERE id_account = (?)";
+
+        Connection connection = CONNECTION_POOL.getConnection();
+        connection.setAutoCommit(false);
+
+        try (PreparedStatement ps1 = connection.prepareStatement(query)) {
+            ps1.setBigDecimal(1, fromAccount.getBalance());
+            ps1.setInt(2, fromAccount.getId());
+            ps1.executeUpdate();
+
+            ps1.setBigDecimal(1, toAccount.getBalance());
+            ps1.setInt(2, toAccount.getId());
+            ps1.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            try {
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
     }
 
     @Override
@@ -186,47 +224,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         ITransfersDAO transfersDAO = new TransfersDAO();
         transfersDAO.create(transfer);
     }
-
-    /**
-     * This method is equivalent to calling update on the accounts individually.
-     * However, it updates transactionally.
-     *
-     * @param fromAccount The account to transfer from.
-     * @param toAccount   The account to transfer to.
-     * @return True if the transfer was successful, false otherwise.
-     * @throws SQLException If a database access error occurs.
-     *                      If an error occurs while committing the transaction then neither account will be updated.
-     */
-    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) throws SQLException {
-        String query = "UPDATE accounts " +
-                "SET balance = (?) " +
-                "WHERE id_account = (?)";
-
-        Connection connection = CONNECTION_POOL.getConnection();
-        connection.setAutoCommit(false);
-
-        try (PreparedStatement ps1 = connection.prepareStatement(query)) {
-            ps1.setBigDecimal(1, fromAccount.getBalance());
-            ps1.setInt(2, fromAccount.getId());
-            ps1.executeUpdate();
-
-            ps1.setBigDecimal(1, toAccount.getBalance());
-            ps1.setInt(2, toAccount.getId());
-            ps1.executeUpdate();
-
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-            }
-        }
-    }
-
 
     public void createAccount(User user, Account account, Card card) throws SQLException {
         account.setIdForeignKey(user.getId());

@@ -1,7 +1,6 @@
 package datamodels.builders;
 
 import datamodels.BalanceInfo;
-import datamodels.Transaction;
 import datamodels.Transfer;
 
 import java.math.BigDecimal;
@@ -17,22 +16,22 @@ public class TransferBuilder extends BalanceInfo {
         super(id, idForeignKey, time, oldBalance, newBalance);
     }
 
-    public TransferBuilder setIdAccount2(int idAccount2){
+    public TransferBuilder setIdAccount2(int idAccount2) {
         this.idAccount2 = idAccount2;
         return this;
     }
 
-    public TransferBuilder setOldBalance2(BigDecimal oldBalance2){
+    public TransferBuilder setOldBalance2(BigDecimal oldBalance2) {
         this.oldBalance2 = oldBalance2;
         return this;
     }
 
-    public TransferBuilder setNewBalance2(BigDecimal newBalance2){
+    public TransferBuilder setNewBalance2(BigDecimal newBalance2) {
         this.newBalance2 = newBalance2;
         return this;
     }
 
-    public Transfer build(){
+    public Transfer build() {
         Transfer transfer = new Transfer();
         transfer.setId(getId());
         transfer.setIdForeignKey(getIdForeignKey());

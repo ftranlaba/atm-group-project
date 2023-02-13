@@ -13,27 +13,27 @@ public class UserBuilder extends IdInfo {
         super(id);
     }
 
-    public UserBuilder setFirstName(String firstName){
+    public UserBuilder setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public UserBuilder setLastName(String lastName){
+    public UserBuilder setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
-    public UserBuilder setAddress(String address){
+    public UserBuilder setAddress(String address) {
         this.address = address;
         return this;
     }
 
-    public UserBuilder setPhoneNumber(String phoneNumber){
+    public UserBuilder setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
 
-    public User build(){
+    public User build() {
         User user = new User();
         user.setId(getId());
         user.setFirstName(firstName);

@@ -13,27 +13,27 @@ public class CardBuilder extends TypeInfo {
         super(id, idForeignKey, type);
     }
 
-    public CardBuilder setCardNumber(String cardNumber){
+    public CardBuilder setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
         return this;
     }
 
-    public CardBuilder setExpirationDate(String expirationDate){
+    public CardBuilder setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
         return this;
     }
 
-    public CardBuilder setCvc(int cvc){
+    public CardBuilder setCvc(int cvc) {
         this.cvc = cvc;
         return this;
     }
 
-    public CardBuilder setBlock(boolean block){
+    public CardBuilder setBlock(boolean block) {
         this.block = block;
         return this;
     }
 
-    public Card build(){
+    public Card build() {
         Card card = new Card();
         card.setId(getId());
         card.setIdForeignKey(getIdForeignKey());

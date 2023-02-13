@@ -10,16 +10,16 @@ public class DepositWithdrawBuilder extends BalanceInfo {
     private String type;
 
     public DepositWithdrawBuilder(int id, int idForeignKey, Timestamp time, BigDecimal oldBalance,
-                           BigDecimal newBalance) {
+                                  BigDecimal newBalance) {
         super(id, idForeignKey, time, oldBalance, newBalance);
     }
 
-    public DepositWithdrawBuilder setType(String type){
+    public DepositWithdrawBuilder setType(String type) {
         this.type = type;
         return this;
     }
 
-    public DepositWithdraw build(){
+    public DepositWithdraw build() {
         DepositWithdraw depositWithdraw = new DepositWithdraw();
         depositWithdraw.setId(getId());
         depositWithdraw.setIdForeignKey(getIdForeignKey());
