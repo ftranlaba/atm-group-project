@@ -70,7 +70,7 @@ public class TerminalUtil {
 
     }
 
-    public final static void makeTransfer(Account a) throws InvalidTypeException, SQLException, DAOException {
+    public final static void makeTransfer(Account a) throws SQLException, DAOException {
         AccountsDAO accountsDAO = new AccountsDAO();
         LOGGER.info("Amount For Transfer");
         BigDecimal transferAmount = scan.nextBigDecimal();

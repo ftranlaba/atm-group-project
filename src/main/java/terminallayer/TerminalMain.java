@@ -60,7 +60,7 @@ public class TerminalMain {
         }
     }
 
-    public static void userUI(Account a) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException, DAOException {
+    public static void userUI(Account a) throws InvalidTypeException, SQLException, DAOException {
         AccountsDAO accountsDAO = new AccountsDAO();
         CardsDAO cardsDAO = new CardsDAO();
         LOGGER.info("1) Check Account ");
@@ -148,7 +148,7 @@ public class TerminalMain {
         LOGGER.info(accountsDAO.getById(u.getId()));
     }
 
-    public static Account makeAccount() throws InvalidTypeException, SQLException {
+    public static Account makeAccount() throws InvalidTypeException {
         LOGGER.info("Please Enter Four Digit pin");
         int pin = scan.nextInt();
         LOGGER.info("Please enter account type: ");
