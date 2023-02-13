@@ -73,6 +73,9 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         ps.setString(5, entity.getType());
         ps.setBoolean(6, entity.isBlock());
     }
+<<<<<<< HEAD
+}
+=======
 
     @Override
     public void toggleBlockStatus(Card card) throws SQLException {
@@ -124,3 +127,4 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         return RANDOM.nextInt(1000);
     }
 }
+>>>>>>> 8c0cfe6aa541b68c9ba34970652db7ac3ea71762

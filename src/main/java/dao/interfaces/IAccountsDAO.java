@@ -11,6 +11,10 @@ import java.sql.SQLException;
 /**
  * @author Moussa
  */
+<<<<<<< HEAD
+public interface IAccountsDAO extends IBaseDAO<Account>{
+}
+=======
 public interface IAccountsDAO extends IBaseDAO<Account> {
     /**
      * @param card The card to get the account of. The only fields that need to be set are
@@ -54,3 +58,4 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
      */
     void createAccount(User user, Account account, Card card) throws SQLException;
 }
+>>>>>>> 8c0cfe6aa541b68c9ba34970652db7ac3ea71762
