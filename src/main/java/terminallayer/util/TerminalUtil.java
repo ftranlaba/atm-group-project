@@ -2,6 +2,7 @@ package terminallayer.util;
 
 import dao.concretedaos.AccountsDAO;
 import dao.concretedaos.UsersDAO;
+import dao.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
 import datamodels.Transfer;
@@ -27,76 +28,60 @@ public class TerminalUtil {
     private static final Logger LOGGER = LogManager.getLogger("TESTLOGGER");
     private static final Scanner scan = new Scanner(System.in);
 
-    public final static String cardNumGen() {
-        Random rand = new Random();
-        return String.valueOf(rand.nextInt((int) Math.pow(10, 10)));
-    }
-
-    public final static int cvcGen() {
-        Random rand = new Random();
-        return rand.nextInt((int) Math.pow(4, 4));
-    }
-
-    public final static String date() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/YY");
-        return formatter.format(LocalDate.now().plusYears(5));
-
-    }
-
-    public final static Card createCard(int id, String type) throws SQLException {
-        return new Card(id, type, cardNumGen(), date(), cvcGen(), false);
-    }
-
     public final static Account authUser() throws InvalidTypeException, ExecutionException, InterruptedException, SQLException {
         AccountsDAO accountsDAO = new AccountsDAO();
-        List paramList = new ArrayList<>();
-        CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
-            LOGGER.info("Enter Account Id: ");
-//            scan.nextLine();
-            int id = scan.nextInt();
-            paramList.add(id);
-        }).thenRunAsync(() -> {
-            LOGGER.info("Enter Pin: ");
-            int pin = scan.nextInt();
-            paramList.add(pin);
-        }).thenRunAsync(() -> {
-          LOGGER.info("Please Enter Card Number: ");
-          scan.nextLine();
-          String cardNum = scan.nextLine();
-          paramList.add(cardNum);
-        }).thenRunAsync(() ->{
-            LOGGER.info("Please Enter Expiration Date: ");
-            String expirationDate = scan.nextLine();
-            paramList.add(expirationDate);
-        }).thenRunAsync(() -> {
-            LOGGER.info("Please Enter CVC: ");
-            int cvc = scan.nextInt();
-            paramList.add(cvc);
-        });
-        c.get();
-        //get account from db
-//        LOGGER.info(paramList);
-        Account  account = accountsDAO.getById((Integer) paramList.get(0));
+        Card card = new Card();
+        Account a = new Account();
+            CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
+                LOGGER.info("Enter Pin: ");
+                 int pin = scan.nextInt();
+                 a.setPin(pin);
+            }).thenRunAsync(() -> {
+                LOGGER.info("Please Enter Card Number: ");
+                scan.nextLine();
+                card.setCardNumber(scan.nextLine());
+            }).thenRunAsync(() -> {
+                LOGGER.info("Please Enter Expiration Date: ");
+                String expirationDate = scan.nextLine();
+//                if (expirationDate.matches("[0-9,2]-[0-9,2]")) {
+                    card.setExpirationDate(expirationDate);
+//                } else {
+//                    try {
+//                        throw new InvalidTypeException("Invalid Format");
+//                    } catch (InvalidTypeException e) {
+//                        LOGGER.error(e);
+//                    }
+//                }
+            }).thenRunAsync(() -> {
+                LOGGER.info("Please Enter CVC: ");
+                String cvc = scan.nextLine();
+//                if(cvc.matches("[0-9,4]") ){
+                    card.setCvc(Integer.parseInt(cvc));
+//                }else{
+//                    try {
+//                        throw new InvalidTypeException("invalid format");
+//                    } catch (InvalidTypeException e) {
+//                        LOGGER.error(e.getMessage());
+//                    }
+//                }
+            });
+            c.get();
+        Account account = accountsDAO.getAccount(card, a.getPin());
         if (account != null) {
             return account;
         }
-        throw new InvalidTypeException("Invalid Account id");
+        throw new InvalidTypeException("Invalid Account");
 
     }
 
-    public final static Transfer makeTransfer(Account a) throws InvalidTypeException, SQLException {
+    public final static void makeTransfer(Account a) throws InvalidTypeException, SQLException, DAOException {
         AccountsDAO accountsDAO = new AccountsDAO();
         LOGGER.info("Amount For Transfer");
         BigDecimal transferAmount = scan.nextBigDecimal();
-        BigDecimal initBalance = a.getBalance();
-        BigDecimal newBalance = initBalance.subtract(transferAmount);
         LOGGER.info("Id for receiving account");
         int id2 = scan.nextInt();
-        //get account by id
         Account account = accountsDAO.getById(id2);
-        BigDecimal oldBalance2 = account.getBalance();
-        BigDecimal newBalance2 = oldBalance2.add(transferAmount);
-        return new Transfer(a.getId(), new Timestamp(System.currentTimeMillis()), initBalance, newBalance, id2, oldBalance2, newBalance2);
+        accountsDAO.makeTransfer(a, account, transferAmount);
     }
 
     public final static int userIdCounter() throws SQLException {
@@ -106,15 +91,6 @@ public class TerminalUtil {
             return 1;
         }
         return userList.size() + 1;
-    }
-
-    public final static int accountCounter() throws SQLException {
-        AccountsDAO accountsDAO = new AccountsDAO();
-        List<Account> accountList = accountsDAO.getAll();
-        if (accountList == null) {
-            return 1;
-        }
-        return accountList.size() + 1;
     }
 
 }

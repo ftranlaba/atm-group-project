@@ -53,8 +53,8 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     protected void setCreatePreparedStatement(PreparedStatement ps, Account entity) throws SQLException {
         ps.setInt(1, entity.getIdForeignKey());
         ps.setInt(2, entity.getPin());
-        ps.setBigDecimal(2, entity.getBalance());
-        ps.setString(3, entity.getType());
+        ps.setBigDecimal(3, entity.getBalance());
+        ps.setString(4, entity.getType());
     }
 
     @Override
@@ -67,10 +67,10 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
                 "WHERE number = (?) AND expiration_date = (?) AND cvc = (?))";
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, card.getCardNumber());
-            ps.setString(2, card.getExpirationDate());
-            ps.setInt(3, card.getCvc());
-            ps.setInt(4, pin);
+            ps.setInt(1, pin);
+            ps.setString(2, card.getCardNumber());
+            ps.setString(3, card.getExpirationDate());
+            ps.setInt(4, card.getCvc());
 
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
