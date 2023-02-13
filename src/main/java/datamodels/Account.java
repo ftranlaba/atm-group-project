@@ -12,6 +12,12 @@ public class Account extends TypeInfo {
         this.pin = pin;
     }
 
+
+    public Account(String type, int pin) {
+        super(type);
+        this.pin = pin;
+    }
+
     public Account() {
         super();
     }

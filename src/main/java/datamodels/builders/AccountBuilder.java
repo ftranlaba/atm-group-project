@@ -18,7 +18,7 @@ public class AccountBuilder extends TypeInfo {
         return this;
     }
 
-    public AccountBuilder setPin(int pin){
+    public AccountBuilder setPin(int pin) {
         this.pin = pin;
         return this;
     }

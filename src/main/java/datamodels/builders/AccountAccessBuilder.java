@@ -1,6 +1,5 @@
 package datamodels.builders;
 
-import datamodels.Account;
 import datamodels.AccountAccess;
 import datamodels.TimeInfo;
 
@@ -13,7 +12,7 @@ public class AccountAccessBuilder extends TimeInfo {
         super(id, idForeignKey, time);
     }
 
-    public AccountAccessBuilder setMacAddress(String macAddress){
+    public AccountAccessBuilder setMacAddress(String macAddress) {
         this.macAddress = macAddress;
         return this;
     }

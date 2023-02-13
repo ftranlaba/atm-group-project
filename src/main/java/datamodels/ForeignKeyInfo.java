@@ -10,6 +10,10 @@ public abstract class ForeignKeyInfo extends IdInfo {
         this.idForeignKey = idForeignKey;
     }
 
+    public ForeignKeyInfo(int idForeignKey) {
+        this.idForeignKey = idForeignKey;
+    }
+
     public ForeignKeyInfo() {
     }
 

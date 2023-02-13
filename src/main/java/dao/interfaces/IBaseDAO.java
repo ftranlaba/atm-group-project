@@ -14,7 +14,7 @@ public interface IBaseDAO<T> {
      */
     void create(T o) throws SQLException;
 
-    T getById(long id) throws SQLException;
+    T getById(int id) throws SQLException;
 
     List<T> getAll() throws SQLException;
 

@@ -11,6 +11,11 @@ public abstract class TimeInfo extends ForeignKeyInfo {
         this.time = time;
     }
 
+    public TimeInfo(int idForeignKey, Timestamp time) {
+        super(idForeignKey);
+        this.time = time;
+    }
+
     public TimeInfo() {
 
     }

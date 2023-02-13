@@ -14,17 +14,17 @@ public class TransactionBuilder extends TimeInfo {
         super(id, idForeignKey, time);
     }
 
-    public TransactionBuilder setMerchantName(String merchantName){
+    public TransactionBuilder setMerchantName(String merchantName) {
         this.merchantName = merchantName;
         return this;
     }
 
-    public TransactionBuilder setCost(BigDecimal cost){
+    public TransactionBuilder setCost(BigDecimal cost) {
         this.cost = cost;
         return this;
     }
 
-    public Transaction build(){
+    public Transaction build() {
         Transaction transaction = new Transaction();
         transaction.setId(getId());
         transaction.setIdForeignKey(getIdForeignKey());

@@ -15,6 +15,14 @@ public class Card extends TypeInfo {
         this.block = block;
     }
 
+    public Card(int idForeignKey, String type, String cardNumber, String expirationDate, int cvc, boolean block) {
+        super(idForeignKey, type);
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
+        this.cvc = cvc;
+        this.block = block;
+    }
+
     public Card() {
         super();
     }
