@@ -2,12 +2,10 @@ package terminallayer;
 
 import dao.concretedaos.AccountsDAO;
 import dao.concretedaos.CardsDAO;
-import dao.concretedaos.TransfersDAO;
 import dao.concretedaos.UsersDAO;
 import dao.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
-import datamodels.Transfer;
 import datamodels.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +13,6 @@ import terminallayer.exceptions.InvalidTypeException;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
@@ -31,6 +28,11 @@ public class TerminalMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException, DAOException {
         while (true) {
+            LOGGER.info("date");
+            String date = scan.nextLine();
+            if (date.matches("[0-9][0-9]-[0-9][0-9]")) {
+                LOGGER.info("passed");
+            }
             LOGGER.info("ATM Terminal \n");
             LOGGER.info("1) User");
             LOGGER.info("2) Admin");
@@ -101,7 +103,7 @@ public class TerminalMain {
         LOGGER.info("2) See Accounts");
         LOGGER.info("3) Block Card");
         LOGGER.info("4) Unblock Card");
-        switch (scan.nextInt()){
+        switch (scan.nextInt()) {
             case 1:
                 LOGGER.info("Enter account id: ");
                 int id = scan.nextInt();
@@ -110,7 +112,7 @@ public class TerminalMain {
                 break;
             case 2:
                 List<Account> accountList = accountsDAO.getAll();
-                for(Account account1 : accountList){
+                for (Account account1 : accountList) {
                     LOGGER.info(account1 + "\n");
                 }
                 break;
@@ -154,9 +156,8 @@ public class TerminalMain {
         LOGGER.info("2) Debit");
         LOGGER.info("3) Savings");
         int type = scan.nextInt();
-        if(String.valueOf(pin).matches("/d/d/d/d")){
-            LOGGER.info("passed");
-//            throw new InvalidTypeException("Invalid pin pattern");
+        if (String.valueOf(pin).matches("[0-9]{4}")) {
+            throw new InvalidTypeException("Invalid pin pattern");
         }
         switch (type) {
             case 1:

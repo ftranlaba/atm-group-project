@@ -5,20 +5,14 @@ import dao.concretedaos.UsersDAO;
 import dao.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
-import datamodels.Transfer;
 import datamodels.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import terminallayer.exceptions.InvalidTypeException;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.sql.SQLException;;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -43,27 +37,27 @@ public class TerminalUtil {
             }).thenRunAsync(() -> {
                 LOGGER.info("Please Enter Expiration Date: ");
                 String expirationDate = scan.nextLine();
-//                if (expirationDate.matches("[0-9,2]-[0-9,2]")) {
+                if (expirationDate.matches("[0-9][0-9]-[0-9][0-9]")) {
                     card.setExpirationDate(expirationDate);
-//                } else {
-//                    try {
-//                        throw new InvalidTypeException("Invalid Format");
-//                    } catch (InvalidTypeException e) {
-//                        LOGGER.error(e);
-//                    }
-//                }
+                } else {
+                    try {
+                        throw new InvalidTypeException("Invalid Format");
+                    } catch (InvalidTypeException e) {
+                        LOGGER.error(e);
+                    }
+                }
             }).thenRunAsync(() -> {
                 LOGGER.info("Please Enter CVC: ");
                 String cvc = scan.nextLine();
-//                if(cvc.matches("[0-9,4]") ){
+                if(cvc.matches("[0-9]{4}") ){
                     card.setCvc(Integer.parseInt(cvc));
-//                }else{
-//                    try {
-//                        throw new InvalidTypeException("invalid format");
-//                    } catch (InvalidTypeException e) {
-//                        LOGGER.error(e.getMessage());
-//                    }
-//                }
+                }else{
+                    try {
+                        throw new InvalidTypeException("invalid format");
+                    } catch (InvalidTypeException e) {
+                        LOGGER.error(e.getMessage());
+                    }
+                }
             });
             c.get();
         Account account = accountsDAO.getAccount(card, a.getPin());
