@@ -1,7 +1,7 @@
 package dao.concretedaos;
 
 import dao.AbstractDAO;
-import dao.interfaces.IAccountAccessHistory;
+import dao.interfaces.IAccountAccessHistoryDAO;
 import datamodels.AccountAccess;
 
 import java.sql.PreparedStatement;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Moussa
  */
-public class AccountAccessHistoryDAO extends AbstractDAO<AccountAccess> implements IAccountAccessHistory {
+public class AccountAccessHistoryDAO extends AbstractDAO<AccountAccess> implements IAccountAccessHistoryDAO {
     private static final String TABLE_NAME = "account_access_history";
     private static final String ID_COLUMN_NAME = "id_history";
     private static final List<String> COLUMN_NAMES;
