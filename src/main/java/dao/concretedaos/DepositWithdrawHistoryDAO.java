@@ -65,11 +65,7 @@ public class DepositWithdrawHistoryDAO extends AbstractDAO<DepositWithdraw> impl
         ps.setBigDecimal(4, entity.getNewBalance());
         ps.setString(5, entity.getType());
     }
-<<<<<<< HEAD
-}
-=======
 
-    @Override
     public void logDepositOrWithdrawal(Account account, BigDecimal oldBalance, BigDecimal newBalance, String type) throws SQLException {
         DepositWithdraw depositWithdraw = new DepositWithdraw();
         depositWithdraw.setIdForeignKey(account.getId());
@@ -81,4 +77,3 @@ public class DepositWithdrawHistoryDAO extends AbstractDAO<DepositWithdraw> impl
         create(depositWithdraw);
     }
 }
->>>>>>> 8c0cfe6aa541b68c9ba34970652db7ac3ea71762

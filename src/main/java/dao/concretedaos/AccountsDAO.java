@@ -56,11 +56,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         ps.setBigDecimal(3, entity.getBalance());
         ps.setString(4, entity.getType());
     }
-<<<<<<< HEAD
-}
-=======
 
-    @Override
     public @Nullable Account getAccount(Card card, int pin) throws SQLException {
         String query = "SELECT * " +
                 "FROM accounts " +
@@ -111,7 +107,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         return account;
     }
 
-    @Override
     public void makeDeposit(Account account, BigDecimal amount) throws SQLException {
         String query = "UPDATE accounts " +
                 "SET balance = balance + (?) " +
@@ -125,7 +120,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             BigDecimal oldBalance = account.getBalance();
             BigDecimal newBalance = oldBalance.add(amount);
 
-            IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
+            DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
             depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "deposit");
         } finally {
             try {
@@ -136,7 +131,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         }
     }
 
-    @Override
     public void makeWithdrawal(Account account, BigDecimal amount) throws SQLException, DAOException {
         if (amount.compareTo(account.getBalance()) > 0) {
             throw new DAOException("Insufficient funds");
@@ -154,7 +148,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             BigDecimal oldBalance = account.getBalance();
             BigDecimal newBalance = oldBalance.subtract(amount);
 
-            IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
+            DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
             depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "withdrawal");
         } finally {
             try {
@@ -165,7 +159,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         }
     }
 
-    @Override
     public void makeTransfer(Account from, Account to, BigDecimal amount) throws SQLException, DAOException {
         BigDecimal fromAccOldBalance = from.getBalance();
         if (fromAccOldBalance.compareTo(amount) < 0) {
@@ -234,7 +227,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         }
     }
 
-    @Override
+
     public void createAccount(User user, Account account, Card card) throws SQLException {
         account.setIdForeignKey(user.getId());
         account.setBalance(BigDecimal.ZERO);
@@ -243,9 +236,8 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         card.setIdForeignKey(account.getId());
         card.setType(account.getType());
         card.setBlock(false);
-        ICardsDAO cardDAO = new CardsDAO();
+        CardsDAO cardDAO = new CardsDAO();
         cardDAO.setCardInfo(card);
         cardDAO.create(card);
     }
 }
->>>>>>> 8c0cfe6aa541b68c9ba34970652db7ac3ea71762
