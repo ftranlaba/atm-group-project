@@ -18,7 +18,8 @@ import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static terminallayer.util.TerminalUtil.*;
+import static terminallayer.util.TerminalUtil.authUser;
+import static terminallayer.util.TerminalUtil.makeTransfer;
 
 
 public class TerminalMain {
@@ -28,11 +29,6 @@ public class TerminalMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException, DAOException {
         while (true) {
-            LOGGER.info("date");
-            String date = scan.nextLine();
-            if (date.matches("[0-9][0-9]-[0-9][0-9]")) {
-                LOGGER.info("passed");
-            }
             LOGGER.info("ATM Terminal \n");
             LOGGER.info("1) User");
             LOGGER.info("2) Admin");
@@ -80,12 +76,20 @@ public class TerminalMain {
                 accountsDAO.makeDeposit(a, deposit);
                 break;
             case 3:
-                makeTransfer(a);
+                try {
+                    makeTransfer(a);
+                } catch (DAOException e) {
+                    LOGGER.error(e.getMessage());
+                }
                 break;
             case 4:
                 LOGGER.info("Amount to Withdraw");
                 BigDecimal withdraw = scan.nextBigDecimal();
-                accountsDAO.makeWithdrawal(a, withdraw);
+                try {
+                    accountsDAO.makeWithdrawal(a, withdraw);
+                } catch (DAOException e) {
+                    LOGGER.error(e.getMessage());
+                }
                 break;
             case 5:
                 LOGGER.info("Card Blocked");
@@ -156,7 +160,7 @@ public class TerminalMain {
         LOGGER.info("2) Debit");
         LOGGER.info("3) Savings");
         int type = scan.nextInt();
-        if (String.valueOf(pin).matches("[0-9]{4}")) {
+        if (!String.valueOf(pin).matches("[0-9]{4}")) {
             throw new InvalidTypeException("Invalid pin pattern");
         }
         switch (type) {
@@ -191,7 +195,6 @@ public class TerminalMain {
             String phoneNumber = scan.nextLine();
             u.setPhoneNumber(phoneNumber);
         });
-        u.setId(userIdCounter());
         c.get();
         return u;
     }
