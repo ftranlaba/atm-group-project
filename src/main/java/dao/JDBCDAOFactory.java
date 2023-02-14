@@ -6,6 +6,7 @@ import dao.interfaces.*;
 /**
  * @author Moussa
  */
+@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class JDBCDAOFactory implements IDAOFactory {
     @Override
     public IAccountsDAO getAccountsDAO() {

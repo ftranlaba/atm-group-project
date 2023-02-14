@@ -52,7 +52,8 @@ public final class ConnectionPool {
 
     private static Connection createConnection(String url, String user, String password) {
         try {
-            return DriverManager.getConnection(url, user, password);
+            Connection con = DriverManager.getConnection(url, user, password);
+            return new ConnectionWrapper(con);
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
@@ -60,7 +61,6 @@ public final class ConnectionPool {
     }
 
     public synchronized Connection getConnection() {
-        // TODO: Make a ConnectionWrapper class that implements AutoCloseable.
         Connection connection = FREE_CONNECTIONS.remove(FREE_CONNECTIONS.size() - 1);
         USED_CONNECTIONS.add(connection);
         return connection;
