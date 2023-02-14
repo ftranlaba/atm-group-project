@@ -59,6 +59,7 @@ public class TerminalMain {
                 default:
                     throw new InvalidTypeException("Invalid Option");
             }
+            break;
         }
     }
 
