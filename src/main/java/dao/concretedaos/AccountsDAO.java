@@ -49,7 +49,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
         Connection connection = CONNECTION_POOL.getConnection();
         connection.setAutoCommit(false);
-
         try (PreparedStatement ps1 = connection.prepareStatement(query)) {
             ps1.setBigDecimal(1, fromAccount.getBalance());
             ps1.setInt(2, fromAccount.getId());
@@ -65,6 +64,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             throw e;
         } finally {
             try {
+                connection.setAutoCommit(true);
                 CONNECTION_POOL.releaseConnection(connection);
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
@@ -103,8 +103,8 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
                 "(SELECT id_account " +
                 "FROM cards " +
                 "WHERE number = (?) AND expiration_date = (?) AND cvc = (?))";
-        Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, pin);
             ps.setString(2, card.getCardNumber());
             ps.setString(3, card.getExpirationDate());
@@ -126,12 +126,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             accountAccessDAO.create(accountAccess);
 
             return account;
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-            }
         }
     }
 
@@ -151,8 +145,8 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         String query = "UPDATE accounts " +
                 "SET balance = balance + (?) " +
                 "WHERE id_account = (?)";
-        Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setBigDecimal(1, amount);
             ps.setInt(2, account.getId());
             ps.executeUpdate();
@@ -162,12 +156,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
             DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
             depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "deposit");
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-            }
         }
     }
 
@@ -180,8 +168,8 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         String query = "UPDATE accounts " +
                 "SET balance = balance - (?) " +
                 "WHERE id_account = (?)";
-        Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setBigDecimal(1, amount);
             ps.setInt(2, account.getId());
             ps.executeUpdate();
@@ -191,12 +179,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
             DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
             depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "withdrawal");
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-            }
         }
     }
 

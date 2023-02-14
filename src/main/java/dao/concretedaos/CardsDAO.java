@@ -36,31 +36,6 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         COLUMN_NAMES.add("block");
     }
 
-    private static String generateCardNumber() {
-        StringBuilder cardNumber = new StringBuilder();
-        // No leading 0.
-        cardNumber.append(RANDOM.nextInt(9) + 1);
-
-        int cardNumberLength = 16;
-        for (int i = 1; i < cardNumberLength; i++) {
-            cardNumber.append(RANDOM.nextInt(10));
-        }
-        return cardNumber.toString();
-    }
-
-    private static String calculateExpirationDate() {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expirationDate = now.plusYears(3);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yy");
-        return formatter.format(expirationDate);
-    }
-
-    private static int generateCvc() {
-        int min = 101;
-        int max = 999;
-        return (int) Math.floor(Math.random() * (max - min + 1) + min);
-    }
-
     @Override
     protected String getTableName() {
         return TABLE_NAME;
@@ -104,17 +79,11 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         String query = "UPDATE cards " +
                 "SET block = (?) " +
                 "WHERE id_card = (?)";
-        Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setBoolean(1, !card.isBlock());
             ps.setInt(2, card.getId());
             ps.executeUpdate();
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-            }
         }
         card.setBlock(!card.isBlock());
     }
@@ -124,5 +93,30 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         card.setCardNumber(generateCardNumber());
         card.setExpirationDate(calculateExpirationDate());
         card.setCvc(generateCvc());
+    }
+
+    private static String generateCardNumber() {
+        StringBuilder cardNumber = new StringBuilder();
+        // No leading 0.
+        cardNumber.append(RANDOM.nextInt(9) + 1);
+
+        int cardNumberLength = 16;
+        for (int i = 1; i < cardNumberLength; i++) {
+            cardNumber.append(RANDOM.nextInt(10));
+        }
+        return cardNumber.toString();
+    }
+
+    private static String calculateExpirationDate() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expirationDate = now.plusYears(3);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yy");
+        return formatter.format(expirationDate);
+    }
+
+    private static int generateCvc() {
+        int min = 101;
+        int max = 999;
+        return (int) Math.floor(Math.random() * (max - min + 1) + min);
     }
 }

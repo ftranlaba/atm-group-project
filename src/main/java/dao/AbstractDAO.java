@@ -18,22 +18,16 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
 
     @Override
     public T getById(int id) throws SQLException {
-        Connection connection = CONNECTION_POOL.getConnection();
         String query = QueryUtil.entityByIdQuery(getTableName(), getIdColumnName());
 
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) {
                     throw new SQLException("No entity found with id " + id);
                 }
                 return createEntityFromRow(rs);
-            }
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
             }
         }
     }
@@ -73,11 +67,11 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
      * @param query                   The query to execute. Can be an INSERT, or UPDATE query.
      * @param preparedStatementSetter The method to set the PreparedStatement. Accepts a PreparedStatement and an entity.
      * @param entity                  The entity to use to set the PreparedStatement.
-     * @return The id of the created entity if any.
+     * @return The id of the created entity if any. Returns 0 if no id was generated.
      */
     private int executeCommand(String query, PreparedStatementSetter<T> preparedStatementSetter, T entity) throws SQLException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatementSetter.setValues(ps, entity);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -85,12 +79,6 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
                 return rs.getInt(1);
             } else {
                 return 0;
-            }
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
             }
         }
     }
@@ -118,26 +106,20 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
 
     @Override
     public void delete(long id) throws SQLException {
-        Connection connection = CONNECTION_POOL.getConnection();
         String query = QueryUtil.deleteQuery(getTableName(), getIdColumnName());
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             ps.executeUpdate();
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-            }
         }
     }
 
     @Override
     public List<T> getAll() throws SQLException {
         String tableName = getTableName();
-        Connection connection = CONNECTION_POOL.getConnection();
         String query = QueryUtil.selectAllQuery(tableName);
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 List<T> entities = new ArrayList<>();
                 while (rs.next()) {
@@ -145,12 +127,6 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
                     entities.add(entity);
                 }
                 return entities;
-            }
-        } finally {
-            try {
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
             }
         }
     }
