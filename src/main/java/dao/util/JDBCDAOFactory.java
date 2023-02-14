@@ -13,7 +13,7 @@ public class JDBCDAOFactory implements IDAOFactory {
 
     @Override
     public IBaseDAO getDAO(String modal) {
-        switch (modal.toLowerCase()) {
+        switch (modal) {
             case "IAccountAccessHistoryDAO":
                 return new AccountAccessHistoryDAO();
             case "IAccountsDAO":
