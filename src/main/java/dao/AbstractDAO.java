@@ -75,7 +75,6 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
      * @return The id of the created entity if any. Returns 0 if no id was generated.
      */
     private int executeCommand(String query, PreparedStatementSetter<T> preparedStatementSetter, T entity) {
-        int output = 0;
         try (Connection connection = CONNECTION_POOL.getConnection();
              PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatementSetter.setValues(ps, entity);
@@ -88,7 +87,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
         catch(SQLException e){
             LOGGER.error(e);
         }
-        return output;
+        return 0;
     }
 
     protected void setUpdatePreparedStatement(PreparedStatement preparedStatement, T entity) throws SQLException {
