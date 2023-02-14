@@ -1,5 +1,6 @@
 package dao;
 
+import com.sun.istack.Nullable;
 import dao.util.ConnectionPool;
 import dao.util.PreparedStatementSetter;
 import dao.util.QueryUtil;
@@ -19,22 +20,23 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDAO.class);
 
     @Override
-    public T getById(int id) {
+    public @Nullable T getById(int id) {
         String query = QueryUtil.entityByIdQuery(getTableName(), getIdColumnName());
-        T output = null;
         try (Connection connection = CONNECTION_POOL.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                throw new SQLException("No entity found with id " + id);
+                return null;
             }
-            output = createEntityFromRow(rs);
+
+            return createEntityFromRow(rs);
         }
-        catch(Exception e){
+        catch(SQLException e){
             LOGGER.error(e);
         }
-        return output;
+
+        return null;
     }
 
     /**
