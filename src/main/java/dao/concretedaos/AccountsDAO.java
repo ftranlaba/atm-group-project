@@ -119,7 +119,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
             DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
             depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "deposit");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOGGER.error(e);
         }
     }
@@ -140,7 +140,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
             DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
             depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "withdrawal");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOGGER.error(e);
         }
     }
@@ -156,11 +156,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         BigDecimal toAccNewBalance = toAccOldBalance.add(amount);
         to.setBalance(toAccNewBalance);
 
-        try {
-            updateBalanceForTransfer(from, to);
-        } catch (Exception e) {
-            LOGGER.error(e);
-        }
+        updateBalanceForTransfer(from, to);
 
         Transfer transfer = new Transfer();
         transfer.setIdForeignKey(from.getId());
