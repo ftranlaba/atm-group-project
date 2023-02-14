@@ -114,7 +114,7 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
             ps.setInt(2, card.getId());
             ps.executeUpdate();
         }
-        catch(Exception e){
+        catch(SQLException e){
             LOGGER.error(e);
         }
         card.setBlock(!card.isBlock());
