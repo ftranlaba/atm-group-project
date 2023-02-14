@@ -99,7 +99,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
     @Override
     public @Nullable
-    Account getAccount(Card card, int pin) throws SQLException {
+    Account getAccount(Card card, int pin) {
         String query = "SELECT * " +
                 "FROM accounts " +
                 "WHERE pin = (?) AND id_account = " +
@@ -129,7 +129,10 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             accountAccessDAO.create(accountAccess);
 
             return account;
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
         }
+        return null;
     }
 
     @Override
