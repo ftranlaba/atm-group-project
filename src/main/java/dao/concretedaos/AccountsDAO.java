@@ -4,7 +4,6 @@ import com.sun.istack.Nullable;
 import dao.AbstractDAO;
 import dao.interfaces.IAccountsDAO;
 import dao.interfaces.ITransfersDAO;
-import dao.util.exceptions.DAOException;
 import datamodels.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -225,6 +224,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         card.setIdForeignKey(account.getId());
         card.setType(account.getType());
         card.setBlock(false);
+
         CardsDAO cardDAO = new CardsDAO();
         cardDAO.setCardInfo(card);
         cardDAO.create(card);
