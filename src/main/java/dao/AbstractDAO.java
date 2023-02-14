@@ -16,6 +16,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     protected static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
     private static final Logger LOGGER = LogManager.getLogger(AbstractDAO.class);
 
+    @Override
     public T getById(int id) throws SQLException {
         Connection connection = CONNECTION_POOL.getConnection();
         String query = QueryUtil.entityByIdQuery(getTableName(), getIdColumnName());

@@ -99,6 +99,7 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         ps.setBoolean(6, entity.isBlock());
     }
 
+    @Override
     public void toggleBlockStatus(Card card) throws SQLException {
         String query = "UPDATE cards " +
                 "SET block = (?) " +
@@ -118,6 +119,7 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         card.setBlock(!card.isBlock());
     }
 
+    @Override
     public void setCardInfo(Card card) {
         card.setCardNumber(generateCardNumber());
         card.setExpirationDate(calculateExpirationDate());

@@ -95,6 +95,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         ps.setString(4, entity.getType());
     }
 
+    @Override
     public @Nullable Account getAccount(Card card, int pin) throws SQLException {
         String query = "SELECT * " +
                 "FROM accounts " +
@@ -145,6 +146,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         return account;
     }
 
+    @Override
     public void makeDeposit(Account account, BigDecimal amount) throws SQLException {
         String query = "UPDATE accounts " +
                 "SET balance = balance + (?) " +
@@ -169,6 +171,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         }
     }
 
+    @Override
     public void makeWithdrawal(Account account, BigDecimal amount) throws SQLException, DAOException {
         if (amount.compareTo(account.getBalance()) > 0) {
             throw new DAOException("Insufficient funds");
@@ -197,6 +200,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         }
     }
 
+    @Override
     public void makeTransfer(Account from, Account to, BigDecimal amount) throws SQLException, DAOException {
         BigDecimal fromAccOldBalance = from.getBalance();
         if (fromAccOldBalance.compareTo(amount) < 0) {
@@ -225,6 +229,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         transfersDAO.create(transfer);
     }
 
+    @Override
     public void createAccount(User user, Account account, Card card) throws SQLException {
         account.setIdForeignKey(user.getId());
         account.setBalance(BigDecimal.ZERO);
