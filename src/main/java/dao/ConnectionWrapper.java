@@ -11,23 +11,26 @@ import java.util.concurrent.Executor;
 public class ConnectionWrapper implements AutoCloseable, Connection {
     public static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
     private static final Logger LOGGER = LogManager.getLogger(ConnectionWrapper.class);
-    private Connection connection;
+    private final Connection connection;
 
     public ConnectionWrapper(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public void close() throws SQLException {
+    public void close() {
         if (connection == null) {
             LOGGER.info("Connection is null");
             return;
         }
 
-        CONNECTION_POOL.releaseConnection(this);
-        connection = null;
-        LOGGER.info("Connection closed");
+        try {
+            CONNECTION_POOL.releaseConnection(this);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
 
+        LOGGER.info("Connection closed");
     }
 
     @Override
