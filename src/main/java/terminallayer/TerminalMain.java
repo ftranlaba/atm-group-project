@@ -3,12 +3,17 @@ package terminallayer;
 import dao.concretedaos.AccountsDAO;
 import dao.concretedaos.CardsDAO;
 import dao.concretedaos.UsersDAO;
-import dao.exceptions.DAOException;
+import dao.util.DBFactoryGenerator;
+import dao.util.IDAOFactory;
+import dao.util.enums.DBConnectionType;
+import dao.util.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
 import datamodels.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.IService;
+import service.JDBCService;
 import terminallayer.exceptions.InvalidTypeException;
 
 import java.math.BigDecimal;
@@ -26,6 +31,7 @@ public class TerminalMain {
 
     private static final Logger LOGGER = LogManager.getLogger("TESTLOGGER");
     private static final Scanner scan = new Scanner(System.in);
+    private static final IService service = JDBCService.getInstance();
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException, DAOException {
         while (true) {
@@ -57,14 +63,12 @@ public class TerminalMain {
     }
 
     public static void userUI(Account a) throws InvalidTypeException, SQLException, DAOException {
-        AccountsDAO accountsDAO = new AccountsDAO();
-        CardsDAO cardsDAO = new CardsDAO();
         LOGGER.info("1) Check Account ");
         LOGGER.info("2) Deposit Money");
         LOGGER.info("3) Transfer Money");
         LOGGER.info("4) Withdraw money");
         LOGGER.info("5) Report Card Stolen");
-        Card c = cardsDAO.getById(a.getId());
+        Card c = service.getByIdCard(a.getId());
         switch (scan.nextInt()) {
             case 1:
                 LOGGER.info("account ");
@@ -73,7 +77,7 @@ public class TerminalMain {
             case 2:
                 LOGGER.info("How Much money would you like to deposit: ");
                 BigDecimal deposit = scan.nextBigDecimal();
-                accountsDAO.makeDeposit(a, deposit);
+                service.makeDepositAccount(a, deposit);
                 break;
             case 3:
                 try {
@@ -85,15 +89,11 @@ public class TerminalMain {
             case 4:
                 LOGGER.info("Amount to Withdraw");
                 BigDecimal withdraw = scan.nextBigDecimal();
-                try {
-                    accountsDAO.makeWithdrawal(a, withdraw);
-                } catch (DAOException e) {
-                    LOGGER.error(e.getMessage());
-                }
+                service.makeWithdrawalAccount(a, withdraw);
                 break;
             case 5:
                 LOGGER.info("Card Blocked");
-                cardsDAO.toggleBlockStatus(c);
+                service.toggleBlockStatus(c);
                 break;
             default:
                 throw new InvalidTypeException("Invalid Option");

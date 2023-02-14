@@ -1,7 +1,7 @@
 package terminallayer.util;
 
 import dao.concretedaos.AccountsDAO;
-import dao.exceptions.DAOException;
+import dao.util.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
 import org.apache.logging.log4j.LogManager;
@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-;
 
 public class TerminalUtil {
 
