@@ -2,7 +2,7 @@ package dao.util;
 
 import dao.IBaseDAO;
 import dao.concretedaos.*;
-import dao.util.enums.UnsupportedFactoryException;
+import dao.util.exceptions.UnsupportedFactoryException;
 
 /**
  * @author Moussa

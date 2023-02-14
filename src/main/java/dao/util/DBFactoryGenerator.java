@@ -1,7 +1,7 @@
 package dao.util;
 
 import dao.util.enums.DBConnectionType;
-import dao.util.enums.UnsupportedFactoryException;
+import dao.util.exceptions.UnsupportedFactoryException;
 
 public abstract class DBFactoryGenerator {
     public static IDAOFactory getFactory(DBConnectionType connectionType){
