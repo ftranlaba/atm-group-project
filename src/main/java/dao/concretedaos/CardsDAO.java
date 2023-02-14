@@ -56,9 +56,12 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
     }
 
     private static int generateCvc() {
-        int min = 101;
-        int max = 999;
-        return (int) Math.floor(Math.random() * (max - min + 1) + min);
+        // inclusive
+        int min = 100;
+
+        // exclusive
+        int max = 1000;
+        return RANDOM.nextInt(max - min) + min;
     }
 
     @Override
