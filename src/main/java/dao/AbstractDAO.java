@@ -1,6 +1,8 @@
 package dao;
 
-import dao.interfaces.IBaseDAO;
+import dao.util.ConnectionPool;
+import dao.util.PreparedStatementSetter;
+import dao.util.QueryUtil;
 import datamodels.IdInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,19 +19,22 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDAO.class);
 
     @Override
-    public T getById(int id) throws SQLException {
+    public T getById(int id) {
         String query = QueryUtil.entityByIdQuery(getTableName(), getIdColumnName());
-
+        T output = null;
         try (Connection connection = CONNECTION_POOL.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
-                    throw new SQLException("No entity found with id " + id);
-                }
-                return createEntityFromRow(rs);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                throw new SQLException("No entity found with id " + id);
             }
+            output = createEntityFromRow(rs);
         }
+        catch(Exception e){
+            LOGGER.error(e);
+        }
+        return output;
     }
 
     /**
@@ -53,7 +58,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     protected abstract String getIdColumnName();
 
     @Override
-    public void update(T entity) throws SQLException {
+    public void update(T entity) {
         String query = QueryUtil.updateQuery(getTableName(), getColumnNames(), getIdColumnName());
         executeCommand(query, this::setUpdatePreparedStatement, entity);
     }
@@ -69,7 +74,8 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
      * @param entity                  The entity to use to set the PreparedStatement.
      * @return The id of the created entity if any. Returns 0 if no id was generated.
      */
-    private int executeCommand(String query, PreparedStatementSetter<T> preparedStatementSetter, T entity) throws SQLException {
+    private int executeCommand(String query, PreparedStatementSetter<T> preparedStatementSetter, T entity) {
+        int output = 0;
         try (Connection connection = CONNECTION_POOL.getConnection();
              PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatementSetter.setValues(ps, entity);
@@ -77,10 +83,12 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 return rs.getInt(1);
-            } else {
-                return 0;
             }
         }
+        catch(Exception e){
+            LOGGER.error(e);
+        }
+        return output;
     }
 
     protected void setUpdatePreparedStatement(PreparedStatement preparedStatement, T entity) throws SQLException {
@@ -96,7 +104,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     protected abstract void setCreatePreparedStatement(PreparedStatement ps, T entity) throws SQLException;
 
     @Override
-    public void create(T entity) throws SQLException {
+    public void create(T entity) {
         String tableName = getTableName();
         List<String> columnNames = getColumnNames();
         String query = QueryUtil.createQuery(tableName, columnNames);
@@ -105,29 +113,34 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
     }
 
     @Override
-    public void delete(long id) throws SQLException {
+    public void delete(int id) {
         String query = QueryUtil.deleteQuery(getTableName(), getIdColumnName());
         try (Connection connection = CONNECTION_POOL.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             ps.executeUpdate();
         }
+        catch(Exception e){
+            LOGGER.error(e);
+        }
     }
 
     @Override
-    public List<T> getAll() throws SQLException {
+    public List<T> getAll() {
         String tableName = getTableName();
         String query = QueryUtil.selectAllQuery(tableName);
+        List<T> entities = new ArrayList<>();
         try (Connection connection = CONNECTION_POOL.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
-            try (ResultSet rs = ps.executeQuery()) {
-                List<T> entities = new ArrayList<>();
-                while (rs.next()) {
-                    T entity = createEntityFromRow(rs);
-                    entities.add(entity);
-                }
-                return entities;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                T entity = createEntityFromRow(rs);
+                entities.add(entity);
             }
         }
+        catch(Exception e){
+            LOGGER.error(e);
+        }
+        return entities;
     }
 }

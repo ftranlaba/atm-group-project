@@ -1,6 +1,7 @@
 package dao.interfaces;
 
-import dao.exceptions.DAOException;
+import dao.IBaseDAO;
+import dao.util.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
 import datamodels.User;
@@ -28,7 +29,7 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
      * @param amount  The amount to deposit.
      * @throws SQLException If a database access error occurs.
      */
-    void makeDeposit(Account account, BigDecimal amount) throws SQLException;
+    void makeDeposit(Account account, BigDecimal amount);
 
     /**
      * @param account The account to make the withdrawal from.
@@ -36,7 +37,7 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
      * @throws SQLException If a database access error occurs.
      * @throws DAOException If the account does not have enough money to make the withdrawal.
      */
-    void makeWithdrawal(Account account, BigDecimal amount) throws SQLException, DAOException;
+    void makeWithdrawal(Account account, BigDecimal amount);
 
     /**
      * @param from   The account to transfer from.
@@ -45,7 +46,7 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
      * @throws SQLException If a database access error occurs.
      * @throws DAOException If the from account does not have enough money to make the transfer.
      */
-    void makeTransfer(Account from, Account to, BigDecimal amount) throws SQLException, DAOException;
+    void makeTransfer(Account from, Account to, BigDecimal amount);
 
     /**
      * @param user    The user to create the account for. The user should already be in the users table.
@@ -53,5 +54,5 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
      * @param card    An uninitialized card object. It will be modified inplace to hold the info of the created card.
      * @throws SQLException If a database access error occurs.
      */
-    void createAccount(User user, Account account, Card card) throws SQLException;
+    void createAccount(User user, Account account, Card card);
 }

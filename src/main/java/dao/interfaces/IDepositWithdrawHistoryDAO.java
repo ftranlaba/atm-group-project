@@ -1,5 +1,6 @@
 package dao.interfaces;
 
+import dao.IBaseDAO;
 import datamodels.Account;
 import datamodels.DepositWithdraw;
 
