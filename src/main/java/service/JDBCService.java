@@ -9,6 +9,7 @@ import datamodels.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class JDBCService implements IService {
     private static final IAccountAccessHistoryDAO accountAccessHistoryDAO = (IAccountAccessHistoryDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IAccountAccessHistoryDAO");
 
