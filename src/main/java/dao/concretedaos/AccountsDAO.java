@@ -215,7 +215,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         transfer.setNewBalance(fromAccNewBalance);
         transfer.setOldBalance2(toAccOldBalance);
         transfer.setNewBalance2(toAccNewBalance);
-        transfer.setTime(new java.sql.Timestamp(System.currentTimeMillis()));
+        transfer.setTime(new Timestamp(System.currentTimeMillis()));
 
         ITransfersDAO transfersDAO = new TransfersDAO();
         transfersDAO.create(transfer);
