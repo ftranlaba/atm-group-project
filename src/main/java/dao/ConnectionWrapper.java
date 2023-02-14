@@ -24,7 +24,7 @@ public class ConnectionWrapper implements AutoCloseable, Connection {
             return;
         }
 
-        CONNECTION_POOL.releaseConnection(this.connection);
+        CONNECTION_POOL.releaseConnection(this);
         connection = null;
         LOGGER.info("Connection closed");
 
