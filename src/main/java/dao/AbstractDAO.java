@@ -31,8 +31,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
             }
 
             return createEntityFromRow(rs);
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             LOGGER.error(e);
         }
 
@@ -85,8 +84,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
             if (rs.next()) {
                 return rs.getInt(1);
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             LOGGER.error(e);
         }
         return 0;
@@ -120,8 +118,7 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             ps.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             LOGGER.error(e);
         }
     }
@@ -138,10 +135,10 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
                 T entity = createEntityFromRow(rs);
                 entities.add(entity);
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             LOGGER.error(e);
         }
+
         return entities;
     }
 }

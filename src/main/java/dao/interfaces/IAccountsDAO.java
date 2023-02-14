@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 /**
  * @author Moussa
  */
-
 public interface IAccountsDAO extends IBaseDAO<Account> {
     /**
      * @param card The card to get the account of. The only fields that need to be set are

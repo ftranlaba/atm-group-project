@@ -31,49 +31,6 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         COLUMN_NAMES.add("type");
     }
 
-    /**
-     * This method is equivalent to calling update on the accounts individually.
-     * However, it updates transactionally.
-     *
-     * @param fromAccount The account to transfer from.
-     * @param toAccount   The account to transfer to.
-     * @return True if the transfer was successful, false otherwise.
-     */
-    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) {
-        String query = "UPDATE accounts " +
-                "SET balance = (?) " +
-                "WHERE id_account = (?)";
-
-        Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement ps1 = connection.prepareStatement(query)) {
-            connection.setAutoCommit(false);
-
-            ps1.setBigDecimal(1, fromAccount.getBalance());
-            ps1.setInt(2, fromAccount.getId());
-            ps1.executeUpdate();
-
-            ps1.setBigDecimal(1, toAccount.getBalance());
-            ps1.setInt(2, toAccount.getId());
-            ps1.executeUpdate();
-
-            connection.commit();
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                LOGGER.error(ex.getMessage());
-            }
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-                CONNECTION_POOL.releaseConnection(connection);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-            }
-        }
-    }
-
     @Override
     protected String getTableName() {
         return TABLE_NAME;
@@ -162,8 +119,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
             DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
             depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "deposit");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             LOGGER.error(e);
         }
     }
@@ -184,8 +140,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
             DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
             depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "withdrawal");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             LOGGER.error(e);
         }
     }
@@ -203,8 +158,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
         try {
             updateBalanceForTransfer(from, to);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             LOGGER.error(e);
         }
 
@@ -219,6 +173,49 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
         ITransfersDAO transfersDAO = new TransfersDAO();
         transfersDAO.create(transfer);
+    }
+
+    /**
+     * This method is equivalent to calling update on the accounts individually.
+     * However, it updates transactionally.
+     *
+     * @param fromAccount The account to transfer from.
+     * @param toAccount   The account to transfer to.
+     * @return True if the transfer was successful, false otherwise.
+     */
+    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) {
+        String query = "UPDATE accounts " +
+                "SET balance = (?) " +
+                "WHERE id_account = (?)";
+
+        Connection connection = CONNECTION_POOL.getConnection();
+        try (PreparedStatement ps1 = connection.prepareStatement(query)) {
+            connection.setAutoCommit(false);
+
+            ps1.setBigDecimal(1, fromAccount.getBalance());
+            ps1.setInt(2, fromAccount.getId());
+            ps1.executeUpdate();
+
+            ps1.setBigDecimal(1, toAccount.getBalance());
+            ps1.setInt(2, toAccount.getId());
+            ps1.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                LOGGER.error(ex.getMessage());
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+                CONNECTION_POOL.releaseConnection(connection);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
     }
 
     @Override

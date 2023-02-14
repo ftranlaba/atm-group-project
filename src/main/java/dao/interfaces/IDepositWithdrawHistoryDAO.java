@@ -10,6 +10,5 @@ import java.math.BigDecimal;
  * @author Moussa
  */
 public interface IDepositWithdrawHistoryDAO extends IBaseDAO<DepositWithdraw> {
-
     void logDepositOrWithdrawal(Account account, BigDecimal oldBalance, BigDecimal newBalance, String type);
 }
