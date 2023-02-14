@@ -1,4 +1,4 @@
-package dao.interfaces;
+package dao;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,13 +12,13 @@ public interface IBaseDAO<T> {
      *          This object is modified; its id is set to the id of the created row.
      * @throws SQLException
      */
-    void create(T o) throws SQLException;
+    void create(T o);
 
-    T getById(int id) throws SQLException;
+    T getById(int id);
 
-    List<T> getAll() throws SQLException;
+    List<T> getAll();
 
-    void update(T o) throws SQLException;
+    void update(T o);
 
-    void delete(long id) throws SQLException;
+    void delete(int id);
 }

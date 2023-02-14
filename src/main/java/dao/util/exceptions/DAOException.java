@@ -1,4 +1,4 @@
-package dao.exceptions;
+package dao.util.exceptions;
 
 /**
  * @author Moussa
