@@ -38,17 +38,16 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
      * @param fromAccount The account to transfer from.
      * @param toAccount   The account to transfer to.
      * @return True if the transfer was successful, false otherwise.
-     * @throws SQLException If a database access error occurs.
-     *                      If an error occurs while committing the transaction then neither account will be updated.
      */
-    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) throws SQLException {
+    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) {
         String query = "UPDATE accounts " +
                 "SET balance = (?) " +
                 "WHERE id_account = (?)";
 
         Connection connection = CONNECTION_POOL.getConnection();
-        connection.setAutoCommit(false);
         try (PreparedStatement ps1 = connection.prepareStatement(query)) {
+            connection.setAutoCommit(false);
+
             ps1.setBigDecimal(1, fromAccount.getBalance());
             ps1.setInt(2, fromAccount.getId());
             ps1.executeUpdate();
@@ -59,8 +58,12 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
             connection.commit();
         } catch (SQLException e) {
-            connection.rollback();
-            throw e;
+            LOGGER.error(e.getMessage());
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                LOGGER.error(ex.getMessage());
+            }
         } finally {
             try {
                 connection.setAutoCommit(true);
