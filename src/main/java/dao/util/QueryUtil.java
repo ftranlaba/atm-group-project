@@ -17,10 +17,12 @@ public final class QueryUtil {
         StringBuilder query = new StringBuilder(String.format("UPDATE %s SET ", tableName));
         for (int i = 0; i < columnNames.size(); i++) {
             query.append(columnNames.get(i)).append(" = (?)");
+
             if (i != columnNames.size() - 1) {
                 query.append(", ");
             }
         }
+
         query.append(String.format(" WHERE %s = (?)", idColumnName));
         return query.toString();
     }
@@ -29,17 +31,21 @@ public final class QueryUtil {
         StringBuilder query = new StringBuilder(String.format("INSERT INTO %s (", tableName));
         for (int i = 0; i < columnNames.size(); i++) {
             query.append(columnNames.get(i));
+
             if (i != columnNames.size() - 1) {
                 query.append(", ");
             }
         }
+
         query.append(") VALUES (");
         for (int i = 0; i < columnNames.size(); i++) {
             query.append("?");
+
             if (i != columnNames.size() - 1) {
                 query.append(", ");
             }
         }
+
         query.append(")");
         return query.toString();
     }
