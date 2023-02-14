@@ -1,7 +1,8 @@
 package dao.util;
 
 import dao.IBaseDAO;
+import datamodels.IdInfo;
 
 public interface IDAOFactory {
-    IBaseDAO getDAO(String modal);
+    IBaseDAO<? extends IdInfo> getDAO(String modal);
 }

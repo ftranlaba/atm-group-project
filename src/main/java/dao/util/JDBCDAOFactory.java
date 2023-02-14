@@ -3,6 +3,7 @@ package dao.util;
 import dao.IBaseDAO;
 import dao.concretedaos.*;
 import dao.util.exceptions.UnsupportedFactoryException;
+import datamodels.IdInfo;
 
 /**
  * @author Francis
@@ -12,7 +13,7 @@ public class JDBCDAOFactory implements IDAOFactory {
     protected JDBCDAOFactory(){ }
 
     @Override
-    public IBaseDAO getDAO(String modal) {
+    public IBaseDAO<? extends IdInfo> getDAO(String modal) {
         switch (modal.toLowerCase()) {
             case "iaccountaccesshistorydao":
                 return new AccountAccessHistoryDAO();
