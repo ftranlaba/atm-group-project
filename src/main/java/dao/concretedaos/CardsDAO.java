@@ -50,7 +50,8 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
 
     private static String calculateExpirationDate() {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expirationDate = now.plusYears(3);
+        int numYearsValid = 3;
+        LocalDateTime expirationDate = now.plusYears(numYearsValid);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yy");
         return formatter.format(expirationDate);
     }
