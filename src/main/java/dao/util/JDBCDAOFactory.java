@@ -5,7 +5,7 @@ import dao.concretedaos.*;
 import dao.util.exceptions.UnsupportedFactoryException;
 
 /**
- * @author Moussa
+ * @author Francis
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class JDBCDAOFactory implements IDAOFactory {
@@ -14,19 +14,19 @@ public class JDBCDAOFactory implements IDAOFactory {
     @Override
     public IBaseDAO getDAO(String modal) {
         switch (modal.toLowerCase()) {
-            case "IAccountAccessHistoryDAO":
+            case "iaccountaccesshistorydao":
                 return new AccountAccessHistoryDAO();
-            case "IAccountsDAO":
+            case "iaccountsdao":
                 return new AccountsDAO();
-            case "ICardsDAO":
+            case "icardsdao":
                 return new CardsDAO();
-            case "IDepositWithdrawHistoryDAO":
+            case "idepositwithdrawhistorydao":
                 return new DepositWithdrawHistoryDAO();
-            case "ITransactionsDAO":
+            case "itransactionsdao":
                 return new TransactionsDAO();
-            case "ITransfersDAO":
+            case "itransfersdao":
                 return new TransfersDAO();
-            case "IUsersDAO":
+            case "iusersdao":
                 return new UsersDAO();
             default:
                 throw new UnsupportedFactoryException("JDBC Factory Type not supported.");
