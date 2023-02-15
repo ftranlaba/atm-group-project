@@ -1,8 +1,11 @@
 package datamodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Timestamp;
 
 public class AccountAccess extends TimeInfo {
+    @JsonProperty
     private String macAddress;
 
     public AccountAccess(int id, int idForeignKey, Timestamp time, String macAddress) {
