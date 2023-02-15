@@ -1,16 +1,11 @@
 package datamodels;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class Transfer extends BalanceInfo {
-    @JsonProperty
     private int idAccount2;
-    @JsonProperty
     private BigDecimal oldBalance2;
-    @JsonProperty
     private BigDecimal newBalance2;
 
     public Transfer(int id, int idForeignKey, Timestamp time, BigDecimal oldBalance, BigDecimal newBalance,

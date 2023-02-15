@@ -1,11 +1,8 @@
 package datamodels;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Objects;
 
 public abstract class IdInfo {
-    @JsonProperty
     private int id;
 
     public IdInfo() {

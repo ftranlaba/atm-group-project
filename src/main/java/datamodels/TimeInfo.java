@@ -1,14 +1,9 @@
 package datamodels;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.sql.Timestamp;
 import java.util.Objects;
 
 public abstract class TimeInfo extends ForeignKeyInfo {
-    @JsonProperty
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Timestamp time;
 
     public TimeInfo(int id, int idForeignKey, Timestamp time) {

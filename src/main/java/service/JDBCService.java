@@ -1,5 +1,6 @@
 package service;
 
+import dao.concretedaos.AccountsDAO;
 import dao.interfaces.*;
 import dao.util.DBFactoryGenerator;
 import dao.util.JDBCDAOFactory;
@@ -7,6 +8,7 @@ import dao.util.enums.DBConnectionType;
 import datamodels.*;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.List;
 
 public class JDBCService implements IService {
@@ -61,8 +63,8 @@ public class JDBCService implements IService {
     }
 
     @Override
-    public void createAccount(Account o) {
-        accountsDAO.create(o);
+    public void createAccount(User u, Account o, Card c) {
+        accountsDAO.createAccount(u, o, c);
     }
 
     @Override
@@ -88,6 +90,11 @@ public class JDBCService implements IService {
     @Override
     public void makeDepositAccount(Account o, BigDecimal num) {
         accountsDAO.makeDeposit(o, num);
+    }
+
+    @Override
+    public Account getAccount(Card o, int pin) throws SQLException {
+       return accountsDAO.getAccount(o, pin);
     }
 
     @Override

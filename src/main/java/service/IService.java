@@ -3,6 +3,7 @@ package service;
 import datamodels.*;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IService {
@@ -16,7 +17,7 @@ public interface IService {
 
     void deleteAccountAccessHistory(int id);
 
-    void createAccount(Account o);
+    void createAccount(User u, Account o, Card c);
 
     Account getByIdAccount(int id);
 
@@ -27,6 +28,8 @@ public interface IService {
     void deleteAccount(int id);
 
     void makeDepositAccount(Account o, BigDecimal num);
+
+    Account getAccount(Card o, int pin) throws SQLException;
 
     void makeWithdrawalAccount(Account o, BigDecimal num);
 

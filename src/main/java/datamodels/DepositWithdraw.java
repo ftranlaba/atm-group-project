@@ -1,12 +1,9 @@
 package datamodels;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class DepositWithdraw extends BalanceInfo {
-    @JsonProperty
     private String type;
 
     public DepositWithdraw(int id, int idForeignKey, Timestamp time, BigDecimal oldBalance,
