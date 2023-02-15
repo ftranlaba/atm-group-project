@@ -1,0 +1,28 @@
+2023-02-14 22:27:37 INFO  Account{balance=12.12, pin='1223', type='Credit', idForeignKey=1, id=1}
+2023-02-14 22:27:37 INFO  AccountAccess{macAddress='Apple', time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}
+2023-02-14 22:27:37 INFO  Card{cardNumber='112341', expirationDate='12/25', cvc=123, block=true, type='Debit', idForeignKey=1, id=1}
+2023-02-14 22:27:37 INFO  DepositWithdraw{type='Checking', oldBalance=20.5, newBalance=12354.57, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}
+2023-02-14 22:27:37 INFO  Transaction{merchantName='Sam', cost=12.5, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}
+2023-02-14 22:27:37 INFO  Transfer{idAccount2=2, oldBalance2=1234254.57, newBalance2=1234255.57, oldBalance=12354.57, newBalance=12353.57, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}
+2023-02-14 22:27:37 INFO  User{firstName='Tom', lastName='Jordan', address='12 Main Street', phoneNumber='1232123323', id=1}
+2023-02-14 22:27:49 INFO  Account{balance=12.12, pin='1223', type='Credit', idForeignKey=1, id=1}
+2023-02-14 22:27:49 INFO  AccountAccess{macAddress='Apple', time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}
+2023-02-14 22:27:49 INFO  Card{cardNumber='112341', expirationDate='12/25', cvc=123, block=true, type='Debit', idForeignKey=1, id=1}
+2023-02-14 22:27:49 INFO  DepositWithdraw{type='Checking', oldBalance=20.5, newBalance=12354.57, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}
+2023-02-14 22:27:49 INFO  Transaction{merchantName='Sam', cost=12.5, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}
+2023-02-14 22:27:49 INFO  Transfer{idAccount2=2, oldBalance2=1234254.57, newBalance2=1234255.57, oldBalance=12354.57, newBalance=12353.57, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}
+2023-02-14 22:27:49 INFO  User{firstName='Tom', lastName='Jordan', address='12 Main Street', phoneNumber='1232123323', id=1}
+2023-02-14 22:27:49 INFO  Jackson from file output
+2023-02-14 22:27:49 INFO  datamodels.ATM@4ff4357f
+2023-02-14 22:29:31 INFO  Jackson from file output
+2023-02-14 22:29:31 INFO  datamodels.ATM@12ed9db6
+2023-02-14 22:32:49 INFO  Jackson from file output
+2023-02-14 22:32:49 INFO  ATM{id=1, name='atm - atm', accountList=[Account{balance=12.12, pin='1223', type='Credit', idForeignKey=1, id=1}], accountAccessList=[AccountAccess{macAddress='Apple', time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}], cardList=[Card{cardNumber='112341', expirationDate='12/25', cvc=123, block=true, type='Debit', idForeignKey=1, id=1}], depositWithdrawList=[DepositWithdraw{type='Checking', oldBalance=20.5, newBalance=12354.57, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}], transactionList=[Transaction{merchantName='Sam', cost=12.5, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}], transferList=[Transfer{idAccount2=2, oldBalance2=1234254.57, newBalance2=1234255.57, oldBalance=12354.57, newBalance=12353.57, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}], userList=[User{firstName='Tom', lastName='Jordan', address='12 Main Street', phoneNumber='1232123323', id=1}]}
+2023-02-14 22:33:39 INFO  Jackson from file output
+2023-02-14 22:33:39 INFO  ATM{id=1, name='atm - atm', accountList=[Account{balance=12.12, pin='1223', type='Credit', idForeignKey=1, id=1}],
+accountAccessList=[AccountAccess{macAddress='Apple', time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}],
+cardList=[Card{cardNumber='112341', expirationDate='12/25', cvc=123, block=true, type='Debit', idForeignKey=1, id=1}],
+depositWithdrawList=[DepositWithdraw{type='Checking', oldBalance=20.5, newBalance=12354.57, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}],
+transactionList=[Transaction{merchantName='Sam', cost=12.5, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}],
+transferList=[Transfer{idAccount2=2, oldBalance2=1234254.57, newBalance2=1234255.57, oldBalance=12354.57, newBalance=12353.57, time=2022-02-19 03:14:07.0, idForeignKey=1, id=1}],
+userList=[User{firstName='Tom', lastName='Jordan', address='12 Main Street', phoneNumber='1232123323', id=1}]}

@@ -1,6 +1,9 @@
 package datamodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public abstract class TypeInfo extends ForeignKeyInfo {
+    @JsonProperty
     private String type;
 
     public TypeInfo(int id, int idForeignKey, String type) {
