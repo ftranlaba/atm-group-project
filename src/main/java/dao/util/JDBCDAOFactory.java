@@ -4,7 +4,6 @@ import dao.IBaseDAO;
 import dao.concretedaos.*;
 import dao.util.exceptions.UnsupportedFactoryException;
 import datamodels.IdInfo;
-import datamodels.IdInfo;
 
 /**
  * @author Francis
