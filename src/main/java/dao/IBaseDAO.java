@@ -14,6 +14,10 @@ public interface IBaseDAO<T> {
 
     T getById(int id);
 
+    /**
+     * @return A list of all the objects in the table.
+     * If an error occurs or the table is empty, an empty list is returned.
+     */
     List<T> getAll();
 
     void update(T o);

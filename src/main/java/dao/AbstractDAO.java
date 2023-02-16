@@ -135,10 +135,11 @@ public abstract class AbstractDAO<T extends IdInfo> implements IBaseDAO<T> {
                 T entity = createEntityFromRow(rs);
                 entities.add(entity);
             }
+
+            return entities;
         } catch (SQLException e) {
             LOGGER.error(e);
+            return new ArrayList<>();
         }
-
-        return entities;
     }
 }
