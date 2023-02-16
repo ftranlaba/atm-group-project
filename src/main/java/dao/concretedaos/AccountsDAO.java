@@ -147,7 +147,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         BigDecimal toAccNewBalance = toAccOldBalance.add(amount);
         to.setBalance(toAccNewBalance);
 
-        updateBalanceForTransfer(from, to);
+        updateBalanceAfterTransfer(from, to);
 
         Transfer transfer = new Transfer();
         transfer.setIdForeignKey(from.getId());
@@ -170,7 +170,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
      * @param toAccount   The account to transfer to.
      * @return True if the transfer was successful, false otherwise.
      */
-    private static void updateBalanceForTransfer(Account fromAccount, Account toAccount) {
+    private static void updateBalanceAfterTransfer(Account fromAccount, Account toAccount) {
         String query = "UPDATE accounts " +
                 "SET balance = (?) " +
                 "WHERE id_account = (?)";
