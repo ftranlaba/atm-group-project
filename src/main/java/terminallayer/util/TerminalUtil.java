@@ -4,6 +4,7 @@ import dao.concretedaos.AccountsDAO;
 import dao.util.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
+import datamodels.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.IService;
@@ -75,13 +76,12 @@ public class TerminalUtil {
     }
 
     public final static void makeTransfer(Account a) throws DAOException {
-        AccountsDAO accountsDAO = new AccountsDAO();
         LOGGER.info("Amount For Transfer");
         BigDecimal transferAmount = scan.nextBigDecimal();
         LOGGER.info("Id for receiving account");
         int id2 = scan.nextInt();
-        Account account = accountsDAO.getById(id2);
-        accountsDAO.makeTransfer(a, account, transferAmount);
+        Account account = service.getByIdAccount(id2);
+        service.makeTransfer(a, account, transferAmount);
     }
 
     public final static String numberValidator(String s, int maxNum) throws TooManyAttempts {
@@ -118,6 +118,57 @@ public class TerminalUtil {
             }
         } while (!input.matches("[0-9]{2}-[0-9]{2}"));
         return input;
+    }
+
+    public final static String printAccount(int option, User u, Account a, Card c) {
+        switch (option) {
+            case 1:
+                return "\n" +
+                        "        Account Created    " +
+                        "\n" +
+                        "    Firstname: " + u.getFirstName() + " Lastname: " + u.getLastName() +
+                        "\n" +
+                        "    Address: " + u.getAddress() + " Phone Number: " + u.getPhoneNumber() +
+                        "\n" +
+                        "    Account ID: " + a.getId() + " Account Type: " + a.getType() +
+                        "\n" +
+                        "    Pin: " + a.getPin() +
+                        "\n" +
+                        "    Card Number: " + c.getCardNumber() + " CVC: " + c.getCvc() +
+                        "\n" +
+                        "    Expiration Date: " + c.getExpirationDate() + " Type " + c.getType() +
+                        "\n";
+            case 2:
+                return "\n" +
+                        "        Account: " + a.getId() + "    " +
+                        "\n" +
+                        "    Firstname: " + u.getFirstName() + " Lastname: " + u.getLastName() +
+                        "\n" +
+                        "    Account Type: " + a.getType() + " Balance: " + a.getBalance() +
+                        "\n" +
+                        "    Pin: " + a.getPin() +
+                        "\n" +
+                        "    Card Number: " + c.getCardNumber() + " CVC: " + c.getCvc() +
+                        "\n" +
+                        "    Expiration Date: " + c.getExpirationDate() + " Type " + c.getType() +
+                        "\n" +
+                        "    Blocked: " + c.isBlock();
+            case 3:
+                return "\n " +
+                        "                       [" +
+                        "firstName=" + u.getFirstName() +
+                        ", lastName=" + u.getLastName() +
+                        ", accountId=" + a.getId() + "balance=" + a.getBalance() +
+                        ", pin=" + a.getPin() +
+                        ", type=" + a.getType() +
+                        ", cardNumber=" + c.getCardNumber() +
+                        ", expirationDate=" + c.getExpirationDate() +
+                        ", cvc=" + c.getCvc() +
+                        ", block=" + c.isBlock() +
+                        ", type=" + c.getType() +
+                        "]";
+        }
+        return null;
     }
 
 }

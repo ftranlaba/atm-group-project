@@ -188,6 +188,11 @@ public class JDBCService implements IService {
     }
 
     @Override
+    public void makeTransfer(Account from, Account to, BigDecimal amount) {
+        accountsDAO.makeTransfer(from, to, amount);
+    }
+
+    @Override
     public Transfer getByIdTransfer(int id) {
         return transfersDAO.getById(id);
     }

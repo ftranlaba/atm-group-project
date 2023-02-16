@@ -122,13 +122,17 @@ public class TerminalMain {
                 case 1:
                     LOGGER.info("Enter account id: ");
                     int id = scan.nextInt();
-                    Account account = service.getByIdAccount(id);
-                    LOGGER.info(account);
+                    User u = service.getByIdUser(id);
+                    Account a = service.getByIdAccount(id);
+                    Card c = service.getByIdCard(id);
+                    LOGGER.info(printAccount(1, u, a, c));
                     break;
                 case 2:
                     List<Account> accountList = service.getAllAccounts();
-                    for (Account account1 : accountList) {
-                        LOGGER.info(account1 + "\n");
+                    for (Account a1 : accountList) {
+                        User u1 = service.getByIdUser(a1.getId());
+                        Card c1 = service.getByIdCard(a1.getId());
+                        LOGGER.info(printAccount(3, u1, a1, c1));
                     }
                     break;
                 case 3:
@@ -156,9 +160,10 @@ public class TerminalMain {
         User u = createUser();
         service.createUser(u);
         service.createAccount(u, makeAccount(), new Card());
-//        LOGGER.info(usersDAO.getById(u.getId()));
-//        LOGGER.info(cardsDAO.getById(u.getId()));
-//        LOGGER.info(accountsDAO.getById(u.getId()));
+        User newUser = service.getByIdUser(u.getId());
+        Account newAccount =service.getByIdAccount(u.getId());
+        Card newCard = service.getByIdCard(u.getId());
+        LOGGER.info(printAccount(1, newUser, newAccount, newCard));
     }
 
     public static Account makeAccount() throws InvalidTypeException, TooManyAttempts {
