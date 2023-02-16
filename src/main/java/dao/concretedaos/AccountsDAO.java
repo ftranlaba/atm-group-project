@@ -55,8 +55,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     }
 
     @Override
-    public @Nullable
-    Account getAccount(Card card, int pin) {
+    public @Nullable Account getAccount(Card card, int pin) {
         String query = "SELECT * " +
                 "FROM accounts " +
                 "WHERE pin = (?) AND id_account = " +
