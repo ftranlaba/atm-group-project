@@ -1,11 +1,5 @@
 package terminallayer;
 
-import dao.concretedaos.AccountsDAO;
-import dao.concretedaos.CardsDAO;
-import dao.concretedaos.UsersDAO;
-import dao.util.DBFactoryGenerator;
-import dao.util.IDAOFactory;
-import dao.util.enums.DBConnectionType;
 import dao.util.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
@@ -14,7 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.IService;
 import service.JDBCService;
-import terminallayer.exceptions.InvalidTypeException;
+import terminallayer.exceptions.InvalidNumber;
+import terminallayer.exceptions.TooManyAttempts;
+import terminallayer.util.AccountType;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -23,8 +19,7 @@ import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static terminallayer.util.TerminalUtil.authUser;
-import static terminallayer.util.TerminalUtil.makeTransfer;
+import static terminallayer.util.TerminalUtil.*;
 
 
 public class TerminalMain {
@@ -33,8 +28,9 @@ public class TerminalMain {
     private static final Scanner scan = new Scanner(System.in);
     private static final IService service = JDBCService.getInstance();
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException, DAOException {
-        infiniteloop: while (true) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidNumber, SQLException, DAOException, TooManyAttempts {
+        infiniteloop:
+        while (true) {
             LOGGER.info("ATM Terminal \n");
             LOGGER.info("1) User");
             LOGGER.info("2) Admin");
@@ -57,122 +53,133 @@ public class TerminalMain {
                     scan.close();
                     break infiniteloop;
                 default:
-                    throw new InvalidTypeException("Invalid Option");
+                    throw new InvalidNumber("Invalid Option");
             }
         }
     }
 
-    public static void userUI(Account a) throws InvalidTypeException, SQLException, DAOException {
-        LOGGER.info("1) Check Account ");
-        LOGGER.info("2) Deposit Money");
-        LOGGER.info("3) Transfer Money");
-        LOGGER.info("4) Withdraw money");
-        LOGGER.info("5) Report Card Stolen");
-        Card c = service.getByIdCard(a.getId());
-        switch (scan.nextInt()) {
-            case 1:
-                LOGGER.info("account ");
-                LOGGER.info(a);
-                break;
-            case 2:
-                LOGGER.info("How Much money would you like to deposit: ");
-                BigDecimal deposit = scan.nextBigDecimal();
-                service.makeDepositAccount(a, deposit);
-                break;
-            case 3:
-                try {
-                    makeTransfer(a);
-                } catch (DAOException e) {
-                    LOGGER.error(e.getMessage());
-                }
-                break;
-            case 4:
-                LOGGER.info("Amount to Withdraw");
-                BigDecimal withdraw = scan.nextBigDecimal();
-                service.makeWithdrawalAccount(a, withdraw);
-                break;
-            case 5:
-                LOGGER.info("Card Blocked");
-                service.toggleBlockStatus(c);
-                break;
-            default:
-                throw new InvalidTypeException("Invalid Option");
+    public static void userUI(Account a) throws InvalidNumber, SQLException, DAOException {
+        infiniteloop:
+        while (true) {
+            LOGGER.info("1) Check Account ");
+            LOGGER.info("2) Deposit Money");
+            LOGGER.info("3) Transfer Money");
+            LOGGER.info("4) Withdraw money");
+            LOGGER.info("5) Report Card Stolen");
+            LOGGER.info("6) Exit to Main Menu");
+            Card c = service.getByIdCard(a.getId());
+            switch (scan.nextInt()) {
+                case 1:
+                    LOGGER.info("account ");
+                    LOGGER.info(service.getByIdAccount(a.getId()));
+                    break;
+                case 2:
+                    LOGGER.info("How Much money would you like to deposit: ");
+                    BigDecimal deposit = scan.nextBigDecimal();
+                    service.makeDepositAccount(a, deposit);
+                    break;
+                case 3:
+                    try {
+                        makeTransfer(a);
+                    } catch (DAOException e) {
+                        LOGGER.error(e.getMessage());
+                    }
+                    break;
+                case 4:
+                    LOGGER.info("Amount to Withdraw");
+                    BigDecimal withdraw = scan.nextBigDecimal();
+                    service.makeWithdrawalAccount(a, withdraw);
+                    break;
+                case 5:
+                    LOGGER.info("Card Blocked");
+                    service.toggleBlockStatus(c);
+                    break;
+                case 6:
+                    break infiniteloop;
+                default:
+                    LOGGER.error("Invalid Option");
+                    userUI(a);
+            }
         }
     }
 
-    public static void adminUI() throws InvalidTypeException, SQLException {
-        AccountsDAO accountsDAO = new AccountsDAO();
-        CardsDAO cardsDAO = new CardsDAO();
-        LOGGER.info("1) See Account");
-        LOGGER.info("2) See Accounts");
-        LOGGER.info("3) Block Card");
-        LOGGER.info("4) Unblock Card");
-        switch (scan.nextInt()) {
-            case 1:
-                LOGGER.info("Enter account id: ");
-                int id = scan.nextInt();
-                Account account = accountsDAO.getById(id);
-                LOGGER.info(account);
-                break;
-            case 2:
-                List<Account> accountList = accountsDAO.getAll();
-                for (Account account1 : accountList) {
-                    LOGGER.info(account1 + "\n");
-                }
-                break;
-            case 3:
-                LOGGER.info("Enter Account Id of Card to Block: ");
-                int blockId = scan.nextInt();
-                Card c = cardsDAO.getById(blockId);
-                cardsDAO.toggleBlockStatus(c);
-                LOGGER.info("Card Blocked");
-                break;
-            case 4:
-                LOGGER.info("Enter Account Id of Card to Unblock: ");
-                int unBlockId = scan.nextInt();
-                Card c1 = cardsDAO.getById(unBlockId);
-                cardsDAO.toggleBlockStatus(c1);
-                LOGGER.info("Card UnBlocked");
-                break;
-            default:
-                throw new InvalidTypeException("Invalid Option");
-        }
+    public static void adminUI() throws InvalidNumber, SQLException {
 
+        infiniteloop:
+        while (true) {
+            LOGGER.info("1) See Account");
+            LOGGER.info("2) See Accounts");
+            LOGGER.info("3) Block Card");
+            LOGGER.info("4) Unblock Card");
+            LOGGER.info("5) Exit to Main Menu");
+            switch (scan.nextInt()) {
+                case 1:
+                    LOGGER.info("Enter account id: ");
+                    int id = scan.nextInt();
+                    User u = service.getByIdUser(id);
+                    Account a = service.getByIdAccount(id);
+                    Card c = service.getByIdCard(id);
+                    LOGGER.info(printAccount(2, u, a, c));
+                    break;
+                case 2:
+                    List<Account> accountList = service.getAllAccounts();
+                    for (Account a1 : accountList) {
+                        User u1 = service.getByIdUser(a1.getId());
+                        Card c1 = service.getByIdCard(a1.getId());
+                        LOGGER.info(printAccount(3, u1, a1, c1));
+                    }
+                    break;
+                case 3:
+                    LOGGER.info("Enter Account Id of Card to Block: ");
+                    int blockId = scan.nextInt();
+                    service.toggleBlockStatus(service.getByIdCard(blockId));
+                    LOGGER.info("Card Blocked");
+                    break;
+                case 4:
+                    LOGGER.info("Enter Account Id of Card to Unblock: ");
+                    int unBlockId = scan.nextInt();
+                    service.toggleBlockStatus(service.getByIdCard(unBlockId));
+                    LOGGER.info("Card UnBlocked");
+                    break;
+                case 5:
+                    break infiniteloop;
+                default:
+                    LOGGER.error("Invalid Option");
+                    adminUI();
+            }
+        }
     }
 
-    public static void createAccount() throws ExecutionException, InterruptedException, InvalidTypeException, SQLException {
-        UsersDAO usersDAO = new UsersDAO();
-        CardsDAO cardsDAO = new CardsDAO();
-        AccountsDAO accountsDAO = new AccountsDAO();
+    public static void createAccount() throws ExecutionException, InterruptedException, InvalidNumber, SQLException, TooManyAttempts {
         User u = createUser();
-        usersDAO.create(u);
-        accountsDAO.createAccount(u, makeAccount(), new Card());
-        LOGGER.info(usersDAO.getById(u.getId()));
-        LOGGER.info(cardsDAO.getById(u.getId()));
-        LOGGER.info(accountsDAO.getById(u.getId()));
+        service.createUser(u);
+        service.createAccount(u, makeAccount(), new Card());
+        User newUser = service.getByIdUser(u.getId());
+        Account newAccount =service.getByIdAccount(u.getId());
+        Card newCard = service.getByIdCard(u.getId());
+        LOGGER.info(printAccount(1, newUser, newAccount, newCard));
     }
 
-    public static Account makeAccount() throws InvalidTypeException {
-        LOGGER.info("Please Enter Four Digit pin");
-        int pin = scan.nextInt();
+    public static Account makeAccount() throws InvalidNumber, TooManyAttempts {
+        String message = ("Please Enter Four Digit pin");
+        String output = numberValidator(message, 4);
+        int pin = Integer.parseInt(output);
         LOGGER.info("Please enter account type: ");
         LOGGER.info("1) Credit");
         LOGGER.info("2) Debit");
         LOGGER.info("3) Savings");
-        int type = scan.nextInt();
-        if (!String.valueOf(pin).matches("[0-9]{4}")) {
-            throw new InvalidTypeException("Invalid pin pattern");
-        }
-        switch (type) {
+        switch (scan.nextInt()) {
             case 1:
-                return new Account("Credit", pin);
+                return new Account(AccountType.CREDIT.getType(), pin);
             case 2:
-                return new Account("Debit", pin);
+                return new Account(AccountType.DEBIT.getType(), pin);
             case 3:
-                return new Account("Savings", pin);
+                return new Account(AccountType.SAVINGS.getType(), pin);
             default:
-                throw new InvalidTypeException("Invalid type");
+                LOGGER.error("Invalid Option");
+                makeAccount();
         }
+        return null;
     }
 
     public static User createUser() throws ExecutionException, InterruptedException, SQLException {

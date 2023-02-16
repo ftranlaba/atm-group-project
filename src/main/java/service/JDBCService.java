@@ -1,5 +1,6 @@
 package service;
 
+import dao.concretedaos.AccountsDAO;
 import dao.interfaces.*;
 import dao.util.DBFactoryGenerator;
 import dao.util.IDAOFactory;
@@ -7,6 +8,7 @@ import dao.util.enums.DBConnectionType;
 import datamodels.*;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.List;
 
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
@@ -66,8 +68,8 @@ public final class JDBCService implements IService {
     }
 
     @Override
-    public void createAccount(Account o) {
-        ACCOUNTS_DAO.create(o);
+    public void createAccount(User u, Account o, Card c) {
+        ACCOUNTS_DAO.createAccount(u, o, c);
     }
 
     @Override
@@ -93,6 +95,11 @@ public final class JDBCService implements IService {
     @Override
     public void makeDepositAccount(Account o, BigDecimal num) {
         ACCOUNTS_DAO.makeDeposit(o, num);
+    }
+
+    @Override
+    public Account getAccount(Card o, int pin) throws SQLException {
+       return ACCOUNTS_DAO.getAccount(o, pin);
     }
 
     @Override
@@ -183,6 +190,11 @@ public final class JDBCService implements IService {
     @Override
     public void createTransfer(Transfer o) {
         TRANSFERS_DAO.create(o);
+    }
+
+    @Override
+    public void makeTransfer(Account from, Account to, BigDecimal amount) {
+        ACCOUNTS_DAO.makeTransfer(from, to, amount);
     }
 
     @Override

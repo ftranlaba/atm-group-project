@@ -36,13 +36,13 @@ public class MainDriver {
         User tom = new UserBuilder(1).setFirstName("Tom").setLastName("Jordan").setAddress("12 Main Street")
                 .setPhoneNumber("1232123323").build();
 
-        /* LOGGER.info(tomAccount);
+//        LOGGER.info(tomAccount);
         LOGGER.info(tomAccountAccess);
         LOGGER.info(tomCard);
         LOGGER.info(tomDeposit);
         LOGGER.info(tomTransaction);
         LOGGER.info(tomTransfer);
-        LOGGER.info(tom); */
+//        LOGGER.info(tom);
 
         List<Account> accountList = new ArrayList<>();
         accountList.add(tomAccount);
