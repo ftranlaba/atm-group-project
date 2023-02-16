@@ -2,9 +2,13 @@ package dao.concretedaos;
 
 import com.sun.istack.Nullable;
 import dao.AbstractDAO;
+import dao.interfaces.IAccountAccessHistoryDAO;
 import dao.interfaces.IAccountsDAO;
 import dao.interfaces.ITransfersDAO;
-import datamodels.*;
+import datamodels.Account;
+import datamodels.Card;
+import datamodels.Transfer;
+import datamodels.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -76,18 +80,14 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
             Account account = createEntityFromRow(rs);
 
-            AccountAccess accountAccess = new AccountAccess();
-            accountAccess.setIdForeignKey(account.getId());
-            accountAccess.setTime(new Timestamp(System.currentTimeMillis()));
-            accountAccess.setMacAddress("00:00:00:00:00:00");
-
-            AccountAccessHistoryDAO accountAccessDAO = new AccountAccessHistoryDAO();
-            accountAccessDAO.create(accountAccess);
+            IAccountAccessHistoryDAO accountAccessHistoryDAO = new AccountAccessHistoryDAO();
+            accountAccessHistoryDAO.logAccountAccess(account);
 
             return account;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
+
         return null;
     }
 
