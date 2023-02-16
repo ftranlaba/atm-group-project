@@ -125,31 +125,31 @@ public class TerminalUtil {
                 return "\n" +
                         "        Account Created    " +
                         "\n" +
-                        "    Firstname: " + u.getFirstName() + " Lastname: " + u.getLastName() +
+                        "    Firstname: " + u.getFirstName() + ", Lastname: " + u.getLastName() +
                         "\n" +
-                        "    Address: " + u.getAddress() + " Phone Number: " + u.getPhoneNumber() +
+                        "    Address: " + u.getAddress() + ", Phone Number: " + u.getPhoneNumber() +
                         "\n" +
-                        "    Account ID: " + a.getId() + " Account Type: " + a.getType() +
+                        "    Account ID: " + a.getId() + ", Account Type: " + a.getType() +
                         "\n" +
                         "    Pin: " + a.getPin() +
                         "\n" +
-                        "    Card Number: " + c.getCardNumber() + " CVC: " + c.getCvc() +
+                        "    Card Number: " + c.getCardNumber() + ", CVC: " + c.getCvc() +
                         "\n" +
-                        "    Expiration Date: " + c.getExpirationDate() + " Type " + c.getType() +
+                        "    Expiration Date: " + c.getExpirationDate() + ", Type " + c.getType() +
                         "\n";
             case 2:
                 return "\n" +
                         "        Account: " + a.getId() + "    " +
                         "\n" +
-                        "    Firstname: " + u.getFirstName() + " Lastname: " + u.getLastName() +
+                        "    Firstname: " + u.getFirstName() + ", Lastname: " + u.getLastName() +
                         "\n" +
-                        "    Account Type: " + a.getType() + " Balance: " + a.getBalance() +
+                        "    Account Type: " + a.getType() + ", Balance: " + a.getBalance() +
                         "\n" +
                         "    Pin: " + a.getPin() +
                         "\n" +
-                        "    Card Number: " + c.getCardNumber() + " CVC: " + c.getCvc() +
+                        "    Card Number: " + c.getCardNumber() + ", CVC: " + c.getCvc() +
                         "\n" +
-                        "    Expiration Date: " + c.getExpirationDate() + " Type " + c.getType() +
+                        "    Expiration Date: " + c.getExpirationDate() + ", Type " + c.getType() +
                         "\n" +
                         "    Blocked: " + c.isBlock();
             case 3:
@@ -157,7 +157,7 @@ public class TerminalUtil {
                         "                       [" +
                         "firstName=" + u.getFirstName() +
                         ", lastName=" + u.getLastName() +
-                        ", accountId=" + a.getId() + "balance=" + a.getBalance() +
+                        ", accountId=" + a.getId() + " balance=" + a.getBalance() +
                         ", pin=" + a.getPin() +
                         ", type=" + a.getType() +
                         ", cardNumber=" + c.getCardNumber() +

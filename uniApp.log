@@ -1,0 +1,139 @@
+2023-02-16 08:12:49 INFO  ATM Terminal 
+
+2023-02-16 08:12:49 INFO  1) User
+2023-02-16 08:12:49 INFO  2) Admin
+2023-02-16 08:12:49 INFO  3) Create Account
+2023-02-16 08:12:49 INFO  4) Exit
+2023-02-16 08:12:52 INFO  Enter First Name: 
+2023-02-16 08:12:55 INFO  Enter Last Name: 
+2023-02-16 08:12:56 INFO  Enter Address
+2023-02-16 08:13:00 INFO  Enter Phone Number: 
+2023-02-16 08:13:07 INFO  Please Enter Four Digit pin
+2023-02-16 08:13:11 INFO  Please enter account type: 
+2023-02-16 08:13:11 INFO  1) Credit
+2023-02-16 08:13:11 INFO  2) Debit
+2023-02-16 08:13:11 INFO  3) Savings
+2023-02-16 08:13:13 INFO  
+        Account Created    
+    Firstname: Alex  Lastname: H
+    Address: 123 main st Phone Number: (345)535-4533
+    Account ID: 9 Account Type: Debit
+    Pin: 2222
+    Card Number: 3666821277239414 CVC: 332
+    Expiration Date: 02-26 Type Debit
+
+2023-02-16 08:13:13 INFO  ATM Terminal 
+
+2023-02-16 08:13:13 INFO  1) User
+2023-02-16 08:13:13 INFO  2) Admin
+2023-02-16 08:13:13 INFO  3) Create Account
+2023-02-16 08:13:13 INFO  4) Exit
+2023-02-16 08:13:35 INFO  Have A Good Rest of Your Day!
+2023-02-16 08:14:36 INFO  ATM Terminal 
+
+2023-02-16 08:14:36 INFO  1) User
+2023-02-16 08:14:36 INFO  2) Admin
+2023-02-16 08:14:36 INFO  3) Create Account
+2023-02-16 08:14:36 INFO  4) Exit
+2023-02-16 08:14:40 INFO  Enter First Name: 
+2023-02-16 08:14:50 INFO  Enter Last Name: 
+2023-02-16 08:14:52 INFO  Enter Address
+2023-02-16 08:14:58 INFO  Enter Phone Number: 
+2023-02-16 08:15:04 INFO  Please Enter Four Digit pin
+2023-02-16 08:15:06 INFO  Please enter account type: 
+2023-02-16 08:15:06 INFO  1) Credit
+2023-02-16 08:15:06 INFO  2) Debit
+2023-02-16 08:15:06 INFO  3) Savings
+2023-02-16 08:15:08 INFO  
+        Account Created    
+    Firstname: Squid, Lastname: Ward
+    Address: 123 address rd, Phone Number: (534)453-3533
+    Account ID: 10, Account Type: Debit
+    Pin: 3333
+    Card Number: 7487881441819698, CVC: 953
+    Expiration Date: 02-26, Type Debit
+
+2023-02-16 08:15:08 INFO  ATM Terminal 
+
+2023-02-16 08:15:08 INFO  1) User
+2023-02-16 08:15:08 INFO  2) Admin
+2023-02-16 08:15:08 INFO  3) Create Account
+2023-02-16 08:15:08 INFO  4) Exit
+2023-02-16 08:15:31 INFO  Enter Pin: 
+2023-02-16 08:15:36 INFO  Please Enter Card Number: 
+2023-02-16 08:15:37 INFO  Please Enter Expiration Date: 
+2023-02-16 08:15:39 INFO  Please Enter CVC: 
+2023-02-16 08:15:41 INFO  1) See Account
+2023-02-16 08:15:41 INFO  2) See Accounts
+2023-02-16 08:15:41 INFO  3) Block Card
+2023-02-16 08:15:41 INFO  4) Unblock Card
+2023-02-16 08:15:41 INFO  5) Exit to Main Menu
+2023-02-16 08:15:45 INFO  Enter account id: 
+2023-02-16 08:15:47 INFO  
+        Account Created    
+    Firstname: Scott , Lastname: pilgrim
+    Address: 45345 gsgsdf, Phone Number: (456)453-4533
+    Account ID: 2, Account Type: Debit
+    Pin: 3233
+    Card Number: 2087363694885966, CVC: 140
+    Expiration Date: 02-26, Type Debit
+
+2023-02-16 08:15:47 INFO  1) See Account
+2023-02-16 08:15:47 INFO  2) See Accounts
+2023-02-16 08:15:47 INFO  3) Block Card
+2023-02-16 08:15:47 INFO  4) Unblock Card
+2023-02-16 08:15:47 INFO  5) Exit to Main Menu
+2023-02-16 08:16:24 INFO  ATM Terminal 
+
+2023-02-16 08:16:24 INFO  1) User
+2023-02-16 08:16:24 INFO  2) Admin
+2023-02-16 08:16:24 INFO  3) Create Account
+2023-02-16 08:16:24 INFO  4) Exit
+2023-02-16 08:16:28 INFO  Enter Pin: 
+2023-02-16 08:16:32 INFO  Please Enter Card Number: 
+2023-02-16 08:16:34 INFO  Please Enter Expiration Date: 
+2023-02-16 08:16:36 INFO  Please Enter CVC: 
+2023-02-16 08:16:37 INFO  1) See Account
+2023-02-16 08:16:37 INFO  2) See Accounts
+2023-02-16 08:16:37 INFO  3) Block Card
+2023-02-16 08:16:37 INFO  4) Unblock Card
+2023-02-16 08:16:37 INFO  5) Exit to Main Menu
+2023-02-16 08:16:40 INFO  Enter account id: 
+2023-02-16 08:16:41 INFO  
+        Account: 1    
+    Firstname: firstname, Lastname: lastname
+    Account Type: Savings, Balance: 0
+    Pin: 3333
+    Card Number: 5726867009082747, CVC: 674
+    Expiration Date: 02-26, Type Savings
+    Blocked: false
+2023-02-16 08:16:41 INFO  1) See Account
+2023-02-16 08:16:41 INFO  2) See Accounts
+2023-02-16 08:16:41 INFO  3) Block Card
+2023-02-16 08:16:41 INFO  4) Unblock Card
+2023-02-16 08:16:41 INFO  5) Exit to Main Menu
+2023-02-16 08:16:46 INFO  
+                        [firstName=firstname, lastName=lastname, accountId=1balance=0, pin=3333, type=Savings, cardNumber=5726867009082747, expirationDate=02-26, cvc=674, block=false, type=Savings]
+2023-02-16 08:16:46 INFO  
+                        [firstName=Scott , lastName=pilgrim, accountId=2balance=0, pin=3233, type=Debit, cardNumber=2087363694885966, expirationDate=02-26, cvc=140, block=false, type=Debit]
+2023-02-16 08:16:46 INFO  
+                        [firstName=Scott , lastName=Pilgrim, accountId=3balance=0, pin=3233, type=Debit, cardNumber=3026247382818399, expirationDate=02-26, cvc=262, block=false, type=Debit]
+2023-02-16 08:16:46 INFO  
+                        [firstName=patrick, lastName=star, accountId=4balance=0, pin=3333, type=Debit, cardNumber=1134372321594072, expirationDate=02-26, cvc=658, block=false, type=Debit]
+2023-02-16 08:16:46 INFO  
+                        [firstName=firstname, lastName=lastname, accountId=5balance=0, pin=2222, type=Debit, cardNumber=7652995209886684, expirationDate=02-26, cvc=561, block=false, type=Debit]
+2023-02-16 08:16:46 INFO  
+                        [firstName=Alex, lastName=H, accountId=6balance=0, pin=3333, type=Debit, cardNumber=1232586499208986, expirationDate=02-26, cvc=150, block=false, type=Debit]
+2023-02-16 08:16:46 INFO  
+                        [firstName=Patrick, lastName=Star, accountId=7balance=0, pin=3333, type=Savings, cardNumber=3898481385554920, expirationDate=02-26, cvc=301, block=false, type=Savings]
+2023-02-16 08:16:46 INFO  
+                        [firstName=sponge, lastName=bob, accountId=8balance=0, pin=3333, type=Debit, cardNumber=9893344821885529, expirationDate=02-26, cvc=227, block=false, type=Debit]
+2023-02-16 08:16:46 INFO  
+                        [firstName=Alex , lastName=H, accountId=9balance=0, pin=2222, type=Debit, cardNumber=3666821277239414, expirationDate=02-26, cvc=332, block=false, type=Debit]
+2023-02-16 08:16:46 INFO  
+                        [firstName=Squid, lastName=Ward, accountId=10balance=0, pin=3333, type=Debit, cardNumber=7487881441819698, expirationDate=02-26, cvc=953, block=false, type=Debit]
+2023-02-16 08:16:46 INFO  1) See Account
+2023-02-16 08:16:46 INFO  2) See Accounts
+2023-02-16 08:16:46 INFO  3) Block Card
+2023-02-16 08:16:46 INFO  4) Unblock Card
+2023-02-16 08:16:46 INFO  5) Exit to Main Menu

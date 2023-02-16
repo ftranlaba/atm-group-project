@@ -119,7 +119,7 @@ public class TerminalMain {
                     User u = service.getByIdUser(id);
                     Account a = service.getByIdAccount(id);
                     Card c = service.getByIdCard(id);
-                    LOGGER.info(printAccount(1, u, a, c));
+                    LOGGER.info(printAccount(2, u, a, c));
                     break;
                 case 2:
                     List<Account> accountList = service.getAllAccounts();
