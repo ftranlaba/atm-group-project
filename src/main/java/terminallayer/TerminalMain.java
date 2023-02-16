@@ -1,11 +1,5 @@
 package terminallayer;
 
-import dao.concretedaos.AccountsDAO;
-import dao.concretedaos.CardsDAO;
-import dao.concretedaos.UsersDAO;
-import dao.util.DBFactoryGenerator;
-import dao.util.IDAOFactory;
-import dao.util.enums.DBConnectionType;
 import dao.util.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
@@ -14,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.IService;
 import service.JDBCService;
-import terminallayer.exceptions.InvalidTypeException;
+import terminallayer.exceptions.InvalidNumber;
 import terminallayer.exceptions.TooManyAttempts;
 import terminallayer.util.AccountType;
 
@@ -34,7 +28,7 @@ public class TerminalMain {
     private static final Scanner scan = new Scanner(System.in);
     private static final IService service = JDBCService.getInstance();
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException, DAOException, TooManyAttempts {
+    public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidNumber, SQLException, DAOException, TooManyAttempts {
         infiniteloop:
         while (true) {
             LOGGER.info("ATM Terminal \n");
@@ -59,12 +53,12 @@ public class TerminalMain {
                     scan.close();
                     break infiniteloop;
                 default:
-                    throw new InvalidTypeException("Invalid Option");
+                    throw new InvalidNumber("Invalid Option");
             }
         }
     }
 
-    public static void userUI(Account a) throws InvalidTypeException, SQLException, DAOException {
+    public static void userUI(Account a) throws InvalidNumber, SQLException, DAOException {
         infiniteloop:
         while (true) {
             LOGGER.info("1) Check Account ");
@@ -109,7 +103,7 @@ public class TerminalMain {
         }
     }
 
-    public static void adminUI() throws InvalidTypeException, SQLException {
+    public static void adminUI() throws InvalidNumber, SQLException {
 
         infiniteloop:
         while (true) {
@@ -156,7 +150,7 @@ public class TerminalMain {
         }
     }
 
-    public static void createAccount() throws ExecutionException, InterruptedException, InvalidTypeException, SQLException, TooManyAttempts {
+    public static void createAccount() throws ExecutionException, InterruptedException, InvalidNumber, SQLException, TooManyAttempts {
         User u = createUser();
         service.createUser(u);
         service.createAccount(u, makeAccount(), new Card());
@@ -166,7 +160,7 @@ public class TerminalMain {
         LOGGER.info(printAccount(1, newUser, newAccount, newCard));
     }
 
-    public static Account makeAccount() throws InvalidTypeException, TooManyAttempts {
+    public static Account makeAccount() throws InvalidNumber, TooManyAttempts {
         String message = ("Please Enter Four Digit pin");
         String output = numberValidator(message, 4);
         int pin = Integer.parseInt(output);

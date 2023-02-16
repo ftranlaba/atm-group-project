@@ -1,6 +1,5 @@
 package terminallayer.util;
 
-import dao.concretedaos.AccountsDAO;
 import dao.util.exceptions.DAOException;
 import datamodels.Account;
 import datamodels.Card;
@@ -9,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.IService;
 import service.JDBCService;
-import terminallayer.exceptions.InvalidTypeException;
+import terminallayer.exceptions.InvalidNumber;
 import terminallayer.exceptions.TooManyAttempts;
 
 import java.math.BigDecimal;
@@ -26,7 +25,7 @@ public class TerminalUtil {
     private static final Scanner scan = new Scanner(System.in);
     private static final IService service = JDBCService.getInstance();
 
-    public final static Account authUser() throws InvalidTypeException, ExecutionException, InterruptedException, SQLException {
+    public final static Account authUser() throws InvalidNumber, ExecutionException, InterruptedException, SQLException {
         Card card = new Card();
         List paramList = new ArrayList(1);
         CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
@@ -72,7 +71,7 @@ public class TerminalUtil {
         if (account != null) {
             return account;
         }
-        throw new InvalidTypeException("Invalid Account");
+        throw new InvalidNumber("Invalid Account");
     }
 
     public final static void makeTransfer(Account a) throws DAOException {
