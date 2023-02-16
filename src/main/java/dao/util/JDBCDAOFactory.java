@@ -4,6 +4,7 @@ import dao.IBaseDAO;
 import dao.concretedaos.*;
 import dao.util.exceptions.UnsupportedFactoryException;
 import datamodels.IdInfo;
+import datamodels.IdInfo;
 
 /**
  * @author Francis
@@ -14,20 +15,20 @@ public class JDBCDAOFactory implements IDAOFactory {
 
     @Override
     public IBaseDAO<? extends IdInfo> getDAO(String modal) {
-        switch (modal.toLowerCase()) {
-            case "iaccountaccesshistorydao":
+        switch (modal) {
+            case "IAccountAccessHistoryDAO":
                 return new AccountAccessHistoryDAO();
-            case "iaccountsdao":
+            case "IAccountsDAO":
                 return new AccountsDAO();
-            case "icardsdao":
+            case "ICardsDAO":
                 return new CardsDAO();
-            case "idepositwithdrawhistorydao":
+            case "IDepositWithdrawHistoryDAO":
                 return new DepositWithdrawHistoryDAO();
-            case "itransactionsdao":
+            case "ITransactionsDAO":
                 return new TransactionsDAO();
-            case "itransfersdao":
+            case "ITransfersDAO":
                 return new TransfersDAO();
-            case "iusersdao":
+            case "IUsersDAO":
                 return new UsersDAO();
             default:
                 throw new UnsupportedFactoryException("JDBC Factory Type not supported.");

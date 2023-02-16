@@ -1,9 +1,13 @@
 package datamodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class Account extends TypeInfo {
+    @JsonProperty
     private BigDecimal balance;
+    @JsonProperty
     private int pin;
 
     public Account(int id, int idForeignKey, String type, BigDecimal balance, int pin) {

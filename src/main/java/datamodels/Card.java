@@ -1,9 +1,15 @@
 package datamodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Card extends TypeInfo {
+    @JsonProperty
     private String cardNumber;
+    @JsonProperty
     private String expirationDate;
+    @JsonProperty
     private int cvc;
+    @JsonProperty
     private boolean block;
 
     public Card(int id, int idForeignKey, String type, String cardNumber, String expirationDate, int cvc,

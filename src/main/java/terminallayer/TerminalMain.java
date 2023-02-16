@@ -34,7 +34,7 @@ public class TerminalMain {
     private static final IService service = JDBCService.getInstance();
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidTypeException, SQLException, DAOException {
-        while (true) {
+        infiniteloop: while (true) {
             LOGGER.info("ATM Terminal \n");
             LOGGER.info("1) User");
             LOGGER.info("2) Admin");
@@ -55,7 +55,7 @@ public class TerminalMain {
                 case 4:
                     LOGGER.info("Have A Good Rest of Your Day!");
                     scan.close();
-                    break;
+                    break infiniteloop;
                 default:
                     throw new InvalidTypeException("Invalid Option");
             }
