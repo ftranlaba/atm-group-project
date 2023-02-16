@@ -2,6 +2,7 @@ package service;
 
 import dao.interfaces.*;
 import dao.util.DBFactoryGenerator;
+import dao.util.IDAOFactory;
 import dao.util.enums.DBConnectionType;
 import datamodels.*;
 
@@ -9,20 +10,24 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
-public class JDBCService implements IService {
-    private static final IAccountAccessHistoryDAO ACCOUNT_ACCESS_HISTORY_DAO = (IAccountAccessHistoryDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IAccountAccessHistoryDAO");
-
-    private static final IAccountsDAO ACCOUNTS_DAO = (IAccountsDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IAccountsDAO");
-
-    private static final ICardsDAO CARDS_DAO = (ICardsDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("ICardsDAO");
-
-    private static final IDepositWithdrawHistoryDAO DEPOSIT_WITHDRAW_HISTORY_DAO = (IDepositWithdrawHistoryDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IDepositWithdrawHistoryDAO");
-
-    private static final ITransactionsDAO TRANSACTIONS_DAO = (ITransactionsDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("ITransactionsDAO");
-
-    private static final ITransfersDAO TRANSFERS_DAO = (ITransfersDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("ITransfersDAO");
-
-    private static final IUsersDAO USERS_DAO = (IUsersDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IUsersDAO");
+public final class JDBCService implements IService {
+    private static final IAccountAccessHistoryDAO ACCOUNT_ACCESS_HISTORY_DAO;
+    private static final IAccountsDAO ACCOUNTS_DAO;
+    private static final ICardsDAO CARDS_DAO;
+    private static final IDepositWithdrawHistoryDAO DEPOSIT_WITHDRAW_HISTORY_DAO;
+    private static final ITransactionsDAO TRANSACTIONS_DAO;
+    private static final ITransfersDAO TRANSFERS_DAO;
+    private static final IUsersDAO USERS_DAO;
+    static {
+        IDAOFactory factory = DBFactoryGenerator.getFactory(DBConnectionType.JDBC);
+        ACCOUNT_ACCESS_HISTORY_DAO = (IAccountAccessHistoryDAO) factory.getDAO("IAccountHistoryDAO");
+        ACCOUNTS_DAO = (IAccountsDAO) factory.getDAO("IAccountsDAO");
+        CARDS_DAO = (ICardsDAO) factory.getDAO("ICardsDAO");
+        DEPOSIT_WITHDRAW_HISTORY_DAO = (IDepositWithdrawHistoryDAO) factory.getDAO("IDepositWithdrawHistoryDAO");
+        TRANSACTIONS_DAO = (ITransactionsDAO) factory.getDAO("ITransactionsDAO");
+        TRANSFERS_DAO = (ITransfersDAO) factory.getDAO("ITransfersDAO");
+        USERS_DAO = (IUsersDAO) factory.getDAO("IUsersDAO");
+    }
 
     private static JDBCService instance = null;
 
