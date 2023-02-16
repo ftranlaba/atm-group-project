@@ -67,7 +67,7 @@ public class DepositWithdrawHistoryDAO extends AbstractDAO<DepositWithdraw> impl
     }
 
     @Override
-    public void logDepositOrWithdrawal(Account account, BigDecimal oldBalance, BigDecimal newBalance, String type) throws SQLException {
+    public void logDepositOrWithdrawal(Account account, BigDecimal oldBalance, BigDecimal newBalance, String type) {
         DepositWithdraw depositWithdraw = new DepositWithdraw();
         depositWithdraw.setIdForeignKey(account.getId());
         depositWithdraw.setTime(new Timestamp(System.currentTimeMillis()));
