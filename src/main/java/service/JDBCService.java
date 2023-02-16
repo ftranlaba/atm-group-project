@@ -3,7 +3,7 @@ package service;
 import dao.concretedaos.AccountsDAO;
 import dao.interfaces.*;
 import dao.util.DBFactoryGenerator;
-import dao.util.JDBCDAOFactory;
+import dao.util.IDAOFactory;
 import dao.util.enums.DBConnectionType;
 import datamodels.*;
 
@@ -11,20 +11,25 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
-public class JDBCService implements IService {
-    private static final IAccountAccessHistoryDAO accountAccessHistoryDAO = (IAccountAccessHistoryDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IAccountAccessHistoryDAO");
-
-    private static final IAccountsDAO accountsDAO = (IAccountsDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IAccountsDAO");
-
-    private static final ICardsDAO cardsDAO = (ICardsDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("ICardsDAO");
-
-    private static final IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = (IDepositWithdrawHistoryDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IDepositWithdrawHistoryDAO");
-
-    private static final ITransactionsDAO transactionsDAO = (ITransactionsDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("ITransactionsDAO");
-
-    private static final ITransfersDAO transfersDAO = (ITransfersDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("ITransfersDAO");
-
-    private static final IUsersDAO usersDAO = (IUsersDAO) DBFactoryGenerator.getFactory(DBConnectionType.JDBC).getDAO("IUsersDAO");
+@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
+public final class JDBCService implements IService {
+    private static final IAccountAccessHistoryDAO ACCOUNT_ACCESS_HISTORY_DAO;
+    private static final IAccountsDAO ACCOUNTS_DAO;
+    private static final ICardsDAO CARDS_DAO;
+    private static final IDepositWithdrawHistoryDAO DEPOSIT_WITHDRAW_HISTORY_DAO;
+    private static final ITransactionsDAO TRANSACTIONS_DAO;
+    private static final ITransfersDAO TRANSFERS_DAO;
+    private static final IUsersDAO USERS_DAO;
+    static {
+        IDAOFactory factory = DBFactoryGenerator.getFactory(DBConnectionType.JDBC);
+        ACCOUNT_ACCESS_HISTORY_DAO = (IAccountAccessHistoryDAO) factory.getDAO("IAccountHistoryDAO");
+        ACCOUNTS_DAO = (IAccountsDAO) factory.getDAO("IAccountsDAO");
+        CARDS_DAO = (ICardsDAO) factory.getDAO("ICardsDAO");
+        DEPOSIT_WITHDRAW_HISTORY_DAO = (IDepositWithdrawHistoryDAO) factory.getDAO("IDepositWithdrawHistoryDAO");
+        TRANSACTIONS_DAO = (ITransactionsDAO) factory.getDAO("ITransactionsDAO");
+        TRANSFERS_DAO = (ITransfersDAO) factory.getDAO("ITransfersDAO");
+        USERS_DAO = (IUsersDAO) factory.getDAO("IUsersDAO");
+    }
 
     private static JDBCService instance = null;
 
@@ -39,201 +44,201 @@ public class JDBCService implements IService {
 
     @Override
     public void createAccountAccessHistory(AccountAccess o) {
-        accountAccessHistoryDAO.create(o);
+        ACCOUNT_ACCESS_HISTORY_DAO.create(o);
     }
 
     @Override
     public AccountAccess getByIdAccountAccessHistory(int id) {
-        return accountAccessHistoryDAO.getById(id);
+        return ACCOUNT_ACCESS_HISTORY_DAO.getById(id);
     }
 
     @Override
     public List<AccountAccess> getAllAccountAccessHistory() {
-        return accountAccessHistoryDAO.getAll();
+        return ACCOUNT_ACCESS_HISTORY_DAO.getAll();
     }
 
     @Override
     public void updateAccountAccessHistory(AccountAccess o) {
-        accountAccessHistoryDAO.update(o);
+        ACCOUNT_ACCESS_HISTORY_DAO.update(o);
     }
 
     @Override
     public void deleteAccountAccessHistory(int id) {
-        accountAccessHistoryDAO.delete(id);
+        ACCOUNT_ACCESS_HISTORY_DAO.delete(id);
     }
 
     @Override
     public void createAccount(User u, Account o, Card c) {
-        accountsDAO.createAccount(u, o, c);
+        ACCOUNTS_DAO.createAccount(u, o, c);
     }
 
     @Override
     public Account getByIdAccount(int id) {
-        return accountsDAO.getById(id);
+        return ACCOUNTS_DAO.getById(id);
     }
 
     @Override
     public List<Account> getAllAccounts() {
-        return accountsDAO.getAll();
+        return ACCOUNTS_DAO.getAll();
     }
 
     @Override
     public void updateAccount(Account o) {
-        accountsDAO.update(o);
+        ACCOUNTS_DAO.update(o);
     }
 
     @Override
     public void deleteAccount(int id) {
-        accountsDAO.delete(id);
+        ACCOUNTS_DAO.delete(id);
     }
 
     @Override
     public void makeDepositAccount(Account o, BigDecimal num) {
-        accountsDAO.makeDeposit(o, num);
+        ACCOUNTS_DAO.makeDeposit(o, num);
     }
 
     @Override
     public Account getAccount(Card o, int pin) throws SQLException {
-       return accountsDAO.getAccount(o, pin);
+       return ACCOUNTS_DAO.getAccount(o, pin);
     }
 
     @Override
     public void makeWithdrawalAccount(Account o, BigDecimal num) {
-        accountsDAO.makeWithdrawal(o, num);
+        ACCOUNTS_DAO.makeWithdrawal(o, num);
     }
 
     @Override
     public void createCard(Card o) {
-        cardsDAO.create(o);
+        CARDS_DAO.create(o);
     }
 
     @Override
     public Card getByIdCard(int id) {
-        return cardsDAO.getById(id);
+        return CARDS_DAO.getById(id);
     }
 
     @Override
     public List<Card> getAllCards() {
-        return cardsDAO.getAll();
+        return CARDS_DAO.getAll();
     }
 
     @Override
     public void updateCard(Card o) {
-        cardsDAO.update(o);
+        CARDS_DAO.update(o);
     }
 
     @Override
     public void deleteCard(int id) {
-        cardsDAO.delete(id);
+        CARDS_DAO.delete(id);
     }
 
     @Override
     public void toggleBlockStatus(Card o){
-        cardsDAO.toggleBlockStatus(o);
+        CARDS_DAO.toggleBlockStatus(o);
     }
 
     @Override
     public void createDepositWithdrawHistory(DepositWithdraw o) {
-        depositWithdrawHistoryDAO.create(o);
+        DEPOSIT_WITHDRAW_HISTORY_DAO.create(o);
     }
 
     @Override
     public DepositWithdraw getByIdDepositWithdrawHistory(int id) {
-        return depositWithdrawHistoryDAO.getById(id);
+        return DEPOSIT_WITHDRAW_HISTORY_DAO.getById(id);
     }
 
     @Override
     public List<DepositWithdraw> getAllDepositWithdrawHistory() {
-        return depositWithdrawHistoryDAO.getAll();
+        return DEPOSIT_WITHDRAW_HISTORY_DAO.getAll();
     }
 
     @Override
     public void updateDepositWithdrawHistory(DepositWithdraw o) {
-        depositWithdrawHistoryDAO.update(o);
+        DEPOSIT_WITHDRAW_HISTORY_DAO.update(o);
     }
 
     @Override
     public void deleteDepositWithdrawHistory(int id) {
-        depositWithdrawHistoryDAO.delete(id);
+        DEPOSIT_WITHDRAW_HISTORY_DAO.delete(id);
     }
 
     @Override
     public void createTransaction(Transaction o) {
-        transactionsDAO.create(o);
+        TRANSACTIONS_DAO.create(o);
     }
 
     @Override
     public Transaction getByIdTransaction(int id) {
-        return transactionsDAO.getById(id);
+        return TRANSACTIONS_DAO.getById(id);
     }
 
     @Override
     public List<Transaction> getAllTransactions() {
-        return transactionsDAO.getAll();
+        return TRANSACTIONS_DAO.getAll();
     }
 
     @Override
     public void updateTransactions(Transaction o) {
-        transactionsDAO.update(o);
+        TRANSACTIONS_DAO.update(o);
     }
 
     @Override
     public void deleteTransaction(int id) {
-        transactionsDAO.delete(id);
+        TRANSACTIONS_DAO.delete(id);
     }
 
     @Override
     public void createTransfer(Transfer o) {
-        transfersDAO.create(o);
+        TRANSFERS_DAO.create(o);
     }
 
     @Override
     public void makeTransfer(Account from, Account to, BigDecimal amount) {
-        accountsDAO.makeTransfer(from, to, amount);
+        ACCOUNTS_DAO.makeTransfer(from, to, amount);
     }
 
     @Override
     public Transfer getByIdTransfer(int id) {
-        return transfersDAO.getById(id);
+        return TRANSFERS_DAO.getById(id);
     }
 
     @Override
     public List<Transfer> getAllTransfers() {
-        return transfersDAO.getAll();
+        return TRANSFERS_DAO.getAll();
     }
 
     @Override
     public void updateTransfer(Transfer o) {
-        transfersDAO.update(o);
+        TRANSFERS_DAO.update(o);
     }
 
     @Override
     public void deleteTransfer(int id) {
-        transfersDAO.delete(id);
+        TRANSFERS_DAO.delete(id);
     }
 
     @Override
     public void createUser(User o) {
-        usersDAO.create(o);
+        USERS_DAO.create(o);
     }
 
     @Override
     public User getByIdUser(int id) {
-        return usersDAO.getById(id);
+        return USERS_DAO.getById(id);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return usersDAO.getAll();
+        return USERS_DAO.getAll();
     }
 
     @Override
     public void updateUser(User o) {
-        usersDAO.update(o);
+        USERS_DAO.update(o);
     }
 
     @Override
     public void deleteUser(int id) {
-        usersDAO.delete(id);
+        USERS_DAO.delete(id);
     }
 }

@@ -1,10 +1,14 @@
 package datamodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class Transaction extends TimeInfo {
+    @JsonProperty
     private String merchantName;
+    @JsonProperty
     private BigDecimal cost;
 
     public Transaction(int id, int idForeignKey, Timestamp time, String merchantName, BigDecimal cost) {

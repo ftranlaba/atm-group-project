@@ -1,9 +1,15 @@
 package datamodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User extends IdInfo {
+    @JsonProperty
     private String firstName;
+    @JsonProperty
     private String lastName;
+    @JsonProperty
     private String address;
+    @JsonProperty
     private String phoneNumber;
 
     public User(int id, String firstName, String lastName, String address, String phoneNumber) {
