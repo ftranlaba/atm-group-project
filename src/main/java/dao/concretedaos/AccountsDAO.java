@@ -4,6 +4,7 @@ import com.sun.istack.Nullable;
 import dao.AbstractDAO;
 import dao.interfaces.IAccountAccessHistoryDAO;
 import dao.interfaces.IAccountsDAO;
+import dao.interfaces.IDepositWithdrawHistoryDAO;
 import dao.interfaces.ITransfersDAO;
 import datamodels.Account;
 import datamodels.Card;
@@ -104,44 +105,35 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
     @Override
     public void makeDeposit(Account account, BigDecimal amount) {
-        String query = "UPDATE accounts " +
-                "SET balance = balance + (?) " +
-                "WHERE id_account = (?)";
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setBigDecimal(1, amount);
-            ps.setInt(2, account.getId());
-            ps.executeUpdate();
+        BigDecimal oldBalance = account.getBalance();
+        BigDecimal newBalance = oldBalance.add(amount);
 
-            BigDecimal oldBalance = account.getBalance();
-            BigDecimal newBalance = oldBalance.add(amount);
-
-            DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
-            depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "deposit");
-        } catch (SQLException e) {
-            LOGGER.error(e);
-        }
+        makeDepositOrWithdrawal(account, newBalance, "Deposit");
     }
 
     @Override
     public void makeWithdrawal(Account account, BigDecimal amount) {
+        BigDecimal oldBalance = account.getBalance();
+        BigDecimal newBalance = oldBalance.subtract(amount);
+
+        makeDepositOrWithdrawal(account, newBalance, "Withdrawal");
+    }
+
+    private static void makeDepositOrWithdrawal(Account account, BigDecimal newBalance, String type) {
         String query = "UPDATE accounts " +
-                "SET balance = balance - (?) " +
+                "SET balance = (?) " +
                 "WHERE id_account = (?)";
         try (Connection connection = CONNECTION_POOL.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setBigDecimal(1, amount);
+            ps.setBigDecimal(1, newBalance);
             ps.setInt(2, account.getId());
             ps.executeUpdate();
-
-            BigDecimal oldBalance = account.getBalance();
-            BigDecimal newBalance = oldBalance.subtract(amount);
-
-            DepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
-            depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, oldBalance, newBalance, "withdrawal");
         } catch (SQLException e) {
             LOGGER.error(e);
         }
+
+        IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
+        depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, account.getBalance(), newBalance, type);
     }
 
     @Override
