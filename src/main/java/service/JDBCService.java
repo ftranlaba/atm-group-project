@@ -20,7 +20,7 @@ public final class JDBCService implements IService {
     private static final IUsersDAO USERS_DAO;
     static {
         IDAOFactory factory = DBFactoryGenerator.getFactory(DBConnectionType.JDBC);
-        ACCOUNT_ACCESS_HISTORY_DAO = (IAccountAccessHistoryDAO) factory.getDAO("IAccountHistoryDAO");
+        ACCOUNT_ACCESS_HISTORY_DAO = (IAccountAccessHistoryDAO) factory.getDAO("IAccountAccessHistoryDAO");
         ACCOUNTS_DAO = (IAccountsDAO) factory.getDAO("IAccountsDAO");
         CARDS_DAO = (ICardsDAO) factory.getDAO("ICardsDAO");
         DEPOSIT_WITHDRAW_HISTORY_DAO = (IDepositWithdrawHistoryDAO) factory.getDAO("IDepositWithdrawHistoryDAO");
