@@ -77,7 +77,7 @@ public class AccountAccessHistoryDAO extends AbstractDAO<AccountAccess> implemen
         for (int i = 0; i < numPairs; i++) {
             sb.append(String.format("%02X%s", RANDOM.nextInt(256), (i < 5) ? ":" : ""));
         }
-        
+
         return sb.toString();
     }
 }

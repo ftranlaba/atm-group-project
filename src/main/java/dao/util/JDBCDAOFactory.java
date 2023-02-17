@@ -10,7 +10,8 @@ import datamodels.IdInfo;
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class JDBCDAOFactory implements IDAOFactory {
-    protected JDBCDAOFactory() {}
+    protected JDBCDAOFactory() {
+    }
 
     @Override
     public IBaseDAO<? extends IdInfo> getDAO(String modal) {

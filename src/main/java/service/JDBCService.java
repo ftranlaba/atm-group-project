@@ -20,6 +20,7 @@ public final class JDBCService implements IService {
     private static final ITransactionsDAO TRANSACTIONS_DAO;
     private static final ITransfersDAO TRANSFERS_DAO;
     private static final IUsersDAO USERS_DAO;
+
     static {
         IDAOFactory factory = DBFactoryGenerator.getFactory(DBConnectionType.JDBC);
         ACCOUNT_ACCESS_HISTORY_DAO = (IAccountAccessHistoryDAO) factory.getDAO("IAccountAccessHistoryDAO");
@@ -33,10 +34,11 @@ public final class JDBCService implements IService {
 
     private static JDBCService instance = null;
 
-    private JDBCService(){ }
+    private JDBCService() {
+    }
 
-    public static JDBCService getInstance(){
-        if(instance == null){
+    public static JDBCService getInstance() {
+        if (instance == null) {
             instance = new JDBCService();
         }
         return instance;
@@ -99,7 +101,7 @@ public final class JDBCService implements IService {
 
     @Override
     public Account getAccount(Card o, int pin) throws SQLException {
-       return ACCOUNTS_DAO.getAccount(o, pin);
+        return ACCOUNTS_DAO.getAccount(o, pin);
     }
 
     @Override
@@ -133,7 +135,7 @@ public final class JDBCService implements IService {
     }
 
     @Override
-    public void toggleBlockStatus(Card o){
+    public void toggleBlockStatus(Card o) {
         CARDS_DAO.toggleBlockStatus(o);
     }
 

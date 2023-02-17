@@ -13,7 +13,7 @@ public class ATM {
     private List<Transfer> transferList;
     private List<User> userList;
 
-    public ATM(){
+    public ATM() {
 
     }
 

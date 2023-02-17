@@ -111,7 +111,8 @@ public class TerminalMain {
             LOGGER.info("2) See Accounts");
             LOGGER.info("3) Block Card");
             LOGGER.info("4) Unblock Card");
-            LOGGER.info("5) Exit to Main Menu");
+            LOGGER.info("5) Create Backup");
+            LOGGER.info("6) Exit to Main Menu");
             switch (scan.nextInt()) {
                 case 1:
                     LOGGER.info("Enter account id: ");
@@ -142,6 +143,9 @@ public class TerminalMain {
                     LOGGER.info("Card UnBlocked");
                     break;
                 case 5:
+                    LOGGER.info("create backup");
+                    break;
+                case 6:
                     break infiniteloop;
                 default:
                     LOGGER.error("Invalid Option");
@@ -155,7 +159,7 @@ public class TerminalMain {
         service.createUser(u);
         service.createAccount(u, makeAccount(), new Card());
         User newUser = service.getByIdUser(u.getId());
-        Account newAccount =service.getByIdAccount(u.getId());
+        Account newAccount = service.getByIdAccount(u.getId());
         Card newCard = service.getByIdCard(u.getId());
         LOGGER.info(printAccount(1, newUser, newAccount, newCard));
     }
