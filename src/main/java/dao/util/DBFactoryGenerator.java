@@ -5,8 +5,8 @@ import dao.util.exceptions.UnsupportedFactoryException;
 
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public abstract class DBFactoryGenerator {
-    public static IDAOFactory getFactory(DBConnectionType connectionType){
-        switch(connectionType){
+    public static IDAOFactory getFactory(DBConnectionType connectionType) {
+        switch (connectionType) {
             case JDBC:
                 return new JDBCDAOFactory();
             default:

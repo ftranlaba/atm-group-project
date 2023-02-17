@@ -66,6 +66,7 @@ public interface IService {
     void deleteTransaction(int id);
 
     void createTransfer(Transfer o);
+
     void makeTransfer(Account from, Account to, BigDecimal amount);
 
     Transfer getByIdTransfer(int id);
