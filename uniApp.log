@@ -406,3 +406,115 @@
 2023-02-17 16:24:03 INFO  1) Credit
 2023-02-17 16:24:03 INFO  2) Debit
 2023-02-17 16:24:03 INFO  3) Savings
+2023-02-18 12:19:44 INFO  ATM Terminal 
+
+2023-02-18 12:19:44 INFO  1) User
+2023-02-18 12:19:44 INFO  2) Admin
+2023-02-18 12:19:44 INFO  3) Create Account
+2023-02-18 12:19:44 INFO  4) Exit
+2023-02-18 12:19:47 INFO  Enter First Name: 
+2023-02-18 12:19:50 INFO  Enter Last Name: 
+2023-02-18 12:19:51 INFO  Enter Address
+2023-02-18 12:19:54 INFO  Enter Phone Number: 
+2023-02-18 12:19:56 INFO  Please Enter Four Digit pin
+2023-02-18 12:19:58 ERROR Invalid number Pattern
+2023-02-18 12:19:58 INFO  Please Enter Four Digit pin
+2023-02-18 12:20:00 INFO  Please enter account type: 
+2023-02-18 12:20:00 INFO  1) Credit
+2023-02-18 12:20:00 INFO  2) Debit
+2023-02-18 12:20:00 INFO  3) Savings
+2023-02-18 12:20:03 INFO  
+        Account Created    
+    Firstname: alex, Lastname: h
+    Address: address, Phone Number: phonenumber
+    Account ID: 4, Account Type: Debit
+    Card Number: 7454972341047663, CVC: 831
+    Expiration Date: 02-26, Type Debit
+
+2023-02-18 12:20:03 INFO  ATM Terminal 
+
+2023-02-18 12:20:03 INFO  1) User
+2023-02-18 12:20:03 INFO  2) Admin
+2023-02-18 12:20:03 INFO  3) Create Account
+2023-02-18 12:20:03 INFO  4) Exit
+2023-02-18 12:20:11 INFO  Enter First Name: 
+2023-02-18 12:20:12 ERROR Field Cannot be empty
+2023-02-18 12:20:12 INFO  Enter First Name: 
+2023-02-18 12:20:12 ERROR Field Cannot be empty
+2023-02-18 12:20:12 INFO  Enter First Name: 
+2023-02-18 12:20:13 ERROR Field Cannot be empty
+2023-02-18 12:20:13 INFO  Enter First Name: 
+2023-02-18 12:55:06 INFO  ATM Terminal 
+
+2023-02-18 12:55:06 INFO  1) User
+2023-02-18 12:55:06 INFO  2) Admin
+2023-02-18 12:55:06 INFO  3) Create Account
+2023-02-18 12:55:06 INFO  4) Exit
+2023-02-18 12:55:10 INFO  Enter First Name: 
+2023-02-18 12:55:13 INFO  Enter Last Name: 
+2023-02-18 12:55:16 INFO  Enter Address
+2023-02-18 12:55:19 INFO  Enter Phone Number: 
+2023-02-18 12:55:22 INFO  Please Enter Four Digit pin
+2023-02-18 12:55:24 INFO  Please enter account type: 
+2023-02-18 12:55:24 INFO  1) Credit
+2023-02-18 12:55:24 INFO  2) Debit
+2023-02-18 12:55:24 INFO  3) Savings
+2023-02-18 12:55:26 INFO  
+        Account Created    
+    Firstname: firstname, Lastname: lastname 
+    Address: address, Phone Number: phonenumber
+    Account ID: 5, Account Type: Debit
+    Card Number: 9370870232374082, CVC: 318
+    Expiration Date: 02-26, Type Debit
+
+2023-02-18 12:55:26 INFO  ATM Terminal 
+
+2023-02-18 12:55:26 INFO  1) User
+2023-02-18 12:55:26 INFO  2) Admin
+2023-02-18 12:55:26 INFO  3) Create Account
+2023-02-18 12:55:26 INFO  4) Exit
+2023-02-18 12:55:36 INFO  Enter First Name: 
+2023-02-18 12:55:45 INFO  Enter Last Name: 
+2023-02-18 12:55:47 INFO  Enter Address
+2023-02-18 12:55:54 INFO  Enter Phone Number: 
+2023-02-18 12:55:58 INFO  Please Enter Four Digit pin
+2023-02-18 12:56:01 INFO  Please enter account type: 
+2023-02-18 12:56:01 INFO  1) Credit
+2023-02-18 12:56:01 INFO  2) Debit
+2023-02-18 12:56:01 INFO  3) Savings
+2023-02-18 12:56:03 INFO  
+        Account Created    
+    Firstname: Johnny, Lastname: dane
+    Address: 3242fafaf;m, Phone Number: phonenumber
+    Account ID: 6, Account Type: Debit
+    Card Number: 2327792776791054, CVC: 284
+    Expiration Date: 02-26, Type Debit
+
+2023-02-18 12:56:03 INFO  ATM Terminal 
+
+2023-02-18 12:56:03 INFO  1) User
+2023-02-18 12:56:03 INFO  2) Admin
+2023-02-18 12:56:03 INFO  3) Create Account
+2023-02-18 12:56:03 INFO  4) Exit
+2023-02-18 12:56:45 INFO  Please Enter Card Number: 
+2023-02-18 12:56:58 INFO  Enter Pin: 
+2023-02-18 12:57:03 INFO  Please Enter Expiration Date: 
+2023-02-18 12:57:10 INFO  Please Enter CVC: 
+2023-02-18 12:57:15 INFO  1) Check Account 
+2023-02-18 12:57:15 INFO  2) Deposit Money
+2023-02-18 12:57:15 INFO  3) Transfer Money
+2023-02-18 12:57:15 INFO  4) Withdraw money
+2023-02-18 12:57:15 INFO  5) Block Card
+2023-02-18 12:57:15 INFO  6) Unblock Card
+2023-02-18 12:57:15 INFO  6) Exit to Main Menu
+2023-02-18 12:57:24 INFO  How Much money would you like to deposit: 
+2023-02-18 12:57:30 INFO  1) Check Account 
+2023-02-18 12:57:30 INFO  2) Deposit Money
+2023-02-18 12:57:30 INFO  3) Transfer Money
+2023-02-18 12:57:30 INFO  4) Withdraw money
+2023-02-18 12:57:30 INFO  5) Block Card
+2023-02-18 12:57:30 INFO  6) Unblock Card
+2023-02-18 12:57:30 INFO  6) Exit to Main Menu
+2023-02-18 12:57:58 INFO  Amount For Transfer
+2023-02-18 12:58:08 ERROR Invalid entry, Number cannot be empty or 0
+2023-02-18 12:58:08 INFO  Amount For Transfer

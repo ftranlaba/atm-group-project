@@ -48,7 +48,6 @@ public class TerminalUtil {
             }
         }).thenRunAsync(() -> {
             String message = "Please Enter Expiration Date: ";
-            scan.nextLine();
             String expirationDate;
             try {
                 expirationDate = dateValidator(message);
@@ -94,7 +93,7 @@ public class TerminalUtil {
             } else if (i == 3) {
                 throw new TooManyAttempts("Attempt Limit Exceeded");
             }else{
-                LOGGER.error("Invalid entry, Number cannot be empty or 0");
+                LOGGER.error("Invalid entry, Number cannot be 0 or Negative");
             }
         }while(input.compareTo(BigDecimal.valueOf(0)) == 0 || input.compareTo(BigDecimal.valueOf(0)) == -1);
         return input;

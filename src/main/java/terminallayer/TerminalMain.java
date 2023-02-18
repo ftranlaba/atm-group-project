@@ -58,7 +58,7 @@ public class TerminalMain {
         }
     }
 
-    public static void userUI(Account a) {
+    public static void userUI(Account a) throws TooManyAttempts {
         infiniteloop:
         while (true) {
             LOGGER.info("1) Check Account ");
@@ -77,8 +77,8 @@ public class TerminalMain {
                     LOGGER.info(printAccount(4, u, a1, c));
                     break;
                 case 2:
-                    LOGGER.info("How Much money would you like to deposit: ");
-                    BigDecimal deposit = scan.nextBigDecimal();
+                    String message = "How Much money would you like to deposit: ";
+                    BigDecimal deposit = transferValidator(message);
                     service.makeDepositAccount(a, deposit);
                     break;
                 case 3:
@@ -91,8 +91,8 @@ public class TerminalMain {
                     }
                     break;
                 case 4:
-                    LOGGER.info("Amount to Withdraw");
-                    BigDecimal withdraw = scan.nextBigDecimal();
+                    String m = "Amount to Withdraw";
+                    BigDecimal withdraw = transferValidator(m);
                     service.makeWithdrawalAccount(a, withdraw);
                     break;
                 case 5:
