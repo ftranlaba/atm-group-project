@@ -28,7 +28,7 @@ public class TerminalMain {
     private static final Scanner scan = new Scanner(System.in);
     private static final IService service = JDBCService.getInstance();
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidNumber, SQLException, DAOException, TooManyAttempts {
+    public static void main(String[] args) throws ExecutionException, InterruptedException, InvalidNumber, SQLException, TooManyAttempts {
         infiniteloop:
         while (true) {
             LOGGER.info("ATM Terminal \n");
@@ -58,20 +58,23 @@ public class TerminalMain {
         }
     }
 
-    public static void userUI(Account a) throws InvalidNumber, SQLException, DAOException {
+    public static void userUI(Account a) {
         infiniteloop:
         while (true) {
             LOGGER.info("1) Check Account ");
             LOGGER.info("2) Deposit Money");
             LOGGER.info("3) Transfer Money");
             LOGGER.info("4) Withdraw money");
-            LOGGER.info("5) Report Card Stolen");
+            LOGGER.info("5) Block Card");
+            LOGGER.info("6) Unblock Card");
             LOGGER.info("6) Exit to Main Menu");
             Card c = service.getByIdCard(a.getId());
+            Account a1 = service.getByIdAccount(a.getId());
+            User u = service.getByIdUser(a.getId());
             switch (scan.nextInt()) {
                 case 1:
                     LOGGER.info("account ");
-                    LOGGER.info(service.getByIdAccount(a.getId()));
+                    LOGGER.info(printAccount(4, u, a1, c));
                     break;
                 case 2:
                     LOGGER.info("How Much money would you like to deposit: ");
@@ -83,6 +86,8 @@ public class TerminalMain {
                         makeTransfer(a);
                     } catch (DAOException e) {
                         LOGGER.error(e.getMessage());
+                    } catch (TooManyAttempts e) {
+                        throw new RuntimeException(e);
                     }
                     break;
                 case 4:
@@ -95,6 +100,9 @@ public class TerminalMain {
                     service.toggleBlockStatus(c);
                     break;
                 case 6:
+                    LOGGER.info("Card Un-Blocked");
+                    service.toggleBlockStatus(c);
+                case 7:
                     break infiniteloop;
                 default:
                     LOGGER.error("Invalid Option");
@@ -103,12 +111,11 @@ public class TerminalMain {
         }
     }
 
-    public static void adminUI() throws InvalidNumber, SQLException {
-
+    public static void adminUI() {
         infiniteloop:
         while (true) {
             LOGGER.info("1) See Account");
-            LOGGER.info("2) See Accounts");
+            LOGGER.info("2) See All Accounts");
             LOGGER.info("3) Block Card");
             LOGGER.info("4) Unblock Card");
             LOGGER.info("5) Create Backup");
@@ -140,7 +147,7 @@ public class TerminalMain {
                     LOGGER.info("Enter Account Id of Card to Unblock: ");
                     int unBlockId = scan.nextInt();
                     service.toggleBlockStatus(service.getByIdCard(unBlockId));
-                    LOGGER.info("Card UnBlocked");
+                    LOGGER.info("Card Un-Blocked");
                     break;
                 case 5:
                     LOGGER.info("create backup");
@@ -186,24 +193,44 @@ public class TerminalMain {
         return null;
     }
 
-    public static User createUser() throws ExecutionException, InterruptedException, SQLException {
+    public static User createUser() throws ExecutionException, InterruptedException {
         User u = new User();
         CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
-            LOGGER.info("Enter First Name: ");
+            String message = "Enter First Name: ";
             scan.nextLine();
-            String firstName = scan.nextLine();
+            String firstName;
+            try {
+                firstName = notNullValidator(message);
+            } catch (TooManyAttempts e) {
+                throw new RuntimeException(e);
+            }
             u.setFirstName(firstName);
         }).thenRunAsync(() -> {
-            LOGGER.info("Enter Last Name: ");
-            String lastName = scan.nextLine();
+            String message = "Enter Last Name: ";
+            String lastName;
+            try {
+                lastName = notNullValidator(message);
+            } catch (TooManyAttempts e) {
+                throw new RuntimeException(e);
+            }
             u.setLastName(lastName);
         }).thenRunAsync(() -> {
-            LOGGER.info("Enter Address");
-            String address = scan.nextLine();
+            String message = "Enter Address";
+            String address;
+            try {
+                address = notNullValidator(message);
+            } catch (TooManyAttempts e) {
+                throw new RuntimeException(e);
+            }
             u.setAddress(address);
         }).thenRunAsync(() -> {
-            LOGGER.info("Enter Phone Number: ");
-            String phoneNumber = scan.nextLine();
+            String message = "Enter Phone Number: ";
+            String phoneNumber;
+            try {
+                phoneNumber = notNullValidator(message);
+            } catch (TooManyAttempts e) {
+                throw new RuntimeException(e);
+            }
             u.setPhoneNumber(phoneNumber);
         });
         c.get();

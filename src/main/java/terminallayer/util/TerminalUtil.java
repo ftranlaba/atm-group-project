@@ -25,30 +25,30 @@ public class TerminalUtil {
     private static final Scanner scan = new Scanner(System.in);
     private static final IService service = JDBCService.getInstance();
 
-    public final static Account authUser() throws InvalidNumber, ExecutionException, InterruptedException, SQLException {
+    public final static Account authUser() throws InvalidNumber, ExecutionException, InterruptedException, SQLException, TooManyAttempts {
         Card card = new Card();
         List paramList = new ArrayList(1);
         CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
-            String message = "Enter Pin: ";
-            int pin = 0;
-            try {
-                pin = Integer.parseInt(numberValidator(message, 4));
-                paramList.add(pin);
-            } catch (TooManyAttempts e) {
-                LOGGER.error(e);
-            }
-
-        }).thenRunAsync(() -> {
             String message = "Please Enter Card Number: ";
             String cardNum;
             try {
                 cardNum = numberValidator(message, 16);
                 card.setCardNumber(cardNum);
             } catch (TooManyAttempts e) {
-                LOGGER.error(e);
+                throw new RuntimeException(e);
+            }
+        }).thenRunAsync(() -> {
+            String message = "Enter Pin: ";
+            int pin = 0;
+            try {
+                pin = Integer.parseInt(numberValidator(message, 4));
+                paramList.add(pin);
+            } catch (TooManyAttempts e) {
+                throw new RuntimeException(e);
             }
         }).thenRunAsync(() -> {
             String message = "Please Enter Expiration Date: ";
+            scan.nextLine();
             String expirationDate;
             try {
                 expirationDate = dateValidator(message);
@@ -74,13 +74,30 @@ public class TerminalUtil {
         throw new InvalidNumber("Invalid Account");
     }
 
-    public final static void makeTransfer(Account a) throws DAOException {
-        LOGGER.info("Amount For Transfer");
-        BigDecimal transferAmount = scan.nextBigDecimal();
+    public final static void makeTransfer(Account a) throws DAOException, TooManyAttempts {
+        String message = "Amount For Transfer";
+        BigDecimal transferAmount = transferValidator(message);
         LOGGER.info("Id for receiving account");
         int id2 = scan.nextInt();
         Account account = service.getByIdAccount(id2);
         service.makeTransfer(a, account, transferAmount);
+    }
+
+    public final static BigDecimal transferValidator(String s) throws TooManyAttempts {
+        BigDecimal input;
+        int i = 0;
+        do {
+            LOGGER.info(s);
+            input = scan.nextBigDecimal();
+            if(input.compareTo(BigDecimal.valueOf(0)) == 1){
+                return input;
+            } else if (i == 3) {
+                throw new TooManyAttempts("Attempt Limit Exceeded");
+            }else{
+                LOGGER.error("Invalid entry, Number cannot be empty or 0");
+            }
+        }while(input.compareTo(BigDecimal.valueOf(0)) == 0 || input.compareTo(BigDecimal.valueOf(0)) == -1);
+        return input;
     }
 
     public final static String numberValidator(String s, int maxNum) throws TooManyAttempts {
@@ -119,6 +136,24 @@ public class TerminalUtil {
         return input;
     }
 
+    public final static String notNullValidator(String s) throws TooManyAttempts {
+        String input;
+        int i = 0;
+        do {
+            LOGGER.info(s);
+            input = scan.nextLine();
+            if (input != "") {
+                return input;
+            } else if (i == 3) {
+                throw new TooManyAttempts("Attempt Limit Exceeded");
+            } else {
+                LOGGER.error("Field Cannot be empty");
+                i++;
+            }
+        } while (input == "");
+        return input;
+    }
+
     public final static String printAccount(int option, User u, Account a, Card c) {
         switch (option) {
             case 1:
@@ -130,8 +165,6 @@ public class TerminalUtil {
                         "    Address: " + u.getAddress() + ", Phone Number: " + u.getPhoneNumber() +
                         "\n" +
                         "    Account ID: " + a.getId() + ", Account Type: " + a.getType() +
-                        "\n" +
-                        "    Pin: " + a.getPin() +
                         "\n" +
                         "    Card Number: " + c.getCardNumber() + ", CVC: " + c.getCvc() +
                         "\n" +
@@ -166,6 +199,19 @@ public class TerminalUtil {
                         ", block=" + c.isBlock() +
                         ", type=" + c.getType() +
                         "]";
+            case 4:
+                return "\n" +
+                        "        Account: " + a.getId() + "    " +
+                        "\n" +
+                        "    Firstname: " + u.getFirstName() + ", Lastname: " + u.getLastName() +
+                        "\n" +
+                        "    Account Type: " + a.getType() + ", Balance: " + a.getBalance() +
+                        "\n" +
+                        "    Card Number: " + c.getCardNumber() + ", CVC: " + c.getCvc() +
+                        "\n" +
+                        "    Expiration Date: " + c.getExpirationDate() + ", Type " + c.getType() +
+                        "\n" +
+                        "    Blocked: " + c.isBlock();
         }
         return null;
     }

@@ -137,3 +137,272 @@
 2023-02-16 08:16:46 INFO  3) Block Card
 2023-02-16 08:16:46 INFO  4) Unblock Card
 2023-02-16 08:16:46 INFO  5) Exit to Main Menu
+2023-02-17 15:50:29 INFO  ATM Terminal 
+
+2023-02-17 15:50:29 INFO  1) User
+2023-02-17 15:50:29 INFO  2) Admin
+2023-02-17 15:50:29 INFO  3) Create Account
+2023-02-17 15:50:29 INFO  4) Exit
+2023-02-17 15:50:32 INFO  Enter First Name: 
+2023-02-17 15:50:33 INFO  Enter Last Name: 
+2023-02-17 15:50:34 INFO  Enter Address
+2023-02-17 15:50:34 INFO  Enter Phone Number: 
+2023-02-17 15:50:35 INFO  Please Enter Four Digit pin
+2023-02-17 15:50:35 ERROR Invalid number Pattern
+2023-02-17 15:50:35 INFO  Please Enter Four Digit pin
+2023-02-17 15:50:38 ERROR Invalid number Pattern
+2023-02-17 15:50:38 INFO  Please Enter Four Digit pin
+2023-02-17 15:50:39 ERROR Invalid number Pattern
+2023-02-17 15:50:39 INFO  Please Enter Four Digit pin
+2023-02-17 15:50:46 INFO  ATM Terminal 
+
+2023-02-17 15:50:46 INFO  1) User
+2023-02-17 15:50:46 INFO  2) Admin
+2023-02-17 15:50:46 INFO  3) Create Account
+2023-02-17 15:50:46 INFO  4) Exit
+2023-02-17 15:50:51 INFO  Please Enter Card Number: 
+2023-02-17 15:51:00 INFO  Enter Pin: 
+2023-02-17 15:51:03 ERROR Invalid number Pattern
+2023-02-17 15:51:03 INFO  Enter Pin: 
+2023-02-17 15:51:04 ERROR Invalid number Pattern
+2023-02-17 15:51:04 INFO  Enter Pin: 
+2023-02-17 15:51:07 ERROR Invalid number Pattern
+2023-02-17 15:51:07 INFO  Enter Pin: 
+2023-02-17 15:51:08 ERROR terminallayer.exceptions.TooManyAttempts: Attempt Limit Exceeded
+2023-02-17 15:51:08 INFO  Please Enter Expiration Date: 
+2023-02-17 15:52:17 INFO  ATM Terminal 
+
+2023-02-17 15:52:17 INFO  1) User
+2023-02-17 15:52:17 INFO  2) Admin
+2023-02-17 15:52:17 INFO  3) Create Account
+2023-02-17 15:52:17 INFO  4) Exit
+2023-02-17 15:52:20 INFO  Please Enter Card Number: 
+2023-02-17 15:52:28 INFO  Enter Pin: 
+2023-02-17 15:52:32 ERROR Invalid number Pattern
+2023-02-17 15:52:32 INFO  Enter Pin: 
+2023-02-17 15:52:34 ERROR Invalid number Pattern
+2023-02-17 15:52:34 INFO  Enter Pin: 
+2023-02-17 15:52:36 ERROR Invalid number Pattern
+2023-02-17 15:52:36 INFO  Enter Pin: 
+2023-02-17 15:52:37 ERROR terminallayer.exceptions.TooManyAttempts: Attempt Limit Exceeded
+2023-02-17 15:52:37 INFO  Please Enter Expiration Date: 
+2023-02-17 15:53:04 INFO  ATM Terminal 
+
+2023-02-17 15:53:04 INFO  1) User
+2023-02-17 15:53:04 INFO  2) Admin
+2023-02-17 15:53:04 INFO  3) Create Account
+2023-02-17 15:53:04 INFO  4) Exit
+2023-02-17 15:53:10 INFO  Enter First Name: 
+2023-02-17 15:53:12 INFO  Enter Last Name: 
+2023-02-17 15:53:12 INFO  Enter Address
+2023-02-17 15:53:12 INFO  Enter Phone Number: 
+2023-02-17 15:53:13 INFO  Please Enter Four Digit pin
+2023-02-17 15:53:15 ERROR Invalid number Pattern
+2023-02-17 15:53:15 INFO  Please Enter Four Digit pin
+2023-02-17 15:53:15 ERROR Invalid number Pattern
+2023-02-17 15:53:15 INFO  Please Enter Four Digit pin
+2023-02-17 15:53:15 ERROR Invalid number Pattern
+2023-02-17 15:53:15 INFO  Please Enter Four Digit pin
+2023-02-17 15:54:06 INFO  ATM Terminal 
+
+2023-02-17 15:54:06 INFO  1) User
+2023-02-17 15:54:06 INFO  2) Admin
+2023-02-17 15:54:06 INFO  3) Create Account
+2023-02-17 15:54:06 INFO  4) Exit
+2023-02-17 15:54:07 INFO  Please Enter Card Number: 
+2023-02-17 15:54:18 INFO  Enter Pin: 
+2023-02-17 15:54:20 ERROR Invalid number Pattern
+2023-02-17 15:54:20 INFO  Enter Pin: 
+2023-02-17 15:54:21 ERROR Invalid number Pattern
+2023-02-17 15:54:21 INFO  Enter Pin: 
+2023-02-17 15:54:21 ERROR Invalid number Pattern
+2023-02-17 15:54:21 INFO  Enter Pin: 
+2023-02-17 15:54:21 ERROR terminallayer.exceptions.TooManyAttempts: Attempt Limit Exceeded
+2023-02-17 15:54:21 INFO  Please Enter Expiration Date: 
+2023-02-17 15:55:56 INFO  ATM Terminal 
+
+2023-02-17 15:55:56 INFO  1) User
+2023-02-17 15:55:56 INFO  2) Admin
+2023-02-17 15:55:56 INFO  3) Create Account
+2023-02-17 15:55:56 INFO  4) Exit
+2023-02-17 15:55:57 INFO  Please Enter Card Number: 
+2023-02-17 15:56:03 INFO  Enter Pin: 
+2023-02-17 15:56:06 ERROR Invalid number Pattern
+2023-02-17 15:56:06 INFO  Enter Pin: 
+2023-02-17 15:56:07 ERROR Invalid number Pattern
+2023-02-17 15:56:07 INFO  Enter Pin: 
+2023-02-17 15:56:07 ERROR Invalid number Pattern
+2023-02-17 15:56:07 INFO  Enter Pin: 
+2023-02-17 15:56:08 ERROR terminallayer.exceptions.TooManyAttempts: Attempt Limit Exceeded
+2023-02-17 15:56:09 INFO  Please Enter Expiration Date: 
+2023-02-17 15:56:10 ERROR Invalid Date Pattern
+2023-02-17 15:56:10 INFO  Please Enter Expiration Date: 
+2023-02-17 15:56:16 ERROR Invalid Date Pattern
+2023-02-17 15:56:16 INFO  Please Enter Expiration Date: 
+2023-02-17 15:56:16 ERROR Invalid Date Pattern
+2023-02-17 15:56:16 INFO  Please Enter Expiration Date: 
+2023-02-17 15:57:01 INFO  ATM Terminal 
+
+2023-02-17 15:57:01 INFO  1) User
+2023-02-17 15:57:01 INFO  2) Admin
+2023-02-17 15:57:01 INFO  3) Create Account
+2023-02-17 15:57:01 INFO  4) Exit
+2023-02-17 15:57:17 INFO  Please Enter Card Number: 
+2023-02-17 15:57:18 ERROR Invalid number Pattern
+2023-02-17 15:57:18 INFO  Please Enter Card Number: 
+2023-02-17 15:57:18 ERROR Invalid number Pattern
+2023-02-17 15:57:18 INFO  Please Enter Card Number: 
+2023-02-17 15:57:19 ERROR Invalid number Pattern
+2023-02-17 15:57:19 INFO  Please Enter Card Number: 
+2023-02-17 15:57:19 ERROR terminallayer.exceptions.TooManyAttempts: Attempt Limit Exceeded
+2023-02-17 15:57:19 INFO  Enter Pin: 
+2023-02-17 15:57:21 ERROR Invalid number Pattern
+2023-02-17 15:57:21 INFO  Enter Pin: 
+2023-02-17 15:57:21 ERROR Invalid number Pattern
+2023-02-17 15:57:21 INFO  Enter Pin: 
+2023-02-17 15:57:21 ERROR Invalid number Pattern
+2023-02-17 15:57:21 INFO  Enter Pin: 
+2023-02-17 15:57:22 ERROR terminallayer.exceptions.TooManyAttempts: Attempt Limit Exceeded
+2023-02-17 15:57:22 INFO  Please Enter Expiration Date: 
+2023-02-17 15:57:23 ERROR Invalid Date Pattern
+2023-02-17 15:57:23 INFO  Please Enter Expiration Date: 
+2023-02-17 15:57:23 ERROR Invalid Date Pattern
+2023-02-17 15:57:23 INFO  Please Enter Expiration Date: 
+2023-02-17 15:57:23 ERROR Invalid Date Pattern
+2023-02-17 15:57:23 INFO  Please Enter Expiration Date: 
+2023-02-17 15:59:03 INFO  ATM Terminal 
+
+2023-02-17 15:59:03 INFO  1) User
+2023-02-17 15:59:03 INFO  2) Admin
+2023-02-17 15:59:03 INFO  3) Create Account
+2023-02-17 15:59:03 INFO  4) Exit
+2023-02-17 15:59:04 INFO  Please Enter Card Number: 
+2023-02-17 15:59:05 ERROR Invalid number Pattern
+2023-02-17 15:59:05 INFO  Please Enter Card Number: 
+2023-02-17 15:59:05 ERROR Invalid number Pattern
+2023-02-17 15:59:05 INFO  Please Enter Card Number: 
+2023-02-17 15:59:06 ERROR Invalid number Pattern
+2023-02-17 15:59:06 INFO  Please Enter Card Number: 
+2023-02-17 15:59:06 ERROR terminallayer.exceptions.TooManyAttempts: Attempt Limit Exceeded
+2023-02-17 15:59:06 INFO  Enter Pin: 
+2023-02-17 15:59:07 ERROR Invalid number Pattern
+2023-02-17 15:59:07 INFO  Enter Pin: 
+2023-02-17 15:59:07 ERROR Invalid number Pattern
+2023-02-17 15:59:07 INFO  Enter Pin: 
+2023-02-17 15:59:08 ERROR Invalid number Pattern
+2023-02-17 15:59:08 INFO  Enter Pin: 
+2023-02-17 15:59:08 ERROR terminallayer.exceptions.TooManyAttempts: Attempt Limit Exceeded
+2023-02-17 15:59:09 INFO  Please Enter Expiration Date: 
+2023-02-17 15:59:09 ERROR Invalid Date Pattern
+2023-02-17 15:59:09 INFO  Please Enter Expiration Date: 
+2023-02-17 15:59:10 ERROR Invalid Date Pattern
+2023-02-17 15:59:10 INFO  Please Enter Expiration Date: 
+2023-02-17 15:59:10 ERROR Invalid Date Pattern
+2023-02-17 15:59:10 INFO  Please Enter Expiration Date: 
+2023-02-17 16:00:09 INFO  ATM Terminal 
+
+2023-02-17 16:00:09 INFO  1) User
+2023-02-17 16:00:09 INFO  2) Admin
+2023-02-17 16:00:09 INFO  3) Create Account
+2023-02-17 16:00:09 INFO  4) Exit
+2023-02-17 16:00:12 INFO  Please Enter Card Number: 
+2023-02-17 16:00:12 ERROR Invalid number Pattern
+2023-02-17 16:00:12 INFO  Please Enter Card Number: 
+2023-02-17 16:00:13 ERROR Invalid number Pattern
+2023-02-17 16:00:13 INFO  Please Enter Card Number: 
+2023-02-17 16:00:13 ERROR Invalid number Pattern
+2023-02-17 16:00:13 INFO  Please Enter Card Number: 
+2023-02-17 16:00:36 INFO  ATM Terminal 
+
+2023-02-17 16:00:36 INFO  1) User
+2023-02-17 16:00:36 INFO  2) Admin
+2023-02-17 16:00:36 INFO  3) Create Account
+2023-02-17 16:00:36 INFO  4) Exit
+2023-02-17 16:01:04 INFO  Enter First Name: 
+2023-02-17 16:01:05 INFO  Enter Last Name: 
+2023-02-17 16:01:05 INFO  Enter Address
+2023-02-17 16:01:06 INFO  Enter Phone Number: 
+2023-02-17 16:01:06 INFO  Please Enter Four Digit pin
+2023-02-17 16:01:07 ERROR Invalid number Pattern
+2023-02-17 16:01:07 INFO  Please Enter Four Digit pin
+2023-02-17 16:01:09 ERROR Invalid number Pattern
+2023-02-17 16:01:09 INFO  Please Enter Four Digit pin
+2023-02-17 16:01:09 ERROR Invalid number Pattern
+2023-02-17 16:01:09 INFO  Please Enter Four Digit pin
+2023-02-17 16:01:31 INFO  ATM Terminal 
+
+2023-02-17 16:01:31 INFO  1) User
+2023-02-17 16:01:31 INFO  2) Admin
+2023-02-17 16:01:31 INFO  3) Create Account
+2023-02-17 16:01:31 INFO  4) Exit
+2023-02-17 16:01:45 INFO  Enter First Name: 
+2023-02-17 16:02:26 INFO  Enter Last Name: 
+2023-02-17 16:02:26 INFO  Enter Address
+2023-02-17 16:02:26 INFO  Enter Phone Number: 
+2023-02-17 16:02:29 INFO  Please Enter Four Digit pin
+2023-02-17 16:02:30 ERROR Invalid number Pattern
+2023-02-17 16:02:30 INFO  Please Enter Four Digit pin
+2023-02-17 16:02:30 ERROR Invalid number Pattern
+2023-02-17 16:02:30 INFO  Please Enter Four Digit pin
+2023-02-17 16:02:30 ERROR Invalid number Pattern
+2023-02-17 16:02:30 INFO  Please Enter Four Digit pin
+2023-02-17 16:02:59 INFO  ATM Terminal 
+
+2023-02-17 16:02:59 INFO  1) User
+2023-02-17 16:02:59 INFO  2) Admin
+2023-02-17 16:02:59 INFO  3) Create Account
+2023-02-17 16:02:59 INFO  4) Exit
+2023-02-17 16:03:03 INFO  Enter First Name: 
+2023-02-17 16:03:03 ERROR Field Cannot be empty
+2023-02-17 16:03:03 INFO  Enter Last Name: 
+2023-02-17 16:03:05 ERROR Field Cannot be empty
+2023-02-17 16:03:05 INFO  Enter Address
+2023-02-17 16:03:06 ERROR Field Cannot be empty
+2023-02-17 16:03:06 INFO  Enter Phone Number: 
+2023-02-17 16:03:06 ERROR Field Cannot be empty
+2023-02-17 16:03:06 INFO  Please Enter Four Digit pin
+2023-02-17 16:03:06 ERROR Invalid number Pattern
+2023-02-17 16:03:06 INFO  Please Enter Four Digit pin
+2023-02-17 16:03:07 ERROR Invalid number Pattern
+2023-02-17 16:03:07 INFO  Please Enter Four Digit pin
+2023-02-17 16:03:08 ERROR Invalid number Pattern
+2023-02-17 16:03:08 INFO  Please Enter Four Digit pin
+2023-02-17 16:03:41 INFO  ATM Terminal 
+
+2023-02-17 16:03:41 INFO  1) User
+2023-02-17 16:03:41 INFO  2) Admin
+2023-02-17 16:03:41 INFO  3) Create Account
+2023-02-17 16:03:41 INFO  4) Exit
+2023-02-17 16:03:44 INFO  Enter First Name: 
+2023-02-17 16:03:45 ERROR Field Cannot be empty
+2023-02-17 16:03:45 INFO  Enter First Name: 
+2023-02-17 16:03:46 ERROR Field Cannot be empty
+2023-02-17 16:03:46 INFO  Enter First Name: 
+2023-02-17 16:03:46 ERROR Field Cannot be empty
+2023-02-17 16:03:46 INFO  Enter First Name: 
+2023-02-17 16:23:18 INFO  ATM Terminal 
+
+2023-02-17 16:23:18 INFO  1) User
+2023-02-17 16:23:18 INFO  2) Admin
+2023-02-17 16:23:18 INFO  3) Create Account
+2023-02-17 16:23:18 INFO  4) Exit
+2023-02-17 16:23:23 INFO  Please Enter Card Number: 
+2023-02-17 16:23:43 INFO  ATM Terminal 
+
+2023-02-17 16:23:43 INFO  1) User
+2023-02-17 16:23:43 INFO  2) Admin
+2023-02-17 16:23:43 INFO  3) Create Account
+2023-02-17 16:23:43 INFO  4) Exit
+2023-02-17 16:23:44 INFO  Enter First Name: 
+2023-02-17 16:23:47 INFO  Enter Last Name: 
+2023-02-17 16:23:48 INFO  Enter Address
+2023-02-17 16:23:50 INFO  Enter Phone Number: 
+2023-02-17 16:23:56 INFO  Please Enter Four Digit pin
+2023-02-17 16:23:59 ERROR Invalid number Pattern
+2023-02-17 16:23:59 INFO  Please Enter Four Digit pin
+2023-02-17 16:24:00 ERROR Invalid number Pattern
+2023-02-17 16:24:00 INFO  Please Enter Four Digit pin
+2023-02-17 16:24:03 INFO  Please enter account type: 
+2023-02-17 16:24:03 INFO  1) Credit
+2023-02-17 16:24:03 INFO  2) Debit
+2023-02-17 16:24:03 INFO  3) Savings
