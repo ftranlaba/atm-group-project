@@ -76,7 +76,7 @@ public class TerminalUtil {
     public final static void makeTransfer(Account a) throws DAOException, TooManyAttempts, SQLException {
         String message = "Amount For Transfer";
         BigDecimal transferAmount = transferValidator(message);
-        String m = "Enter cardnumber for account to transfer";
+        String m = "Enter cardnumber for receiving to transfer";
         String cardNum = numberValidator(m, 16);
         Card card = service.getCardByCardNumber(cardNum);
         Account account = service.getByIdAccount(card.getId());

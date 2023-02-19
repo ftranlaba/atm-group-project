@@ -78,7 +78,7 @@ public class TerminalMain {
                 case 2:
                     String message = "How Much money would you like to deposit: ";
                     BigDecimal deposit = transferValidator(message);
-                    service.makeDepositAccount(a, deposit);
+                    service.makeDepositAccount(a1, deposit);
                     break;
                 case 3:
                     try {
