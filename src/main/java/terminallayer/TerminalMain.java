@@ -1,9 +1,8 @@
 package terminallayer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.util.exceptions.DAOException;
-import datamodels.Account;
-import datamodels.Card;
-import datamodels.User;
+import datamodels.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.IService;
@@ -12,8 +11,11 @@ import terminallayer.exceptions.InvalidNumber;
 import terminallayer.exceptions.TooManyAttempts;
 import terminallayer.util.AccountType;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
@@ -144,6 +146,7 @@ public class TerminalMain {
                     break;
                 case 5:
                     LOGGER.info("create backup");
+                    createBackup();
                     break;
                 case 6:
                     break infiniteloop;
@@ -208,5 +211,40 @@ public class TerminalMain {
         });
         c.get();
         return u;
+    }
+
+    public static void createBackup(){
+        List<Account> accountList = service.getAllAccounts();
+        List<AccountAccess> accountAccessList = service.getAllAccountAccessHistory();
+        List<Card> cardList = service.getAllCards();
+        List<DepositWithdraw> depositWithdrawList = service.getAllDepositWithdrawHistory();
+        List<Transaction> transactionList = service.getAllTransactions();
+        List<Transfer> transferList = service.getAllTransfers();
+        List<User> userList = service.getAllUsers();
+
+        ATM atm = new ATM(1, "atm - atm", accountList, accountAccessList, cardList, depositWithdrawList,
+                transactionList, transferList, userList);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            objectMapper.writeValue(new File(System.getProperty("user.dir") + "/src/main/resources/atm_output.json"),
+                    atm);
+        } catch (IOException e) {
+            LOGGER.error(e);
+        }
+
+        ATM atmFromFile;
+
+        try {
+            atmFromFile = objectMapper.readValue(new File(System.getProperty("user.dir") +
+                    "/src/main/resources/atm_output.json"), ATM.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        LOGGER.info("Jackson from file output");
+        LOGGER.info(atmFromFile);
+
     }
 }
