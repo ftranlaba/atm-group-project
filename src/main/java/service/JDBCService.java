@@ -125,6 +125,11 @@ public final class JDBCService implements IService {
     }
 
     @Override
+    public Card getCardByCardNumber(String number) throws SQLException {
+        return CARDS_DAO.getCardByCardNumber(number);
+    }
+
+    @Override
     public void updateCard(Card o) {
         CARDS_DAO.update(o);
     }

@@ -3,6 +3,8 @@ package dao.interfaces;
 import dao.IBaseDAO;
 import datamodels.Card;
 
+import java.sql.SQLException;
+
 /**
  * @author Moussa
  */
@@ -16,4 +18,6 @@ public interface ICardsDAO extends IBaseDAO<Card> {
      * @param card The card to set the info of. It will be modified inplace. The Number, Expiration date and CVC fields will be set.
      */
     void setCardInfo(Card card);
+
+    Card getCardByCardNumber(String cardNumber) throws SQLException;
 }

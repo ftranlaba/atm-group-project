@@ -66,7 +66,6 @@ public class TerminalMain {
             LOGGER.info("3) Transfer Money");
             LOGGER.info("4) Withdraw money");
             LOGGER.info("5) Block Card");
-            LOGGER.info("6) Unblock Card");
             LOGGER.info("6) Exit to Main Menu");
             Card c = service.getByIdCard(a.getId());
             Account a1 = service.getByIdAccount(a.getId());
@@ -86,7 +85,7 @@ public class TerminalMain {
                         makeTransfer(a);
                     } catch (DAOException e) {
                         LOGGER.error(e.getMessage());
-                    } catch (TooManyAttempts e) {
+                    } catch (TooManyAttempts | SQLException e) {
                         throw new RuntimeException(e);
                     }
                     break;
@@ -98,11 +97,8 @@ public class TerminalMain {
                 case 5:
                     LOGGER.info("Card Blocked");
                     service.toggleBlockStatus(c);
-                    break;
+                    break infiniteloop;
                 case 6:
-                    LOGGER.info("Card Un-Blocked");
-                    service.toggleBlockStatus(c);
-                case 7:
                     break infiniteloop;
                 default:
                     LOGGER.error("Invalid Option");

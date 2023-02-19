@@ -89,6 +89,25 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         }
         card.setBlock(!card.isBlock());
     }
+    @Override
+    public Card getCardByCardNumber(String number) throws SQLException {
+        String query = "SELECT *" +
+                " FROM cards "+
+                "WHERE number = (?)";
+        try(Connection connection = CONNECTION_POOL.getConnection();
+        PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setString(1, number);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            Card card = createEntityFromRow(rs);
+            return card;
+        }catch (SQLException e){
+            LOGGER.error(e);
+        }
+        return null;
+    }
 
     @Override
     public void setCardInfo(Card card) {
@@ -96,6 +115,7 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
         card.setExpirationDate(calculateExpirationDate());
         card.setCvc(generateCvc());
     }
+
 
     private static String generateCardNumber() {
         StringBuilder cardNumber = new StringBuilder();

@@ -73,12 +73,13 @@ public class TerminalUtil {
         throw new InvalidNumber("Invalid Account");
     }
 
-    public final static void makeTransfer(Account a) throws DAOException, TooManyAttempts {
+    public final static void makeTransfer(Account a) throws DAOException, TooManyAttempts, SQLException {
         String message = "Amount For Transfer";
         BigDecimal transferAmount = transferValidator(message);
-        LOGGER.info("Id for receiving account");
-        int id2 = scan.nextInt();
-        Account account = service.getByIdAccount(id2);
+        String m = "Enter cardnumber for account to transfer";
+        String cardNum = numberValidator(m, 16);
+        Card card = service.getCardByCardNumber(cardNum);
+        Account account = service.getByIdAccount(card.getId());
         service.makeTransfer(a, account, transferAmount);
     }
 
