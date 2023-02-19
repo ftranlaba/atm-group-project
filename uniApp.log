@@ -137,3 +137,141 @@
 2023-02-16 08:16:46 INFO  3) Block Card
 2023-02-16 08:16:46 INFO  4) Unblock Card
 2023-02-16 08:16:46 INFO  5) Exit to Main Menu
+2023-02-19 15:12:37 INFO  ATM Terminal 
+
+2023-02-19 15:12:37 INFO  1) User
+2023-02-19 15:12:37 INFO  2) Admin
+2023-02-19 15:12:37 INFO  3) Create Account
+2023-02-19 15:12:37 INFO  4) Exit
+2023-02-19 15:13:24 INFO  Enter Pin: 
+2023-02-19 15:13:30 ERROR Invalid number Pattern
+2023-02-19 15:13:30 INFO  Enter Pin: 
+2023-02-19 15:13:49 INFO  ATM Terminal 
+
+2023-02-19 15:13:49 INFO  1) User
+2023-02-19 15:13:49 INFO  2) Admin
+2023-02-19 15:13:49 INFO  3) Create Account
+2023-02-19 15:13:49 INFO  4) Exit
+2023-02-19 15:13:51 INFO  Enter First Name: 
+2023-02-19 15:13:53 INFO  Enter Last Name: 
+2023-02-19 15:13:55 INFO  Enter Address
+2023-02-19 15:14:00 INFO  Enter Phone Number: 
+2023-02-19 15:14:03 INFO  Please Enter Four Digit pin
+2023-02-19 15:14:13 INFO  Please enter account type: 
+2023-02-19 15:14:13 INFO  1) Credit
+2023-02-19 15:14:13 INFO  2) Debit
+2023-02-19 15:14:13 INFO  3) Savings
+2023-02-19 15:19:33 INFO  ATM Terminal 
+
+2023-02-19 15:19:33 INFO  1) User
+2023-02-19 15:19:33 INFO  2) Admin
+2023-02-19 15:19:33 INFO  3) Create Account
+2023-02-19 15:19:33 INFO  4) Exit
+2023-02-19 15:19:36 INFO  Enter Pin: 
+2023-02-19 15:19:38 INFO  Please Enter Card Number: 
+2023-02-19 15:19:46 ERROR Invalid number Pattern
+2023-02-19 15:19:46 INFO  Please Enter Card Number: 
+2023-02-19 15:19:55 ERROR Invalid number Pattern
+2023-02-19 15:19:55 INFO  Please Enter Card Number: 
+2023-02-19 15:20:01 ERROR Invalid number Pattern
+2023-02-19 15:20:01 INFO  Please Enter Card Number: 
+2023-02-19 15:21:14 INFO  ATM Terminal 
+
+2023-02-19 15:21:14 INFO  1) User
+2023-02-19 15:21:14 INFO  2) Admin
+2023-02-19 15:21:14 INFO  3) Create Account
+2023-02-19 15:21:14 INFO  4) Exit
+2023-02-19 15:21:18 INFO  Enter Pin: 
+2023-02-19 15:21:20 INFO  Please Enter Card Number: 
+2023-02-19 15:21:27 INFO  Please Enter Expiration Date: 
+2023-02-19 15:21:49 ERROR Invalid Date Pattern
+2023-02-19 15:21:49 INFO  Please Enter Expiration Date: 
+2023-02-19 15:22:04 INFO  Please Enter CVC: 
+2023-02-19 15:23:19 INFO  ATM Terminal 
+
+2023-02-19 15:23:19 INFO  1) User
+2023-02-19 15:23:19 INFO  2) Admin
+2023-02-19 15:23:19 INFO  3) Create Account
+2023-02-19 15:23:19 INFO  4) Exit
+2023-02-19 15:23:21 INFO  Enter Pin: 
+2023-02-19 15:23:25 INFO  Please Enter Card Number: 
+2023-02-19 15:23:35 INFO  ATM Terminal 
+
+2023-02-19 15:23:35 INFO  1) User
+2023-02-19 15:23:35 INFO  2) Admin
+2023-02-19 15:23:35 INFO  3) Create Account
+2023-02-19 15:23:35 INFO  4) Exit
+2023-02-19 15:23:37 INFO  Enter First Name: 
+2023-02-19 15:23:40 INFO  Enter Last Name: 
+2023-02-19 15:23:43 INFO  Enter Address
+2023-02-19 15:23:51 INFO  Enter Phone Number: 
+2023-02-19 15:23:56 INFO  Please Enter Four Digit pin
+2023-02-19 15:24:08 INFO  Please enter account type: 
+2023-02-19 15:24:08 INFO  1) Credit
+2023-02-19 15:24:08 INFO  2) Debit
+2023-02-19 15:24:08 INFO  3) Savings
+2023-02-19 15:38:19 INFO  ATM Terminal 
+
+2023-02-19 15:38:19 INFO  1) User
+2023-02-19 15:38:19 INFO  2) Admin
+2023-02-19 15:38:19 INFO  3) Create Account
+2023-02-19 15:38:19 INFO  4) Exit
+2023-02-19 15:38:21 INFO  Enter Pin: 
+2023-02-19 15:38:29 INFO  ATM Terminal 
+
+2023-02-19 15:38:29 INFO  1) User
+2023-02-19 15:38:29 INFO  2) Admin
+2023-02-19 15:38:29 INFO  3) Create Account
+2023-02-19 15:38:29 INFO  4) Exit
+2023-02-19 15:38:32 INFO  Enter First Name: 
+2023-02-19 15:38:34 INFO  Enter Last Name: 
+2023-02-19 15:38:35 INFO  Enter Address
+2023-02-19 15:38:41 INFO  Enter Phone Number: 
+2023-02-19 15:38:49 INFO  Please Enter Four Digit pin
+2023-02-19 15:38:51 INFO  Please enter account type: 
+2023-02-19 15:38:51 INFO  1) Credit
+2023-02-19 15:38:51 INFO  2) Debit
+2023-02-19 15:38:51 INFO  3) Savings
+2023-02-19 15:38:53 INFO  
+        Account Created    
+    Firstname: Apple, Lastname: Tom
+    Address: 12 Easy Street, Phone Number: 1234212345
+    Account ID: 1, Account Type: Credit
+    Pin: 1234
+    Card Number: 4114840614769366, CVC: 101
+    Expiration Date: 02-26, Type Credit
+
+2023-02-19 15:38:53 INFO  ATM Terminal 
+
+2023-02-19 15:38:53 INFO  1) User
+2023-02-19 15:38:53 INFO  2) Admin
+2023-02-19 15:38:53 INFO  3) Create Account
+2023-02-19 15:38:53 INFO  4) Exit
+2023-02-19 15:39:03 INFO  Enter Pin: 
+2023-02-19 15:39:05 INFO  Please Enter Card Number: 
+2023-02-19 15:39:13 INFO  Please Enter Expiration Date: 
+2023-02-19 15:39:22 INFO  Please Enter CVC: 
+2023-02-19 15:39:26 INFO  1) See Account
+2023-02-19 15:39:26 INFO  2) See Accounts
+2023-02-19 15:39:26 INFO  3) Block Card
+2023-02-19 15:39:26 INFO  4) Unblock Card
+2023-02-19 15:39:26 INFO  5) Create Backup
+2023-02-19 15:39:26 INFO  6) Exit to Main Menu
+2023-02-19 15:39:29 INFO  create backup
+2023-02-19 15:39:29 INFO  Creating backup in JSON file
+2023-02-19 15:39:29 INFO  Backup in JSON file has been created
+2023-02-19 15:39:29 INFO  Jackson from file output
+2023-02-19 15:39:29 INFO  ATM{id=1, name='atm - atm',
+accountList=[Account{balance=0, pin='1234', type='Credit', idForeignKey=1, id=1}],
+accountAccessList=[AccountAccess{macAddress='F4:C3:84:B0:79:52', time=2023-02-19 03:39:27.0, idForeignKey=1, id=1}],
+cardList=[Card{cardNumber='4114840614769366', expirationDate='02-26', cvc=101, block=false, type='Credit', idForeignKey=1, id=1}],
+depositWithdrawList=[],
+transactionList=[],
+transferList=[],
+userList=[User{firstName='Apple', lastName='Tom', address='12 Easy Street', phoneNumber='1234212345', id=1}]}
+2023-02-19 15:39:29 INFO  1) See Account
+2023-02-19 15:39:29 INFO  2) See Accounts
+2023-02-19 15:39:29 INFO  3) Block Card
+2023-02-19 15:39:29 INFO  4) Unblock Card
+2023-02-19 15:39:29 INFO  5) Create Backup
+2023-02-19 15:39:29 INFO  6) Exit to Main Menu

@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
@@ -145,7 +144,7 @@ public class TerminalMain {
                     LOGGER.info("Card UnBlocked");
                     break;
                 case 5:
-                    LOGGER.info("create backup");
+                    LOGGER.info("Create Backup");
                     createBackup();
                     break;
                 case 6:
@@ -228,8 +227,12 @@ public class TerminalMain {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
+            LOGGER.info("Creating backup in JSON file");
+
             objectMapper.writeValue(new File(System.getProperty("user.dir") + "/src/main/resources/atm_output.json"),
                     atm);
+
+            LOGGER.info("Backup in JSON file has been created");
         } catch (IOException e) {
             LOGGER.error(e);
         }
