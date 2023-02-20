@@ -39,6 +39,8 @@ public interface IService {
 
     List<Card> getAllCards();
 
+    Card getCardByCardNumber(String number) throws SQLException;
+
     void updateCard(Card o);
 
     void deleteCard(int id);
