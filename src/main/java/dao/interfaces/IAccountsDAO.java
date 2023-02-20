@@ -36,8 +36,9 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
      * @param from   The account to transfer from.
      * @param to     The account to transfer to.
      * @param amount The amount to transfer.
+     * @return True if the transfer was successful, false otherwise.
      */
-    void makeTransfer(Account from, Account to, BigDecimal amount);
+    boolean makeTransfer(Account from, Account to, BigDecimal amount);
 
     /**
      * @param user    The user to create the account for. The user should already be in the users table.
