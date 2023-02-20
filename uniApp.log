@@ -1037,3 +1037,87 @@
 2023-02-19 08:34:09 INFO  4) Withdraw money
 2023-02-19 08:34:09 INFO  5) Block Card
 2023-02-19 08:34:09 INFO  6) Exit to Main Menu
+2023-02-19 08:34:20 INFO  ATM Terminal 
+
+2023-02-19 08:34:20 INFO  1) User
+2023-02-19 08:34:20 INFO  2) Admin
+2023-02-19 08:34:20 INFO  3) Create Account
+2023-02-19 08:34:20 INFO  4) Exit
+2023-02-19 08:34:23 INFO  Please Enter Card Number: 
+2023-02-19 08:34:28 INFO  Enter Pin: 
+2023-02-19 08:34:30 INFO  Please Enter Expiration Date: 
+2023-02-19 08:34:34 INFO  Please Enter CVC: 
+2023-02-19 08:34:36 INFO  1) Check Account 
+2023-02-19 08:34:36 INFO  2) Deposit Money
+2023-02-19 08:34:36 INFO  3) Transfer Money
+2023-02-19 08:34:36 INFO  4) Withdraw money
+2023-02-19 08:34:36 INFO  5) Block Card
+2023-02-19 08:34:36 INFO  6) Exit to Main Menu
+2023-02-19 08:34:38 INFO  account 
+2023-02-19 08:34:38 INFO  
+        Account: 10    
+    Firstname: firstname, Lastname: lastname
+    Account Type: Savings, Balance: 50
+    Card Number: 4874652106121090, CVC: 244
+    Expiration Date: 02-26, Type Savings
+    Blocked: false
+2023-02-19 08:34:38 INFO  1) Check Account 
+2023-02-19 08:34:38 INFO  2) Deposit Money
+2023-02-19 08:34:38 INFO  3) Transfer Money
+2023-02-19 08:34:38 INFO  4) Withdraw money
+2023-02-19 08:34:38 INFO  5) Block Card
+2023-02-19 08:34:38 INFO  6) Exit to Main Menu
+2023-02-19 08:34:45 INFO  Amount to Withdraw
+2023-02-19 08:34:48 INFO  1) Check Account 
+2023-02-19 08:34:48 INFO  2) Deposit Money
+2023-02-19 08:34:48 INFO  3) Transfer Money
+2023-02-19 08:34:48 INFO  4) Withdraw money
+2023-02-19 08:34:48 INFO  5) Block Card
+2023-02-19 08:34:48 INFO  6) Exit to Main Menu
+2023-02-19 08:34:49 INFO  account 
+2023-02-19 08:34:49 INFO  
+        Account: 10    
+    Firstname: firstname, Lastname: lastname
+    Account Type: Savings, Balance: 25
+    Card Number: 4874652106121090, CVC: 244
+    Expiration Date: 02-26, Type Savings
+    Blocked: false
+2023-02-19 08:34:49 INFO  1) Check Account 
+2023-02-19 08:34:49 INFO  2) Deposit Money
+2023-02-19 08:34:49 INFO  3) Transfer Money
+2023-02-19 08:34:49 INFO  4) Withdraw money
+2023-02-19 08:34:49 INFO  5) Block Card
+2023-02-19 08:34:49 INFO  6) Exit to Main Menu
+2023-02-19 08:34:59 INFO  How Much money would you like to deposit: 
+2023-02-19 08:35:03 INFO  1) Check Account 
+2023-02-19 08:35:03 INFO  2) Deposit Money
+2023-02-19 08:35:03 INFO  3) Transfer Money
+2023-02-19 08:35:03 INFO  4) Withdraw money
+2023-02-19 08:35:03 INFO  5) Block Card
+2023-02-19 08:35:03 INFO  6) Exit to Main Menu
+2023-02-19 08:35:04 INFO  account 
+2023-02-19 08:35:04 INFO  
+        Account: 10    
+    Firstname: firstname, Lastname: lastname
+    Account Type: Savings, Balance: 100
+    Card Number: 4874652106121090, CVC: 244
+    Expiration Date: 02-26, Type Savings
+    Blocked: false
+2023-02-19 08:35:04 INFO  1) Check Account 
+2023-02-19 08:35:04 INFO  2) Deposit Money
+2023-02-19 08:35:04 INFO  3) Transfer Money
+2023-02-19 08:35:04 INFO  4) Withdraw money
+2023-02-19 08:35:04 INFO  5) Block Card
+2023-02-19 08:35:04 INFO  6) Exit to Main Menu
+2023-02-19 08:35:10 INFO  Amount For Transfer
+2023-02-19 08:35:12 INFO  Enter cardnumber for account to transfer
+2023-02-19 08:35:12 ERROR Invalid number Pattern
+2023-02-19 08:35:12 INFO  Enter cardnumber for account to transfer
+2023-02-19 08:35:17 ERROR Invalid number Pattern
+2023-02-19 08:35:17 INFO  Enter cardnumber for account to transfer
+2023-02-19 08:35:56 INFO  1) Check Account 
+2023-02-19 08:35:56 INFO  2) Deposit Money
+2023-02-19 08:35:56 INFO  3) Transfer Money
+2023-02-19 08:35:56 INFO  4) Withdraw money
+2023-02-19 08:35:56 INFO  5) Block Card
+2023-02-19 08:35:56 INFO  6) Exit to Main Menu

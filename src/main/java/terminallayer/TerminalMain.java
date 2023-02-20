@@ -38,11 +38,11 @@ public class TerminalMain {
             LOGGER.info("4) Exit");
             switch (scan.nextInt()) {
                 case 1:
-                    Account a = authUser();
+                    Account a = authUser(16);
                     userUI(a);
                     break;
                 case 2:
-                    authUser();
+                    authUser(1);
                     adminUI();
                     break;
                 case 3:

@@ -25,14 +25,14 @@ public class TerminalUtil {
     private static final Scanner scan = new Scanner(System.in);
     private static final IService service = JDBCService.getInstance();
 
-    public final static Account authUser() throws InvalidNumber, ExecutionException, InterruptedException, SQLException, TooManyAttempts {
+    public final static Account authUser(int cardNumLenght) throws InvalidNumber, ExecutionException, InterruptedException, SQLException, TooManyAttempts {
         Card card = new Card();
         List paramList = new ArrayList(1);
         CompletableFuture<Void> c = CompletableFuture.runAsync(() -> {
             String message = "Please Enter Card Number: ";
             String cardNum;
             try {
-                cardNum = numberValidator(message, 16);
+                cardNum = numberValidator(message, cardNumLenght);
                 card.setCardNumber(cardNum);
             } catch (TooManyAttempts e) {
                 throw new RuntimeException(e);
