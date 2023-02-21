@@ -128,18 +128,17 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             ps.setBigDecimal(1, newBalance);
             ps.setInt(2, account.getId());
             ps.executeUpdate();
+            IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
+            depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, account.getBalance(), newBalance, type);
+            account.setBalance(newBalance);
         } catch (SQLException e) {
             LOGGER.error(e);
         }
-
-        IDepositWithdrawHistoryDAO depositWithdrawHistoryDAO = new DepositWithdrawHistoryDAO();
-        depositWithdrawHistoryDAO.logDepositOrWithdrawal(account, account.getBalance(), newBalance, type);
     }
 
     @Override
-    public void makeTransfer(Account from, Account to, BigDecimal amount) {
+    public boolean makeTransfer(Account from, Account to, BigDecimal amount) {
         BigDecimal fromAccOldBalance = from.getBalance();
-
         BigDecimal fromAccNewBalance = fromAccOldBalance.subtract(amount);
         from.setBalance(fromAccNewBalance);
 
@@ -147,7 +146,9 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
         BigDecimal toAccNewBalance = toAccOldBalance.add(amount);
         to.setBalance(toAccNewBalance);
 
-        updateBalanceAfterTransfer(from, to);
+        if (!updateBalanceAfterTransfer(from, to)) {
+            return false;
+        }
 
         Transfer transfer = new Transfer();
         transfer.setIdForeignKey(from.getId());
@@ -160,6 +161,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
 
         ITransfersDAO transfersDAO = new TransfersDAO();
         transfersDAO.create(transfer);
+        return true;
     }
 
     /**
@@ -170,7 +172,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
      * @param toAccount   The account to transfer to.
      * @return True if the transfer was successful, false otherwise.
      */
-    private static void updateBalanceAfterTransfer(Account fromAccount, Account toAccount) {
+    private static boolean updateBalanceAfterTransfer(Account fromAccount, Account toAccount) {
         String query = "UPDATE accounts " +
                 "SET balance = (?) " +
                 "WHERE id_account = (?)";
@@ -188,6 +190,7 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             ps1.executeUpdate();
 
             connection.commit();
+            return true;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             try {
@@ -195,6 +198,8 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             } catch (SQLException ex) {
                 LOGGER.error(ex.getMessage());
             }
+
+            return false;
         } finally {
             try {
                 connection.setAutoCommit(true);

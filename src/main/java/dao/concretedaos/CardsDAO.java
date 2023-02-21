@@ -118,15 +118,26 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
 
 
     private static String generateCardNumber() {
-        StringBuilder cardNumber = new StringBuilder();
-        // No leading 0.
-        cardNumber.append(RANDOM.nextInt(9) + 1);
+        StringBuilder cardNumberBuilder = new StringBuilder();
 
         int cardNumberLength = 16;
-        for (int i = 1; i < cardNumberLength; i++) {
-            cardNumber.append(RANDOM.nextInt(10));
-        }
-        return cardNumber.toString();
+        String cardNumber;
+
+        do {
+            cardNumberBuilder.setLength(0);
+
+            for (int i = 0; i < cardNumberLength; i++) {
+                cardNumberBuilder.append(RANDOM.nextInt(10));
+            }
+
+            long number = Long.parseLong(cardNumberBuilder.toString());
+
+            // Left pad with 0s to the correct length.
+            cardNumber = String.format("%016d", number);
+
+        } while (!isCardUnique(cardNumber));
+
+        return cardNumberBuilder.toString();
     }
 
     private static String calculateExpirationDate() {
@@ -140,9 +151,25 @@ public class CardsDAO extends AbstractDAO<Card> implements ICardsDAO {
     private static int generateCvc() {
         // inclusive
         int min = 100;
-
         // exclusive
         int max = 1000;
+
         return RANDOM.nextInt(max - min) + min;
+    }
+
+    private static boolean isCardUnique(String cardNumber) {
+        String query = "SELECT * FROM cards WHERE number = (?)";
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, cardNumber);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return !rs.next();
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            return false;
+        }
     }
 }
