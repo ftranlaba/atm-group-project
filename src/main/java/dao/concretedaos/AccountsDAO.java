@@ -140,13 +140,11 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
     public boolean makeTransfer(Account from, Account to, BigDecimal amount) {
         BigDecimal fromAccOldBalance = from.getBalance();
         BigDecimal fromAccNewBalance = fromAccOldBalance.subtract(amount);
-        from.setBalance(fromAccNewBalance);
 
         BigDecimal toAccOldBalance = to.getBalance();
         BigDecimal toAccNewBalance = toAccOldBalance.add(amount);
-        to.setBalance(toAccNewBalance);
 
-        if (!updateBalanceAfterTransfer(from, to)) {
+        if (!updateBalanceAfterTransfer(from, fromAccNewBalance, to, toAccNewBalance)) {
             return false;
         }
 
@@ -168,11 +166,13 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
      * This method is equivalent to calling update on the accounts individually.
      * However, it updates transactionally.
      *
-     * @param fromAccount The account to transfer from.
-     * @param toAccount   The account to transfer to.
+     * @param fromAccount       The account to transfer from.
+     * @param fromAccNewBalance
+     * @param toAccount         The account to transfer to.
+     * @param toAccNewBalance
      * @return True if the transfer was successful, false otherwise.
      */
-    private static boolean updateBalanceAfterTransfer(Account fromAccount, Account toAccount) {
+    private static boolean updateBalanceAfterTransfer(Account fromAccount, BigDecimal fromAccNewBalance, Account toAccount, BigDecimal toAccNewBalance) {
         String query = "UPDATE accounts " +
                 "SET balance = (?) " +
                 "WHERE id_account = (?)";
@@ -190,6 +190,8 @@ public class AccountsDAO extends AbstractDAO<Account> implements IAccountsDAO {
             ps1.executeUpdate();
 
             connection.commit();
+            fromAccount.setBalance(fromAccNewBalance);
+            toAccount.setBalance(toAccNewBalance);
             return true;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
