@@ -21,20 +21,20 @@ public interface IAccountsDAO extends IBaseDAO<Account> {
     Account getAccount(Card card, int pin);
 
     /**
-     * @param account The account to make the deposit from.
+     * @param account The account to make the deposit from. Its balance will be modified inplace.
      * @param amount  The amount to deposit.
      */
     void makeDeposit(Account account, BigDecimal amount);
 
     /**
-     * @param account The account to make the withdrawal from.
+     * @param account The account to make the withdrawal from. Its balance will be modified inplace.
      * @param amount  The amount to withdraw.
      */
     void makeWithdrawal(Account account, BigDecimal amount);
 
     /**
-     * @param from   The account to transfer from.
-     * @param to     The account to transfer to.
+     * @param from   The account to transfer from. Its balance will be modified inplace.
+     * @param to     The account to transfer to. Its balance will be modified inplace.
      * @param amount The amount to transfer.
      * @return True if the transfer was successful, false otherwise.
      */

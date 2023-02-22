@@ -69,17 +69,16 @@ public class TerminalMain {
             LOGGER.info("5) Block Card");
             LOGGER.info("6) Exit to Main Menu");
             Card c = service.getByIdCard(a.getId());
-            Account a1 = service.getByIdAccount(a.getId());
             User u = service.getByIdUser(a.getId());
             switch (scan.nextInt()) {
                 case 1:
                     LOGGER.info("account ");
-                    LOGGER.info(printAccount(4, u, a1, c));
+                    LOGGER.info(printAccount(4, u, a, c));
                     break;
                 case 2:
                     String message = "How Much money would you like to deposit: ";
                     BigDecimal deposit = transferValidator(message);
-                    service.makeDepositAccount(a1, deposit);
+                    service.makeDepositAccount(a, deposit);
                     break;
                 case 3:
                     try {
