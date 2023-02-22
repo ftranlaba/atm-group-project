@@ -43,7 +43,7 @@ public class TerminalMain {
                     userUI(a);
                     break;
                 case 2:
-                    authUser(1);
+                    authUser(16);
                     adminUI();
                     break;
                 case 3:
@@ -98,12 +98,29 @@ public class TerminalMain {
                 case 5:
                     LOGGER.info("Card Blocked");
                     service.toggleBlockStatus(c);
+                    uesrUIBlocked(a, u, a1, c);
                     break infiniteloop;
                 case 6:
                     break infiniteloop;
                 default:
                     LOGGER.error("Invalid Option");
                     userUI(a);
+            }
+        }
+    }
+
+    public static void uesrUIBlocked(Account a, User u, Account a1, Card c){
+        infiniteloop:
+        while (true) {
+            LOGGER.info("1) Check Account ");
+            LOGGER.info("2) Exit to Main Menu");
+            switch (scan.nextInt()) {
+                case 1:
+                    LOGGER.info("account ");
+                    LOGGER.info(printAccount(4, u, a1, c));
+                    break;
+                case 2:
+                    break infiniteloop;
             }
         }
     }
